@@ -1,0 +1,1694 @@
+ARM GAS  /tmp/cc06rZgr.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"vcu.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.global	__aeabi_i2d
+  16              		.global	__aeabi_dmul
+  17              		.global	__aeabi_d2uiz
+  18              		.section	.text.decodeCAN,"ax",%progbits
+  19              		.align	1
+  20              		.global	decodeCAN
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu softvfp
+  26              	decodeCAN:
+  27              	.LFB66:
+  28              		.file 1 "Core/Src/vcu.c"
+   1:Core/Src/vcu.c **** #include "vcu.h"
+   2:Core/Src/vcu.c **** 
+   3:Core/Src/vcu.c **** void decodeCAN(CAN_RxHeaderTypeDef *rxMsg, uint8_t *canRx)
+   4:Core/Src/vcu.c **** {
+  29              		.loc 1 4 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              	.LVL0:
+  34 0000 10B5     		push	{r4, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 4, -8
+  38              		.cfi_offset 14, -4
+   5:Core/Src/vcu.c **** 
+   6:Core/Src/vcu.c ****     switch (rxMsg->StdId)
+  39              		.loc 1 6 0
+  40 0002 0368     		ldr	r3, [r0]
+  41 0004 40F23512 		movw	r2, #309
+  42 0008 9342     		cmp	r3, r2
+  43 000a 34D0     		beq	.L3
+  44 000c B3F59B7F 		cmp	r3, #310
+  45 0010 19D3     		bcc	.L19
+  46 0012 B3F59C7F 		cmp	r3, #312
+  47 0016 00F09F80 		beq	.L8
+  48 001a 23D9     		bls	.L20
+  49 001c 40F23912 		movw	r2, #313
+  50 0020 9342     		cmp	r3, r2
+  51 0022 00F0B980 		beq	.L11
+  52 0026 40F28E32 		movw	r2, #910
+ARM GAS  /tmp/cc06rZgr.s 			page 2
+
+
+  53 002a 9342     		cmp	r3, r2
+  54 002c 22D1     		bne	.L21
+   7:Core/Src/vcu.c ****     {
+   8:Core/Src/vcu.c ****     case 0x135:
+   9:Core/Src/vcu.c ****         if ((((canRx[3] << 8) + canRx[2])) <= 2000)
+  10:Core/Src/vcu.c ****         {
+  11:Core/Src/vcu.c ****             ldu.amps = (((canRx[3] << 8) + canRx[2]) * 1.83);
+  12:Core/Src/vcu.c ****         }
+  13:Core/Src/vcu.c ****         else if ((((canRx[3] << 8) + canRx[2])) >= 3000)
+  14:Core/Src/vcu.c ****         {
+  15:Core/Src/vcu.c ****             ldu.amps = (((((canRx[3] << 8) + canRx[2]) - 65535) * 1.83) * -1);
+  16:Core/Src/vcu.c ****         }
+  17:Core/Src/vcu.c ****         /**************************************************************************/
+  18:Core/Src/vcu.c ****         ldu.rpm = (((canRx[1] << 8) + canRx[0]));
+  19:Core/Src/vcu.c ****         /**************************************************************************/
+  20:Core/Src/vcu.c ****         if ((canRx[4]) > 0)
+  21:Core/Src/vcu.c ****         {
+  22:Core/Src/vcu.c ****             ldu.mTemp = (canRx[5]); //motor temp C
+  23:Core/Src/vcu.c ****         }
+  24:Core/Src/vcu.c ****         /**************************************************************************/
+  25:Core/Src/vcu.c ****         if ((canRx[5]) > 0)
+  26:Core/Src/vcu.c ****         {
+  27:Core/Src/vcu.c ****             ldu.hsTemp = (canRx[4]); //heatsink temp C
+  28:Core/Src/vcu.c ****         }
+  29:Core/Src/vcu.c ****         /**************************************************************************/
+  30:Core/Src/vcu.c ****         if ((((canRx[7] << 8)) + canRx[6]) <= 2000)
+  31:Core/Src/vcu.c ****         {
+  32:Core/Src/vcu.c ****             ldu.potNom = (((canRx[7] << 8)) + canRx[6]);
+  33:Core/Src/vcu.c ****         }
+  34:Core/Src/vcu.c ****         else if ((((canRx[7] << 8)) + canRx[6]) >= 2000)
+  35:Core/Src/vcu.c ****         {
+  36:Core/Src/vcu.c ****             ldu.potNom = ((((canRx[7] << 8)) + canRx[6]) - 65535);
+  37:Core/Src/vcu.c ****         }
+  38:Core/Src/vcu.c ****         break;
+  39:Core/Src/vcu.c **** 
+  40:Core/Src/vcu.c ****     case 0x04F:
+  41:Core/Src/vcu.c ****         ldu.dir = canRx[0];
+  42:Core/Src/vcu.c ****         //ldu.brake = canRx[1];
+  43:Core/Src/vcu.c ****         break;
+  44:Core/Src/vcu.c **** 
+  45:Core/Src/vcu.c ****     case 0x136:
+  46:Core/Src/vcu.c ****         ldu.mode = (canRx[0]);
+  47:Core/Src/vcu.c ****         break;
+  48:Core/Src/vcu.c **** 
+  49:Core/Src/vcu.c ****     case 0x109:
+  50:Core/Src/vcu.c ****         charger.chargerStatus = (canRx[5]);
+  51:Core/Src/vcu.c ****         charger.current = (canRx[3] * 100) / 55;
+  52:Core/Src/vcu.c ****         break;
+  53:Core/Src/vcu.c **** 
+  54:Core/Src/vcu.c ****     case 0x113:
+  55:Core/Src/vcu.c ****         ldu.pot = ((canRx[1] << 8) + canRx[0]);
+  56:Core/Src/vcu.c ****         ldu.pot2 = ((canRx[3] << 8) + canRx[2]);
+  57:Core/Src/vcu.c ****         break;
+  58:Core/Src/vcu.c **** 
+  59:Core/Src/vcu.c ****     case 0x12D:
+  60:Core/Src/vcu.c ****         //restart = ((canRx[1] << 8) + canRx[0]);
+  61:Core/Src/vcu.c ****         break;
+ARM GAS  /tmp/cc06rZgr.s 			page 3
+
+
+  62:Core/Src/vcu.c ****     case 0x38E:
+  63:Core/Src/vcu.c ****         iboost.pedal = ((canRx[4] << 8) + (canRx[3])) - 4415; //0-750
+  55              		.loc 1 63 0
+  56 002e 0A79     		ldrb	r2, [r1, #4]	@ zero_extendqisi2
+  57 0030 CB78     		ldrb	r3, [r1, #3]	@ zero_extendqisi2
+  58 0032 03EB0223 		add	r3, r3, r2, lsl #8
+  59 0036 9BB2     		uxth	r3, r3
+  60 0038 A3F58953 		sub	r3, r3, #4384
+  61 003c 1F3B     		subs	r3, r3, #31
+  62 003e 9BB2     		uxth	r3, r3
+  63 0040 674A     		ldr	r2, .L24+8
+  64 0042 1380     		strh	r3, [r2]	@ movhi
+  64:Core/Src/vcu.c ****         break;
+  65              		.loc 1 64 0
+  66 0044 10BD     		pop	{r4, pc}
+  67              	.L19:
+   6:Core/Src/vcu.c ****     {
+  68              		.loc 1 6 0
+  69 0046 40F20912 		movw	r2, #265
+  70 004a 9342     		cmp	r3, r2
+  71 004c 67D0     		beq	.L5
+  72 004e 40F21312 		movw	r2, #275
+  73 0052 9342     		cmp	r3, r2
+  74 0054 72D0     		beq	.L6
+  75 0056 4F2B     		cmp	r3, #79
+  76 0058 40F0BD80 		bne	.L1
+  41:Core/Src/vcu.c ****         //ldu.brake = canRx[1];
+  77              		.loc 1 41 0
+  78 005c 0A78     		ldrb	r2, [r1]	@ zero_extendqisi2
+  79 005e 614B     		ldr	r3, .L24+12
+  80 0060 1A72     		strb	r2, [r3, #8]
+  43:Core/Src/vcu.c **** 
+  81              		.loc 1 43 0
+  82 0062 10BD     		pop	{r4, pc}
+  83              	.L20:
+   6:Core/Src/vcu.c ****     {
+  84              		.loc 1 6 0
+  85 0064 B3F59B7F 		cmp	r3, #310
+  86 0068 03D1     		bne	.L22
+  46:Core/Src/vcu.c ****         break;
+  87              		.loc 1 46 0
+  88 006a 0A78     		ldrb	r2, [r1]	@ zero_extendqisi2
+  89 006c 5D4B     		ldr	r3, .L24+12
+  90 006e 5A72     		strb	r2, [r3, #9]
+  47:Core/Src/vcu.c **** 
+  91              		.loc 1 47 0
+  92 0070 10BD     		pop	{r4, pc}
+  93              	.L22:
+  94 0072 10BD     		pop	{r4, pc}
+  95              	.L21:
+  96 0074 10BD     		pop	{r4, pc}
+  97              	.L3:
+  98 0076 0C46     		mov	r4, r1
+   9:Core/Src/vcu.c ****         {
+  99              		.loc 1 9 0
+ 100 0078 CB78     		ldrb	r3, [r1, #3]	@ zero_extendqisi2
+ 101 007a 8878     		ldrb	r0, [r1, #2]	@ zero_extendqisi2
+ARM GAS  /tmp/cc06rZgr.s 			page 4
+
+
+ 102              	.LVL1:
+ 103 007c 00EB0320 		add	r0, r0, r3, lsl #8
+ 104 0080 B0F5FA6F 		cmp	r0, #2000
+ 105 0084 2EDC     		bgt	.L13
+  11:Core/Src/vcu.c ****         }
+ 106              		.loc 1 11 0
+ 107 0086 FFF7FEFF 		bl	__aeabi_i2d
+ 108              	.LVL2:
+ 109 008a 53A3     		adr	r3, .L24
+ 110 008c D3E90023 		ldrd	r2, [r3]
+ 111 0090 FFF7FEFF 		bl	__aeabi_dmul
+ 112              	.LVL3:
+ 113 0094 FFF7FEFF 		bl	__aeabi_d2uiz
+ 114              	.LVL4:
+ 115 0098 80B2     		uxth	r0, r0
+ 116 009a 524B     		ldr	r3, .L24+12
+ 117 009c 5881     		strh	r0, [r3, #10]	@ movhi
+ 118              	.L14:
+  18:Core/Src/vcu.c ****         /**************************************************************************/
+ 119              		.loc 1 18 0
+ 120 009e 6278     		ldrb	r2, [r4, #1]	@ zero_extendqisi2
+ 121 00a0 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 122 00a2 03EB0223 		add	r3, r3, r2, lsl #8
+ 123 00a6 9BB2     		uxth	r3, r3
+ 124 00a8 4E4A     		ldr	r2, .L24+12
+ 125 00aa 1380     		strh	r3, [r2]	@ movhi
+  20:Core/Src/vcu.c ****         {
+ 126              		.loc 1 20 0
+ 127 00ac 2379     		ldrb	r3, [r4, #4]	@ zero_extendqisi2
+ 128 00ae 0BB1     		cbz	r3, .L15
+  22:Core/Src/vcu.c ****         }
+ 129              		.loc 1 22 0
+ 130 00b0 6179     		ldrb	r1, [r4, #5]	@ zero_extendqisi2
+ 131 00b2 5180     		strh	r1, [r2, #2]	@ movhi
+ 132              	.L15:
+  25:Core/Src/vcu.c ****         {
+ 133              		.loc 1 25 0
+ 134 00b4 6279     		ldrb	r2, [r4, #5]	@ zero_extendqisi2
+ 135 00b6 12B1     		cbz	r2, .L16
+  27:Core/Src/vcu.c ****         }
+ 136              		.loc 1 27 0
+ 137 00b8 9BB2     		uxth	r3, r3
+ 138 00ba 4A4A     		ldr	r2, .L24+12
+ 139 00bc 9380     		strh	r3, [r2, #4]	@ movhi
+ 140              	.L16:
+  30:Core/Src/vcu.c ****         {
+ 141              		.loc 1 30 0
+ 142 00be E279     		ldrb	r2, [r4, #7]	@ zero_extendqisi2
+ 143 00c0 A379     		ldrb	r3, [r4, #6]	@ zero_extendqisi2
+ 144 00c2 03EB0221 		add	r1, r3, r2, lsl #8
+ 145 00c6 B1F5FA6F 		cmp	r1, #2000
+ 146 00ca 24DD     		ble	.L23
+  34:Core/Src/vcu.c ****         {
+ 147              		.loc 1 34 0
+ 148 00cc B1F5FA6F 		cmp	r1, #2000
+ 149 00d0 C0F28180 		blt	.L1
+  36:Core/Src/vcu.c ****         }
+ARM GAS  /tmp/cc06rZgr.s 			page 5
+
+
+ 150              		.loc 1 36 0
+ 151 00d4 03EB0223 		add	r3, r3, r2, lsl #8
+ 152 00d8 9BB2     		uxth	r3, r3
+ 153 00da 0133     		adds	r3, r3, #1
+ 154 00dc 9BB2     		uxth	r3, r3
+ 155 00de 414A     		ldr	r2, .L24+12
+ 156 00e0 D380     		strh	r3, [r2, #6]	@ movhi
+ 157 00e2 10BD     		pop	{r4, pc}
+ 158              	.LVL5:
+ 159              	.L13:
+  13:Core/Src/vcu.c ****         {
+ 160              		.loc 1 13 0
+ 161 00e4 40F6B733 		movw	r3, #2999
+ 162 00e8 9842     		cmp	r0, r3
+ 163 00ea D8DD     		ble	.L14
+  15:Core/Src/vcu.c ****         }
+ 164              		.loc 1 15 0
+ 165 00ec A0F57F40 		sub	r0, r0, #65280
+ 166 00f0 FF38     		subs	r0, r0, #255
+ 167 00f2 FFF7FEFF 		bl	__aeabi_i2d
+ 168              	.LVL6:
+ 169 00f6 38A3     		adr	r3, .L24
+ 170 00f8 D3E90023 		ldrd	r2, [r3]
+ 171 00fc FFF7FEFF 		bl	__aeabi_dmul
+ 172              	.LVL7:
+ 173 0100 0246     		mov	r2, r0
+ 174 0102 0B46     		mov	r3, r1
+ 175 0104 1046     		mov	r0, r2
+ 176 0106 03F10041 		add	r1, r3, #-2147483648
+ 177 010a FFF7FEFF 		bl	__aeabi_d2uiz
+ 178              	.LVL8:
+ 179 010e 80B2     		uxth	r0, r0
+ 180 0110 344B     		ldr	r3, .L24+12
+ 181 0112 5881     		strh	r0, [r3, #10]	@ movhi
+ 182 0114 C3E7     		b	.L14
+ 183              	.L23:
+  32:Core/Src/vcu.c ****         }
+ 184              		.loc 1 32 0
+ 185 0116 8BB2     		uxth	r3, r1
+ 186 0118 324A     		ldr	r2, .L24+12
+ 187 011a D380     		strh	r3, [r2, #6]	@ movhi
+ 188 011c 10BD     		pop	{r4, pc}
+ 189              	.LVL9:
+ 190              	.L5:
+  50:Core/Src/vcu.c ****         charger.current = (canRx[3] * 100) / 55;
+ 191              		.loc 1 50 0
+ 192 011e 3248     		ldr	r0, .L24+16
+ 193              	.LVL10:
+ 194 0120 4B79     		ldrb	r3, [r1, #5]	@ zero_extendqisi2
+ 195 0122 4370     		strb	r3, [r0, #1]
+  51:Core/Src/vcu.c ****         break;
+ 196              		.loc 1 51 0
+ 197 0124 CA78     		ldrb	r2, [r1, #3]	@ zero_extendqisi2
+ 198 0126 6423     		movs	r3, #100
+ 199 0128 03FB02F3 		mul	r3, r3, r2
+ 200 012c 2F4A     		ldr	r2, .L24+20
+ 201 012e 82FB0312 		smull	r1, r2, r2, r3
+ARM GAS  /tmp/cc06rZgr.s 			page 6
+
+
+ 202              	.LVL11:
+ 203 0132 DB17     		asrs	r3, r3, #31
+ 204 0134 C3EB6203 		rsb	r3, r3, r2, asr #1
+ 205 0138 0370     		strb	r3, [r0]
+  52:Core/Src/vcu.c **** 
+ 206              		.loc 1 52 0
+ 207 013a 10BD     		pop	{r4, pc}
+ 208              	.LVL12:
+ 209              	.L6:
+  55:Core/Src/vcu.c ****         ldu.pot2 = ((canRx[3] << 8) + canRx[2]);
+ 210              		.loc 1 55 0
+ 211 013c 4A78     		ldrb	r2, [r1, #1]	@ zero_extendqisi2
+ 212 013e 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+ 213 0140 03EB0223 		add	r3, r3, r2, lsl #8
+ 214 0144 9BB2     		uxth	r3, r3
+ 215 0146 274A     		ldr	r2, .L24+12
+ 216 0148 D381     		strh	r3, [r2, #14]	@ movhi
+  56:Core/Src/vcu.c ****         break;
+ 217              		.loc 1 56 0
+ 218 014a C878     		ldrb	r0, [r1, #3]	@ zero_extendqisi2
+ 219              	.LVL13:
+ 220 014c 8B78     		ldrb	r3, [r1, #2]	@ zero_extendqisi2
+ 221 014e 03EB0023 		add	r3, r3, r0, lsl #8
+ 222 0152 9BB2     		uxth	r3, r3
+ 223 0154 1382     		strh	r3, [r2, #16]	@ movhi
+  57:Core/Src/vcu.c **** 
+ 224              		.loc 1 57 0
+ 225 0156 10BD     		pop	{r4, pc}
+ 226              	.LVL14:
+ 227              	.L8:
+  65:Core/Src/vcu.c **** 
+  66:Core/Src/vcu.c ****     case 0x138:
+  67:Core/Src/vcu.c ****         BMS[0].chargeRequest = canRx[0];
+ 228              		.loc 1 67 0
+ 229 0158 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+ 230 015a 254A     		ldr	r2, .L24+24
+ 231 015c D371     		strb	r3, [r2, #7]
+  68:Core/Src/vcu.c ****         BMS[0].volt = ((canRx[2] << 8) + canRx[1]) / 100;
+ 232              		.loc 1 68 0
+ 233 015e 8878     		ldrb	r0, [r1, #2]	@ zero_extendqisi2
+ 234              	.LVL15:
+ 235 0160 4B78     		ldrb	r3, [r1, #1]	@ zero_extendqisi2
+ 236 0162 03EB0023 		add	r3, r3, r0, lsl #8
+ 237 0166 2348     		ldr	r0, .L24+28
+ 238 0168 80FB0340 		smull	r4, r0, r0, r3
+ 239 016c DB17     		asrs	r3, r3, #31
+ 240 016e C3EB6013 		rsb	r3, r3, r0, asr #5
+ 241 0172 1380     		strh	r3, [r2]	@ movhi
+  69:Core/Src/vcu.c ****         BMS[0].temp = canRx[3];
+ 242              		.loc 1 69 0
+ 243 0174 CB78     		ldrb	r3, [r1, #3]	@ zero_extendqisi2
+ 244 0176 9370     		strb	r3, [r2, #2]
+  70:Core/Src/vcu.c ****         BMS[0].highCell = (canRx[4]) / 51;
+ 245              		.loc 1 70 0
+ 246 0178 0879     		ldrb	r0, [r1, #4]	@ zero_extendqisi2
+ 247 017a 1F4C     		ldr	r4, .L24+32
+ 248 017c A4FB0030 		umull	r3, r0, r4, r0
+ARM GAS  /tmp/cc06rZgr.s 			page 7
+
+
+ 249 0180 4009     		lsrs	r0, r0, #5
+ 250 0182 D070     		strb	r0, [r2, #3]
+  71:Core/Src/vcu.c ****         BMS[0].lowCell = (canRx[5]) / 51;
+ 251              		.loc 1 71 0
+ 252 0184 4B79     		ldrb	r3, [r1, #5]	@ zero_extendqisi2
+ 253 0186 A4FB0303 		umull	r0, r3, r4, r3
+ 254 018a 5B09     		lsrs	r3, r3, #5
+ 255 018c 1371     		strb	r3, [r2, #4]
+  72:Core/Src/vcu.c ****         BMS[0].chargeState = canRx[6];
+ 256              		.loc 1 72 0
+ 257 018e 8B79     		ldrb	r3, [r1, #6]	@ zero_extendqisi2
+ 258 0190 1372     		strb	r3, [r2, #8]
+  73:Core/Src/vcu.c ****         BMS[0].soc = canRx[7];
+ 259              		.loc 1 73 0
+ 260 0192 CB79     		ldrb	r3, [r1, #7]	@ zero_extendqisi2
+ 261 0194 9371     		strb	r3, [r2, #6]
+  74:Core/Src/vcu.c ****         break;
+ 262              		.loc 1 74 0
+ 263 0196 10BD     		pop	{r4, pc}
+ 264              	.LVL16:
+ 265              	.L11:
+  75:Core/Src/vcu.c **** 
+  76:Core/Src/vcu.c ****     case 0x139:
+  77:Core/Src/vcu.c ****         BMS[1].chargeRequest = canRx[0];
+ 266              		.loc 1 77 0
+ 267 0198 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+ 268 019a 154A     		ldr	r2, .L24+24
+ 269 019c 5374     		strb	r3, [r2, #17]
+  78:Core/Src/vcu.c ****         BMS[1].volt = ((canRx[2] << 8) + canRx[1]) / 100;
+ 270              		.loc 1 78 0
+ 271 019e 8878     		ldrb	r0, [r1, #2]	@ zero_extendqisi2
+ 272              	.LVL17:
+ 273 01a0 4B78     		ldrb	r3, [r1, #1]	@ zero_extendqisi2
+ 274 01a2 03EB0023 		add	r3, r3, r0, lsl #8
+ 275 01a6 1348     		ldr	r0, .L24+28
+ 276 01a8 80FB0340 		smull	r4, r0, r0, r3
+ 277 01ac DB17     		asrs	r3, r3, #31
+ 278 01ae C3EB6013 		rsb	r3, r3, r0, asr #5
+ 279 01b2 5381     		strh	r3, [r2, #10]	@ movhi
+  79:Core/Src/vcu.c ****         BMS[1].temp = canRx[3];
+ 280              		.loc 1 79 0
+ 281 01b4 CB78     		ldrb	r3, [r1, #3]	@ zero_extendqisi2
+ 282 01b6 1373     		strb	r3, [r2, #12]
+  80:Core/Src/vcu.c ****         BMS[1].highCell = (canRx[4]) / 51;
+ 283              		.loc 1 80 0
+ 284 01b8 0879     		ldrb	r0, [r1, #4]	@ zero_extendqisi2
+ 285 01ba 0F4C     		ldr	r4, .L24+32
+ 286 01bc A4FB0030 		umull	r3, r0, r4, r0
+ 287 01c0 4009     		lsrs	r0, r0, #5
+ 288 01c2 5073     		strb	r0, [r2, #13]
+  81:Core/Src/vcu.c ****         BMS[1].lowCell = (canRx[5]) / 51;
+ 289              		.loc 1 81 0
+ 290 01c4 4B79     		ldrb	r3, [r1, #5]	@ zero_extendqisi2
+ 291 01c6 A4FB0303 		umull	r0, r3, r4, r3
+ 292 01ca 5B09     		lsrs	r3, r3, #5
+ 293 01cc 9373     		strb	r3, [r2, #14]
+  82:Core/Src/vcu.c ****         BMS[1].chargeState = canRx[6];
+ARM GAS  /tmp/cc06rZgr.s 			page 8
+
+
+ 294              		.loc 1 82 0
+ 295 01ce 8B79     		ldrb	r3, [r1, #6]	@ zero_extendqisi2
+ 296 01d0 9374     		strb	r3, [r2, #18]
+  83:Core/Src/vcu.c ****         BMS[1].soc = canRx[7];
+ 297              		.loc 1 83 0
+ 298 01d2 CB79     		ldrb	r3, [r1, #7]	@ zero_extendqisi2
+ 299 01d4 1374     		strb	r3, [r2, #16]
+ 300              	.LVL18:
+ 301              	.L1:
+ 302 01d6 10BD     		pop	{r4, pc}
+ 303              	.L25:
+ 304              		.align	3
+ 305              	.L24:
+ 306 01d8 48E17A14 		.word	343597384
+ 307 01dc AE47FD3F 		.word	1073563566
+ 308 01e0 00000000 		.word	iboost
+ 309 01e4 00000000 		.word	ldu
+ 310 01e8 00000000 		.word	charger
+ 311 01ec 95204F09 		.word	156180629
+ 312 01f0 00000000 		.word	BMS
+ 313 01f4 1F85EB51 		.word	1374389535
+ 314 01f8 A1A0A0A0 		.word	-1600085855
+ 315              		.cfi_endproc
+ 316              	.LFE66:
+ 318              		.section	.text.canIOset,"ax",%progbits
+ 319              		.align	1
+ 320              		.global	canIOset
+ 321              		.syntax unified
+ 322              		.thumb
+ 323              		.thumb_func
+ 324              		.fpu softvfp
+ 326              	canIOset:
+ 327              	.LFB67:
+  84:Core/Src/vcu.c ****         break;
+  85:Core/Src/vcu.c **** 
+  86:Core/Src/vcu.c ****     default:
+  87:Core/Src/vcu.c ****         break;
+  88:Core/Src/vcu.c ****     }
+  89:Core/Src/vcu.c **** }
+  90:Core/Src/vcu.c **** 
+  91:Core/Src/vcu.c **** void canIOset(int bit, int val)
+  92:Core/Src/vcu.c **** {
+ 328              		.loc 1 92 0
+ 329              		.cfi_startproc
+ 330              		@ args = 0, pretend = 0, frame = 0
+ 331              		@ frame_needed = 0, uses_anonymous_args = 0
+ 332              	.LVL19:
+ 333 0000 08B5     		push	{r3, lr}
+ 334              	.LCFI1:
+ 335              		.cfi_def_cfa_offset 8
+ 336              		.cfi_offset 3, -8
+ 337              		.cfi_offset 14, -4
+ 338              	.LVL20:
+  93:Core/Src/vcu.c ****     if ((val = ON))
+  94:Core/Src/vcu.c ****     {
+  95:Core/Src/vcu.c ****         vcu.dio |= (1U << (bit));
+ 339              		.loc 1 95 0
+ARM GAS  /tmp/cc06rZgr.s 			page 9
+
+
+ 340 0002 094A     		ldr	r2, .L28
+ 341 0004 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 342 0006 0121     		movs	r1, #1
+ 343 0008 01FA00F0 		lsl	r0, r1, r0
+ 344              	.LVL21:
+ 345 000c 0343     		orrs	r3, r3, r0
+ 346 000e DBB2     		uxtb	r3, r3
+ 347 0010 1370     		strb	r3, [r2]
+  96:Core/Src/vcu.c ****     }
+  97:Core/Src/vcu.c ****     else if ((val = OFF))
+  98:Core/Src/vcu.c ****     {
+  99:Core/Src/vcu.c ****         vcu.dio &= ~(1U << (bit));
+ 100:Core/Src/vcu.c ****     }
+ 101:Core/Src/vcu.c **** 
+ 102:Core/Src/vcu.c ****     txMsg.StdId = 0x113;
+ 348              		.loc 1 102 0
+ 349 0012 0648     		ldr	r0, .L28+4
+ 350 0014 40F21313 		movw	r3, #275
+ 351 0018 0360     		str	r3, [r0]
+ 103:Core/Src/vcu.c ****     txMsg.DLC = 1;
+ 352              		.loc 1 103 0
+ 353 001a 0161     		str	r1, [r0, #16]
+ 104:Core/Src/vcu.c ****     canTx[0] = vcu.dio;
+ 354              		.loc 1 104 0
+ 355 001c 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 356 001e 0449     		ldr	r1, .L28+8
+ 357 0020 0B70     		strb	r3, [r1]
+ 105:Core/Src/vcu.c ****     c1tx(&txMsg, canTx);
+ 358              		.loc 1 105 0
+ 359 0022 FFF7FEFF 		bl	c1tx
+ 360              	.LVL22:
+ 361 0026 08BD     		pop	{r3, pc}
+ 362              	.L29:
+ 363              		.align	2
+ 364              	.L28:
+ 365 0028 00000000 		.word	vcu
+ 366 002c 00000000 		.word	txMsg
+ 367 0030 00000000 		.word	canTx
+ 368              		.cfi_endproc
+ 369              	.LFE67:
+ 371              		.section	.text.canIOsend,"ax",%progbits
+ 372              		.align	1
+ 373              		.global	canIOsend
+ 374              		.syntax unified
+ 375              		.thumb
+ 376              		.thumb_func
+ 377              		.fpu softvfp
+ 379              	canIOsend:
+ 380              	.LFB68:
+ 106:Core/Src/vcu.c **** }
+ 107:Core/Src/vcu.c **** 
+ 108:Core/Src/vcu.c **** void canIOsend(void)
+ 109:Core/Src/vcu.c **** {
+ 381              		.loc 1 109 0
+ 382              		.cfi_startproc
+ 383              		@ args = 0, pretend = 0, frame = 0
+ 384              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/cc06rZgr.s 			page 10
+
+
+ 385 0000 08B5     		push	{r3, lr}
+ 386              	.LCFI2:
+ 387              		.cfi_def_cfa_offset 8
+ 388              		.cfi_offset 3, -8
+ 389              		.cfi_offset 14, -4
+ 110:Core/Src/vcu.c ****     txMsg.StdId = 0x113;
+ 390              		.loc 1 110 0
+ 391 0002 0648     		ldr	r0, .L32
+ 392 0004 40F21313 		movw	r3, #275
+ 393 0008 0360     		str	r3, [r0]
+ 111:Core/Src/vcu.c ****     txMsg.DLC = 1;
+ 394              		.loc 1 111 0
+ 395 000a 0123     		movs	r3, #1
+ 396 000c 0361     		str	r3, [r0, #16]
+ 112:Core/Src/vcu.c ****     canTx[0] = vcu.dio;
+ 397              		.loc 1 112 0
+ 398 000e 044B     		ldr	r3, .L32+4
+ 399 0010 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 400 0012 0449     		ldr	r1, .L32+8
+ 401 0014 0B70     		strb	r3, [r1]
+ 113:Core/Src/vcu.c ****     c1tx(&txMsg, canTx);
+ 402              		.loc 1 113 0
+ 403 0016 FFF7FEFF 		bl	c1tx
+ 404              	.LVL23:
+ 405 001a 08BD     		pop	{r3, pc}
+ 406              	.L33:
+ 407              		.align	2
+ 408              	.L32:
+ 409 001c 00000000 		.word	txMsg
+ 410 0020 00000000 		.word	vcu
+ 411 0024 00000000 		.word	canTx
+ 412              		.cfi_endproc
+ 413              	.LFE68:
+ 415              		.section	.text.vcuInit,"ax",%progbits
+ 416              		.align	1
+ 417              		.global	vcuInit
+ 418              		.syntax unified
+ 419              		.thumb
+ 420              		.thumb_func
+ 421              		.fpu softvfp
+ 423              	vcuInit:
+ 424              	.LFB70:
+ 114:Core/Src/vcu.c **** }
+ 115:Core/Src/vcu.c **** /////////////////////////////////////////////////////////////////////////
+ 116:Core/Src/vcu.c **** void vcuState(void)
+ 117:Core/Src/vcu.c **** {
+ 118:Core/Src/vcu.c ****     switch (vcu.state)
+ 119:Core/Src/vcu.c ****     {
+ 120:Core/Src/vcu.c ****     case off:
+ 121:Core/Src/vcu.c **** 
+ 122:Core/Src/vcu.c ****         if (vcu.key == ON && charger.chargerStatus == CHRG_ENABLED)
+ 123:Core/Src/vcu.c ****         {
+ 124:Core/Src/vcu.c ****             vcu.state = charge_keyOn;
+ 125:Core/Src/vcu.c ****         }
+ 126:Core/Src/vcu.c ****         if (vcu.key == OFF && charger.chargerStatus == CHRG_ENABLED)
+ 127:Core/Src/vcu.c ****         {
+ 128:Core/Src/vcu.c ****             vcu.state = charge_keyOff;
+ARM GAS  /tmp/cc06rZgr.s 			page 11
+
+
+ 129:Core/Src/vcu.c ****         }
+ 130:Core/Src/vcu.c ****         if (vcu.key == ON && charger.chargerStatus == OFF)
+ 131:Core/Src/vcu.c ****         {
+ 132:Core/Src/vcu.c ****             vcu.state = on;
+ 133:Core/Src/vcu.c ****         }
+ 134:Core/Src/vcu.c ****         break;
+ 135:Core/Src/vcu.c **** 
+ 136:Core/Src/vcu.c ****     case on:
+ 137:Core/Src/vcu.c ****         canSet(IDLE_MODE, 1, 32);
+ 138:Core/Src/vcu.c ****         if (ldu.mode == 1)
+ 139:Core/Src/vcu.c ****         {
+ 140:Core/Src/vcu.c ****             vcu.state = idle;
+ 141:Core/Src/vcu.c ****         }
+ 142:Core/Src/vcu.c **** 
+ 143:Core/Src/vcu.c ****         if (vcu.key == OFF)
+ 144:Core/Src/vcu.c ****         {
+ 145:Core/Src/vcu.c ****             vcu.state = off;
+ 146:Core/Src/vcu.c ****         }
+ 147:Core/Src/vcu.c ****         if (charger.chargerStatus == 5)
+ 148:Core/Src/vcu.c ****         {
+ 149:Core/Src/vcu.c ****             vcu.state = charge_keyOn;
+ 150:Core/Src/vcu.c ****         }
+ 151:Core/Src/vcu.c ****         break;
+ 152:Core/Src/vcu.c **** 
+ 153:Core/Src/vcu.c ****     case idle:
+ 154:Core/Src/vcu.c ****         canSet(IDLE_MODE, 1, 32);
+ 155:Core/Src/vcu.c ****         if (ldu.dir != 2)
+ 156:Core/Src/vcu.c ****         {
+ 157:Core/Src/vcu.c ****             vcu.state = run;
+ 158:Core/Src/vcu.c ****         }
+ 159:Core/Src/vcu.c **** 
+ 160:Core/Src/vcu.c ****         if (vcu.key == OFF)
+ 161:Core/Src/vcu.c ****         {
+ 162:Core/Src/vcu.c ****             vcu.state = off;
+ 163:Core/Src/vcu.c ****         }
+ 164:Core/Src/vcu.c ****         break;
+ 165:Core/Src/vcu.c **** 
+ 166:Core/Src/vcu.c ****     case run:
+ 167:Core/Src/vcu.c ****         canSet(IDLE_MODE, 0, 32);
+ 168:Core/Src/vcu.c ****         canSet(FWEAK, 280, 32);
+ 169:Core/Src/vcu.c ****         canSet(FSLIP_MIN, 76, 1);  // 2.3*32
+ 170:Core/Src/vcu.c ****         canSet(FSLIP_MAX, 101, 1); // 3.15*32
+ 171:Core/Src/vcu.c ****         if (vcu.key == OFF)
+ 172:Core/Src/vcu.c ****         {
+ 173:Core/Src/vcu.c ****             vcu.state = off;
+ 174:Core/Src/vcu.c ****         }
+ 175:Core/Src/vcu.c **** 
+ 176:Core/Src/vcu.c ****         if (vcu.launchFlag == ON)
+ 177:Core/Src/vcu.c ****         {
+ 178:Core/Src/vcu.c ****             vcu.state = launchMode;
+ 179:Core/Src/vcu.c ****         }
+ 180:Core/Src/vcu.c ****         break;
+ 181:Core/Src/vcu.c **** 
+ 182:Core/Src/vcu.c ****     case launchMode:
+ 183:Core/Src/vcu.c ****         canSet(FWEAK, 220, 32);
+ 184:Core/Src/vcu.c ****         canSet(FSLIP_MIN, 61, 1); // 1.9*32
+ 185:Core/Src/vcu.c ****         canSet(FSLIP_MAX, 77, 1); // 2.4*32
+ARM GAS  /tmp/cc06rZgr.s 			page 12
+
+
+ 186:Core/Src/vcu.c ****         if (vcu.launchFlag == 0)
+ 187:Core/Src/vcu.c ****         {
+ 188:Core/Src/vcu.c ****             vcu.state = run;
+ 189:Core/Src/vcu.c ****         }
+ 190:Core/Src/vcu.c ****         break;
+ 191:Core/Src/vcu.c **** 
+ 192:Core/Src/vcu.c ****     default:
+ 193:Core/Src/vcu.c ****         break;
+ 194:Core/Src/vcu.c ****     }
+ 195:Core/Src/vcu.c **** }
+ 196:Core/Src/vcu.c **** 
+ 197:Core/Src/vcu.c **** void vcuInit(void)
+ 198:Core/Src/vcu.c **** {
+ 425              		.loc 1 198 0
+ 426              		.cfi_startproc
+ 427              		@ args = 0, pretend = 0, frame = 0
+ 428              		@ frame_needed = 0, uses_anonymous_args = 0
+ 429              		@ link register save eliminated.
+ 199:Core/Src/vcu.c ****     vcu.state = off;
+ 430              		.loc 1 199 0
+ 431 0000 064A     		ldr	r2, .L35
+ 432 0002 0023     		movs	r3, #0
+ 433 0004 1373     		strb	r3, [r2, #12]
+ 200:Core/Src/vcu.c ****     vcu.dio = 0;
+ 434              		.loc 1 200 0
+ 435 0006 1370     		strb	r3, [r2]
+ 201:Core/Src/vcu.c ****     vcu.key = 0;
+ 436              		.loc 1 201 0
+ 437 0008 D370     		strb	r3, [r2, #3]
+ 202:Core/Src/vcu.c ****     vcu.launchFlag = 0;
+ 438              		.loc 1 202 0
+ 439 000a 5373     		strb	r3, [r2, #13]
+ 203:Core/Src/vcu.c ****     ADC_data[0] = 4095; // LVREAD PIN
+ 440              		.loc 1 203 0
+ 441 000c 044A     		ldr	r2, .L35+4
+ 442 000e 40F6FF71 		movw	r1, #4095
+ 443 0012 1160     		str	r1, [r2]
+ 204:Core/Src/vcu.c ****     ADC_data[1] = 0;
+ 444              		.loc 1 204 0
+ 445 0014 5360     		str	r3, [r2, #4]
+ 205:Core/Src/vcu.c ****     ADC_data[2] = 0;
+ 446              		.loc 1 205 0
+ 447 0016 9360     		str	r3, [r2, #8]
+ 448 0018 7047     		bx	lr
+ 449              	.L36:
+ 450 001a 00BF     		.align	2
+ 451              	.L35:
+ 452 001c 00000000 		.word	vcu
+ 453 0020 00000000 		.word	ADC_data
+ 454              		.cfi_endproc
+ 455              	.LFE70:
+ 457              		.section	.text.ioHandler,"ax",%progbits
+ 458              		.align	1
+ 459              		.global	ioHandler
+ 460              		.syntax unified
+ 461              		.thumb
+ 462              		.thumb_func
+ARM GAS  /tmp/cc06rZgr.s 			page 13
+
+
+ 463              		.fpu softvfp
+ 465              	ioHandler:
+ 466              	.LFB71:
+ 206:Core/Src/vcu.c **** }
+ 207:Core/Src/vcu.c **** 
+ 208:Core/Src/vcu.c **** void ioHandler(void)
+ 209:Core/Src/vcu.c **** {
+ 467              		.loc 1 209 0
+ 468              		.cfi_startproc
+ 469              		@ args = 0, pretend = 0, frame = 0
+ 470              		@ frame_needed = 0, uses_anonymous_args = 0
+ 471 0000 08B5     		push	{r3, lr}
+ 472              	.LCFI3:
+ 473              		.cfi_def_cfa_offset 8
+ 474              		.cfi_offset 3, -8
+ 475              		.cfi_offset 14, -4
+ 210:Core/Src/vcu.c ****     ////////////////  Key Input ///////////////////////////////////////
+ 211:Core/Src/vcu.c ****     if (HAL_GPIO_ReadPin(SW12_GPIO_Port, SW12_Pin))
+ 476              		.loc 1 211 0
+ 477 0002 1021     		movs	r1, #16
+ 478 0004 2448     		ldr	r0, .L49
+ 479 0006 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 480              	.LVL24:
+ 481 000a A0B1     		cbz	r0, .L38
+ 212:Core/Src/vcu.c ****     {
+ 213:Core/Src/vcu.c ****         vcu.key = ON;
+ 482              		.loc 1 213 0
+ 483 000c 0122     		movs	r2, #1
+ 484 000e 234B     		ldr	r3, .L49+4
+ 485 0010 DA70     		strb	r2, [r3, #3]
+ 486              	.L39:
+ 214:Core/Src/vcu.c ****     }
+ 215:Core/Src/vcu.c ****     else
+ 216:Core/Src/vcu.c ****     {
+ 217:Core/Src/vcu.c ****         vcu.key = OFF;
+ 218:Core/Src/vcu.c ****         vcu.dio = 0x00;
+ 219:Core/Src/vcu.c ****         ldu.mode = 0;
+ 220:Core/Src/vcu.c ****         if (charger.chargerStatus != CHRG_ENABLED)
+ 221:Core/Src/vcu.c ****         {
+ 222:Core/Src/vcu.c ****             vcu.state = off;
+ 223:Core/Src/vcu.c ****         }
+ 224:Core/Src/vcu.c ****     }
+ 225:Core/Src/vcu.c **** 
+ 226:Core/Src/vcu.c ****     //////////////////  Heater Switching ///////////////////////////////
+ 227:Core/Src/vcu.c ****     int heatRequest = HAL_GPIO_ReadPin(HEAT_REQ_GPIO_Port, HEAT_REQ_Pin);
+ 487              		.loc 1 227 0
+ 488 0012 2021     		movs	r1, #32
+ 489 0014 2048     		ldr	r0, .L49
+ 490 0016 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 491              	.LVL25:
+ 228:Core/Src/vcu.c **** 
+ 229:Core/Src/vcu.c ****     switch (vcu.state)
+ 492              		.loc 1 229 0
+ 493 001a 204B     		ldr	r3, .L49+4
+ 494 001c 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
+ 495 001e 03F0FF02 		and	r2, r3, #255
+ 496 0022 EBB1     		cbz	r3, .L41
+ARM GAS  /tmp/cc06rZgr.s 			page 14
+
+
+ 497 0024 012A     		cmp	r2, #1
+ 498 0026 21D1     		bne	.L40
+ 230:Core/Src/vcu.c ****     {
+ 231:Core/Src/vcu.c ****     case on:
+ 232:Core/Src/vcu.c ****         if (heatRequest)
+ 499              		.loc 1 232 0
+ 500 0028 98B1     		cbz	r0, .L43
+ 233:Core/Src/vcu.c ****         {
+ 234:Core/Src/vcu.c ****             HAL_GPIO_WritePin(HEAT_OUT_GPIO_Port, HEAT_OUT_Pin, ON);
+ 501              		.loc 1 234 0
+ 502 002a 4FF40041 		mov	r1, #32768
+ 503 002e 1A48     		ldr	r0, .L49
+ 504              	.LVL26:
+ 505 0030 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 506              	.LVL27:
+ 507 0034 1AE0     		b	.L40
+ 508              	.L38:
+ 217:Core/Src/vcu.c ****         vcu.dio = 0x00;
+ 509              		.loc 1 217 0
+ 510 0036 194A     		ldr	r2, .L49+4
+ 511 0038 0023     		movs	r3, #0
+ 512 003a D370     		strb	r3, [r2, #3]
+ 218:Core/Src/vcu.c ****         ldu.mode = 0;
+ 513              		.loc 1 218 0
+ 514 003c 1370     		strb	r3, [r2]
+ 219:Core/Src/vcu.c ****         if (charger.chargerStatus != CHRG_ENABLED)
+ 515              		.loc 1 219 0
+ 516 003e 184A     		ldr	r2, .L49+8
+ 517 0040 5372     		strb	r3, [r2, #9]
+ 220:Core/Src/vcu.c ****         {
+ 518              		.loc 1 220 0
+ 519 0042 184B     		ldr	r3, .L49+12
+ 520 0044 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 521 0046 052B     		cmp	r3, #5
+ 522 0048 E3D0     		beq	.L39
+ 222:Core/Src/vcu.c ****         }
+ 523              		.loc 1 222 0
+ 524 004a 0022     		movs	r2, #0
+ 525 004c 134B     		ldr	r3, .L49+4
+ 526 004e 1A73     		strb	r2, [r3, #12]
+ 527 0050 DFE7     		b	.L39
+ 528              	.LVL28:
+ 529              	.L43:
+ 235:Core/Src/vcu.c ****         }
+ 236:Core/Src/vcu.c ****         else
+ 237:Core/Src/vcu.c ****         {
+ 238:Core/Src/vcu.c ****             HAL_GPIO_WritePin(HEAT_OUT_GPIO_Port, HEAT_OUT_Pin, OFF);
+ 530              		.loc 1 238 0
+ 531 0052 0022     		movs	r2, #0
+ 532 0054 4FF40041 		mov	r1, #32768
+ 533 0058 0F48     		ldr	r0, .L49
+ 534              	.LVL29:
+ 535 005a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 536              	.LVL30:
+ 537 005e 05E0     		b	.L40
+ 538              	.LVL31:
+ 539              	.L41:
+ARM GAS  /tmp/cc06rZgr.s 			page 15
+
+
+ 239:Core/Src/vcu.c ****         }
+ 240:Core/Src/vcu.c ****         break;
+ 241:Core/Src/vcu.c **** 
+ 242:Core/Src/vcu.c ****     case off:
+ 243:Core/Src/vcu.c ****         HAL_GPIO_WritePin(HEAT_OUT_GPIO_Port, HEAT_OUT_Pin, OFF);
+ 540              		.loc 1 243 0
+ 541 0060 0022     		movs	r2, #0
+ 542 0062 4FF40041 		mov	r1, #32768
+ 543 0066 0C48     		ldr	r0, .L49
+ 544              	.LVL32:
+ 545 0068 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 546              	.LVL33:
+ 547              	.L40:
+ 244:Core/Src/vcu.c ****         break;
+ 245:Core/Src/vcu.c **** 
+ 246:Core/Src/vcu.c ****     default:
+ 247:Core/Src/vcu.c ****         break;
+ 248:Core/Src/vcu.c ****     }
+ 249:Core/Src/vcu.c **** 
+ 250:Core/Src/vcu.c ****     //////////////////  Power Steering  ///////////////////////////////
+ 251:Core/Src/vcu.c ****     switch (vcu.state)
+ 548              		.loc 1 251 0
+ 549 006c 0B4B     		ldr	r3, .L49+4
+ 550 006e 1A7B     		ldrb	r2, [r3, #12]	@ zero_extendqisi2
+ 551 0070 02F0FF03 		and	r3, r2, #255
+ 552 0074 4AB1     		cbz	r2, .L45
+ 553 0076 043B     		subs	r3, r3, #4
+ 554 0078 012B     		cmp	r3, #1
+ 555 007a 05D8     		bhi	.L37
+ 252:Core/Src/vcu.c ****     {
+ 253:Core/Src/vcu.c ****     case off:
+ 254:Core/Src/vcu.c ****         HAL_GPIO_WritePin(PS_INIT_GPIO_Port, PS_INIT_Pin, OFF);
+ 255:Core/Src/vcu.c ****         break;
+ 256:Core/Src/vcu.c ****     case run:
+ 257:Core/Src/vcu.c ****     case idle:
+ 258:Core/Src/vcu.c ****         HAL_GPIO_WritePin(PS_INIT_GPIO_Port, PS_INIT_Pin, ON);
+ 556              		.loc 1 258 0
+ 557 007c 0122     		movs	r2, #1
+ 558 007e 4FF48041 		mov	r1, #16384
+ 559 0082 0548     		ldr	r0, .L49
+ 560 0084 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 561              	.LVL34:
+ 562              	.L37:
+ 563 0088 08BD     		pop	{r3, pc}
+ 564              	.L45:
+ 254:Core/Src/vcu.c ****         break;
+ 565              		.loc 1 254 0
+ 566 008a 0022     		movs	r2, #0
+ 567 008c 4FF48041 		mov	r1, #16384
+ 568 0090 0148     		ldr	r0, .L49
+ 569 0092 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 570              	.LVL35:
+ 255:Core/Src/vcu.c ****     case run:
+ 571              		.loc 1 255 0
+ 572 0096 08BD     		pop	{r3, pc}
+ 573              	.L50:
+ 574              		.align	2
+ARM GAS  /tmp/cc06rZgr.s 			page 16
+
+
+ 575              	.L49:
+ 576 0098 000C0140 		.word	1073810432
+ 577 009c 00000000 		.word	vcu
+ 578 00a0 00000000 		.word	ldu
+ 579 00a4 00000000 		.word	charger
+ 580              		.cfi_endproc
+ 581              	.LFE71:
+ 583              		.section	.text.canSet,"ax",%progbits
+ 584              		.align	1
+ 585              		.global	canSet
+ 586              		.syntax unified
+ 587              		.thumb
+ 588              		.thumb_func
+ 589              		.fpu softvfp
+ 591              	canSet:
+ 592              	.LFB73:
+ 259:Core/Src/vcu.c ****         break;
+ 260:Core/Src/vcu.c **** 
+ 261:Core/Src/vcu.c ****     default:
+ 262:Core/Src/vcu.c ****         break;
+ 263:Core/Src/vcu.c ****     }
+ 264:Core/Src/vcu.c **** }
+ 265:Core/Src/vcu.c **** 
+ 266:Core/Src/vcu.c **** void regenHandler(void)
+ 267:Core/Src/vcu.c **** {
+ 268:Core/Src/vcu.c **** 
+ 269:Core/Src/vcu.c ****     int baseRegen = 0; //base throttle off regen value
+ 270:Core/Src/vcu.c ****     int maxRegen = 94; //maximum full brake pressure regen value
+ 271:Core/Src/vcu.c ****     int brkNomPedal;
+ 272:Core/Src/vcu.c ****     int regenRamp;
+ 273:Core/Src/vcu.c **** 
+ 274:Core/Src/vcu.c ****     if (iboost.pedal > 700)
+ 275:Core/Src/vcu.c ****     {
+ 276:Core/Src/vcu.c ****         brkNomPedal = ((UINT32_MAX - (maxRegen * 32)) / 32); //sets POT2 value for maximum regen
+ 277:Core/Src/vcu.c ****     }
+ 278:Core/Src/vcu.c ****     else
+ 279:Core/Src/vcu.c ****     {
+ 280:Core/Src/vcu.c ****         brkNomPedal = MAP(iboost.pedal, 1, 700, ((UINT32_MAX - (baseRegen * 32)) / 32), ((UINT32_MA
+ 281:Core/Src/vcu.c ****         ; //maps brake pedal regen between base and max
+ 282:Core/Src/vcu.c ****     }
+ 283:Core/Src/vcu.c ****     canSet(BRAKE_NOM_PEDAL, brkNomPedal, 32);
+ 284:Core/Src/vcu.c **** 
+ 285:Core/Src/vcu.c ****     //regenramp
+ 286:Core/Src/vcu.c ****     if (ldu.rpm <= 10000)
+ 287:Core/Src/vcu.c ****     {
+ 288:Core/Src/vcu.c ****         regenRamp = MAP(ldu.rpm, 0, 10000, 2, 12); // mapped values alredy 32x for gain
+ 289:Core/Src/vcu.c ****     }
+ 290:Core/Src/vcu.c ****     else
+ 291:Core/Src/vcu.c ****     {
+ 292:Core/Src/vcu.c ****         regenRamp = 12; // value already 32x for gain
+ 293:Core/Src/vcu.c ****         canSet(BRAKE_PEDAL_RAMP, regenRamp, 1);
+ 294:Core/Src/vcu.c ****     }
+ 295:Core/Src/vcu.c **** }
+ 296:Core/Src/vcu.c **** 
+ 297:Core/Src/vcu.c **** void canSet(uint8_t index, uint32_t value, uint8_t gain) // LDU param Index, unscaled value, value 
+ 298:Core/Src/vcu.c **** {
+ 593              		.loc 1 298 0
+ARM GAS  /tmp/cc06rZgr.s 			page 17
+
+
+ 594              		.cfi_startproc
+ 595              		@ args = 0, pretend = 0, frame = 0
+ 596              		@ frame_needed = 0, uses_anonymous_args = 0
+ 597              	.LVL36:
+ 598 0000 10B5     		push	{r4, lr}
+ 599              	.LCFI4:
+ 600              		.cfi_def_cfa_offset 8
+ 601              		.cfi_offset 4, -8
+ 602              		.cfi_offset 14, -4
+ 299:Core/Src/vcu.c ****     int val = value * gain;
+ 603              		.loc 1 299 0
+ 604 0002 01FB02F2 		mul	r2, r1, r2
+ 605              	.LVL37:
+ 300:Core/Src/vcu.c **** 
+ 301:Core/Src/vcu.c ****     txMsg.StdId = 0x601; //set parameter ID
+ 606              		.loc 1 301 0
+ 607 0006 0C4B     		ldr	r3, .L53
+ 608 0008 40F20161 		movw	r1, #1537
+ 609              	.LVL38:
+ 610 000c 1960     		str	r1, [r3]
+ 302:Core/Src/vcu.c ****     txMsg.DLC = 8;
+ 611              		.loc 1 302 0
+ 612 000e 0821     		movs	r1, #8
+ 613 0010 1961     		str	r1, [r3, #16]
+ 303:Core/Src/vcu.c ****     canTx[0] = 0x40;
+ 614              		.loc 1 303 0
+ 615 0012 0A49     		ldr	r1, .L53+4
+ 616 0014 4024     		movs	r4, #64
+ 617 0016 0C70     		strb	r4, [r1]
+ 304:Core/Src/vcu.c ****     canTx[1] = 0x00;
+ 618              		.loc 1 304 0
+ 619 0018 0024     		movs	r4, #0
+ 620 001a 4C70     		strb	r4, [r1, #1]
+ 305:Core/Src/vcu.c ****     canTx[2] = 0x20;
+ 621              		.loc 1 305 0
+ 622 001c 2024     		movs	r4, #32
+ 623 001e 8C70     		strb	r4, [r1, #2]
+ 306:Core/Src/vcu.c ****     canTx[3] = index;
+ 624              		.loc 1 306 0
+ 625 0020 C870     		strb	r0, [r1, #3]
+ 307:Core/Src/vcu.c ****     canTx[4] = val & 0xFF;
+ 626              		.loc 1 307 0
+ 627 0022 0A71     		strb	r2, [r1, #4]
+ 308:Core/Src/vcu.c ****     canTx[5] = (val >> 8) & 0xFF;
+ 628              		.loc 1 308 0
+ 629 0024 1012     		asrs	r0, r2, #8
+ 630              	.LVL39:
+ 631 0026 4871     		strb	r0, [r1, #5]
+ 309:Core/Src/vcu.c ****     canTx[6] = (val >> 16) & 0xFF;
+ 632              		.loc 1 309 0
+ 633 0028 1014     		asrs	r0, r2, #16
+ 634 002a 8871     		strb	r0, [r1, #6]
+ 310:Core/Src/vcu.c ****     canTx[7] = (val >> 24) & 0xFF;
+ 635              		.loc 1 310 0
+ 636 002c 120E     		lsrs	r2, r2, #24
+ 637              	.LVL40:
+ 638 002e CA71     		strb	r2, [r1, #7]
+ARM GAS  /tmp/cc06rZgr.s 			page 18
+
+
+ 311:Core/Src/vcu.c ****     c1tx(&txMsg, canTx);
+ 639              		.loc 1 311 0
+ 640 0030 1846     		mov	r0, r3
+ 641 0032 FFF7FEFF 		bl	c1tx
+ 642              	.LVL41:
+ 643 0036 10BD     		pop	{r4, pc}
+ 644              	.L54:
+ 645              		.align	2
+ 646              	.L53:
+ 647 0038 00000000 		.word	txMsg
+ 648 003c 00000000 		.word	canTx
+ 649              		.cfi_endproc
+ 650              	.LFE73:
+ 652              		.section	.text.vcuState,"ax",%progbits
+ 653              		.align	1
+ 654              		.global	vcuState
+ 655              		.syntax unified
+ 656              		.thumb
+ 657              		.thumb_func
+ 658              		.fpu softvfp
+ 660              	vcuState:
+ 661              	.LFB69:
+ 117:Core/Src/vcu.c ****     switch (vcu.state)
+ 662              		.loc 1 117 0
+ 663              		.cfi_startproc
+ 664              		@ args = 0, pretend = 0, frame = 0
+ 665              		@ frame_needed = 0, uses_anonymous_args = 0
+ 666 0000 08B5     		push	{r3, lr}
+ 667              	.LCFI5:
+ 668              		.cfi_def_cfa_offset 8
+ 669              		.cfi_offset 3, -8
+ 670              		.cfi_offset 14, -4
+ 118:Core/Src/vcu.c ****     {
+ 671              		.loc 1 118 0
+ 672 0002 4E4B     		ldr	r3, .L74
+ 673 0004 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
+ 674 0006 DBB2     		uxtb	r3, r3
+ 675 0008 062B     		cmp	r3, #6
+ 676 000a 3DD8     		bhi	.L55
+ 677 000c DFE803F0 		tbb	[pc, r3]
+ 678              	.L58:
+ 679 0010 04       		.byte	(.L57-.L58)/2
+ 680 0011 28       		.byte	(.L59-.L58)/2
+ 681 0012 3C       		.byte	(.L55-.L58)/2
+ 682 0013 3C       		.byte	(.L55-.L58)/2
+ 683 0014 45       		.byte	(.L60-.L58)/2
+ 684 0015 5A       		.byte	(.L61-.L58)/2
+ 685 0016 7E       		.byte	(.L62-.L58)/2
+ 686 0017 00       		.p2align 1
+ 687              	.L57:
+ 122:Core/Src/vcu.c ****         {
+ 688              		.loc 1 122 0
+ 689 0018 484B     		ldr	r3, .L74
+ 690 001a DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 691 001c DBB2     		uxtb	r3, r3
+ 692 001e 012B     		cmp	r3, #1
+ 693 0020 12D0     		beq	.L70
+ARM GAS  /tmp/cc06rZgr.s 			page 19
+
+
+ 694              	.L63:
+ 126:Core/Src/vcu.c ****         {
+ 695              		.loc 1 126 0
+ 696 0022 464B     		ldr	r3, .L74
+ 697 0024 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 698 0026 1BB9     		cbnz	r3, .L64
+ 126:Core/Src/vcu.c ****         {
+ 699              		.loc 1 126 0 is_stmt 0 discriminator 1
+ 700 0028 454B     		ldr	r3, .L74+4
+ 701 002a 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 702 002c 052B     		cmp	r3, #5
+ 703 002e 13D0     		beq	.L71
+ 704              	.L64:
+ 130:Core/Src/vcu.c ****         {
+ 705              		.loc 1 130 0 is_stmt 1
+ 706 0030 424B     		ldr	r3, .L74
+ 707 0032 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 708 0034 DBB2     		uxtb	r3, r3
+ 709 0036 012B     		cmp	r3, #1
+ 710 0038 26D1     		bne	.L55
+ 130:Core/Src/vcu.c ****         {
+ 711              		.loc 1 130 0 is_stmt 0 discriminator 1
+ 712 003a 414B     		ldr	r3, .L74+4
+ 713 003c 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 714 003e 1BBB     		cbnz	r3, .L55
+ 132:Core/Src/vcu.c ****         }
+ 715              		.loc 1 132 0 is_stmt 1
+ 716 0040 0122     		movs	r2, #1
+ 717 0042 3E4B     		ldr	r3, .L74
+ 718 0044 1A73     		strb	r2, [r3, #12]
+ 719 0046 08BD     		pop	{r3, pc}
+ 720              	.L70:
+ 122:Core/Src/vcu.c ****         {
+ 721              		.loc 1 122 0 discriminator 1
+ 722 0048 3D4B     		ldr	r3, .L74+4
+ 723 004a 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 724 004c 052B     		cmp	r3, #5
+ 725 004e E8D1     		bne	.L63
+ 124:Core/Src/vcu.c ****         }
+ 726              		.loc 1 124 0
+ 727 0050 0322     		movs	r2, #3
+ 728 0052 3A4B     		ldr	r3, .L74
+ 729 0054 1A73     		strb	r2, [r3, #12]
+ 730 0056 E4E7     		b	.L63
+ 731              	.L71:
+ 128:Core/Src/vcu.c ****         }
+ 732              		.loc 1 128 0
+ 733 0058 0222     		movs	r2, #2
+ 734 005a 384B     		ldr	r3, .L74
+ 735 005c 1A73     		strb	r2, [r3, #12]
+ 736 005e E7E7     		b	.L64
+ 737              	.L59:
+ 137:Core/Src/vcu.c ****         if (ldu.mode == 1)
+ 738              		.loc 1 137 0
+ 739 0060 2022     		movs	r2, #32
+ 740 0062 0121     		movs	r1, #1
+ 741 0064 4020     		movs	r0, #64
+ARM GAS  /tmp/cc06rZgr.s 			page 20
+
+
+ 742 0066 FFF7FEFF 		bl	canSet
+ 743              	.LVL42:
+ 138:Core/Src/vcu.c ****         {
+ 744              		.loc 1 138 0
+ 745 006a 364B     		ldr	r3, .L74+8
+ 746 006c 5B7A     		ldrb	r3, [r3, #9]	@ zero_extendqisi2
+ 747 006e DBB2     		uxtb	r3, r3
+ 748 0070 012B     		cmp	r3, #1
+ 749 0072 0AD0     		beq	.L72
+ 750              	.L65:
+ 143:Core/Src/vcu.c ****         {
+ 751              		.loc 1 143 0
+ 752 0074 314B     		ldr	r3, .L74
+ 753 0076 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 754 0078 13B9     		cbnz	r3, .L66
+ 145:Core/Src/vcu.c ****         }
+ 755              		.loc 1 145 0
+ 756 007a 0022     		movs	r2, #0
+ 757 007c 2F4B     		ldr	r3, .L74
+ 758 007e 1A73     		strb	r2, [r3, #12]
+ 759              	.L66:
+ 147:Core/Src/vcu.c ****         {
+ 760              		.loc 1 147 0
+ 761 0080 2F4B     		ldr	r3, .L74+4
+ 762 0082 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 763 0084 052B     		cmp	r3, #5
+ 764 0086 04D0     		beq	.L73
+ 765              	.L55:
+ 766 0088 08BD     		pop	{r3, pc}
+ 767              	.L72:
+ 140:Core/Src/vcu.c ****         }
+ 768              		.loc 1 140 0
+ 769 008a 0422     		movs	r2, #4
+ 770 008c 2B4B     		ldr	r3, .L74
+ 771 008e 1A73     		strb	r2, [r3, #12]
+ 772 0090 F0E7     		b	.L65
+ 773              	.L73:
+ 149:Core/Src/vcu.c ****         }
+ 774              		.loc 1 149 0
+ 775 0092 0322     		movs	r2, #3
+ 776 0094 294B     		ldr	r3, .L74
+ 777 0096 1A73     		strb	r2, [r3, #12]
+ 778 0098 08BD     		pop	{r3, pc}
+ 779              	.L60:
+ 154:Core/Src/vcu.c ****         if (ldu.dir != 2)
+ 780              		.loc 1 154 0
+ 781 009a 2022     		movs	r2, #32
+ 782 009c 0121     		movs	r1, #1
+ 783 009e 4020     		movs	r0, #64
+ 784 00a0 FFF7FEFF 		bl	canSet
+ 785              	.LVL43:
+ 155:Core/Src/vcu.c ****         {
+ 786              		.loc 1 155 0
+ 787 00a4 274B     		ldr	r3, .L74+8
+ 788 00a6 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
+ 789 00a8 DBB2     		uxtb	r3, r3
+ 790 00aa 022B     		cmp	r3, #2
+ARM GAS  /tmp/cc06rZgr.s 			page 21
+
+
+ 791 00ac 02D0     		beq	.L67
+ 157:Core/Src/vcu.c ****         }
+ 792              		.loc 1 157 0
+ 793 00ae 0522     		movs	r2, #5
+ 794 00b0 224B     		ldr	r3, .L74
+ 795 00b2 1A73     		strb	r2, [r3, #12]
+ 796              	.L67:
+ 160:Core/Src/vcu.c ****         {
+ 797              		.loc 1 160 0
+ 798 00b4 214B     		ldr	r3, .L74
+ 799 00b6 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 800 00b8 002B     		cmp	r3, #0
+ 801 00ba E5D1     		bne	.L55
+ 162:Core/Src/vcu.c ****         }
+ 802              		.loc 1 162 0
+ 803 00bc 0022     		movs	r2, #0
+ 804 00be 1F4B     		ldr	r3, .L74
+ 805 00c0 1A73     		strb	r2, [r3, #12]
+ 806 00c2 08BD     		pop	{r3, pc}
+ 807              	.L61:
+ 167:Core/Src/vcu.c ****         canSet(FWEAK, 280, 32);
+ 808              		.loc 1 167 0
+ 809 00c4 2022     		movs	r2, #32
+ 810 00c6 0021     		movs	r1, #0
+ 811 00c8 4020     		movs	r0, #64
+ 812 00ca FFF7FEFF 		bl	canSet
+ 813              	.LVL44:
+ 168:Core/Src/vcu.c ****         canSet(FSLIP_MIN, 76, 1);  // 2.3*32
+ 814              		.loc 1 168 0
+ 815 00ce 2022     		movs	r2, #32
+ 816 00d0 4FF48C71 		mov	r1, #280
+ 817 00d4 0120     		movs	r0, #1
+ 818 00d6 FFF7FEFF 		bl	canSet
+ 819              	.LVL45:
+ 169:Core/Src/vcu.c ****         canSet(FSLIP_MAX, 101, 1); // 3.15*32
+ 820              		.loc 1 169 0
+ 821 00da 0122     		movs	r2, #1
+ 822 00dc 4C21     		movs	r1, #76
+ 823 00de 0520     		movs	r0, #5
+ 824 00e0 FFF7FEFF 		bl	canSet
+ 825              	.LVL46:
+ 170:Core/Src/vcu.c ****         if (vcu.key == OFF)
+ 826              		.loc 1 170 0
+ 827 00e4 0122     		movs	r2, #1
+ 828 00e6 6521     		movs	r1, #101
+ 829 00e8 0620     		movs	r0, #6
+ 830 00ea FFF7FEFF 		bl	canSet
+ 831              	.LVL47:
+ 171:Core/Src/vcu.c ****         {
+ 832              		.loc 1 171 0
+ 833 00ee 134B     		ldr	r3, .L74
+ 834 00f0 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 835 00f2 13B9     		cbnz	r3, .L68
+ 173:Core/Src/vcu.c ****         }
+ 836              		.loc 1 173 0
+ 837 00f4 0022     		movs	r2, #0
+ 838 00f6 114B     		ldr	r3, .L74
+ARM GAS  /tmp/cc06rZgr.s 			page 22
+
+
+ 839 00f8 1A73     		strb	r2, [r3, #12]
+ 840              	.L68:
+ 176:Core/Src/vcu.c ****         {
+ 841              		.loc 1 176 0
+ 842 00fa 104B     		ldr	r3, .L74
+ 843 00fc 5B7B     		ldrb	r3, [r3, #13]	@ zero_extendqisi2
+ 844 00fe DBB2     		uxtb	r3, r3
+ 845 0100 012B     		cmp	r3, #1
+ 846 0102 C1D1     		bne	.L55
+ 178:Core/Src/vcu.c ****         }
+ 847              		.loc 1 178 0
+ 848 0104 0622     		movs	r2, #6
+ 849 0106 0D4B     		ldr	r3, .L74
+ 850 0108 1A73     		strb	r2, [r3, #12]
+ 851 010a 08BD     		pop	{r3, pc}
+ 852              	.L62:
+ 183:Core/Src/vcu.c ****         canSet(FSLIP_MIN, 61, 1); // 1.9*32
+ 853              		.loc 1 183 0
+ 854 010c 2022     		movs	r2, #32
+ 855 010e DC21     		movs	r1, #220
+ 856 0110 0120     		movs	r0, #1
+ 857 0112 FFF7FEFF 		bl	canSet
+ 858              	.LVL48:
+ 184:Core/Src/vcu.c ****         canSet(FSLIP_MAX, 77, 1); // 2.4*32
+ 859              		.loc 1 184 0
+ 860 0116 0122     		movs	r2, #1
+ 861 0118 3D21     		movs	r1, #61
+ 862 011a 0520     		movs	r0, #5
+ 863 011c FFF7FEFF 		bl	canSet
+ 864              	.LVL49:
+ 185:Core/Src/vcu.c ****         if (vcu.launchFlag == 0)
+ 865              		.loc 1 185 0
+ 866 0120 0122     		movs	r2, #1
+ 867 0122 4D21     		movs	r1, #77
+ 868 0124 0620     		movs	r0, #6
+ 869 0126 FFF7FEFF 		bl	canSet
+ 870              	.LVL50:
+ 186:Core/Src/vcu.c ****         {
+ 871              		.loc 1 186 0
+ 872 012a 044B     		ldr	r3, .L74
+ 873 012c 5B7B     		ldrb	r3, [r3, #13]	@ zero_extendqisi2
+ 874 012e 002B     		cmp	r3, #0
+ 875 0130 AAD1     		bne	.L55
+ 188:Core/Src/vcu.c ****         }
+ 876              		.loc 1 188 0
+ 877 0132 0522     		movs	r2, #5
+ 878 0134 014B     		ldr	r3, .L74
+ 879 0136 1A73     		strb	r2, [r3, #12]
+ 195:Core/Src/vcu.c **** 
+ 880              		.loc 1 195 0
+ 881 0138 A6E7     		b	.L55
+ 882              	.L75:
+ 883 013a 00BF     		.align	2
+ 884              	.L74:
+ 885 013c 00000000 		.word	vcu
+ 886 0140 00000000 		.word	charger
+ 887 0144 00000000 		.word	ldu
+ARM GAS  /tmp/cc06rZgr.s 			page 23
+
+
+ 888              		.cfi_endproc
+ 889              	.LFE69:
+ 891              		.section	.text.regenHandler,"ax",%progbits
+ 892              		.align	1
+ 893              		.global	regenHandler
+ 894              		.syntax unified
+ 895              		.thumb
+ 896              		.thumb_func
+ 897              		.fpu softvfp
+ 899              	regenHandler:
+ 900              	.LFB72:
+ 267:Core/Src/vcu.c **** 
+ 901              		.loc 1 267 0
+ 902              		.cfi_startproc
+ 903              		@ args = 0, pretend = 0, frame = 0
+ 904              		@ frame_needed = 0, uses_anonymous_args = 0
+ 905 0000 08B5     		push	{r3, lr}
+ 906              	.LCFI6:
+ 907              		.cfi_def_cfa_offset 8
+ 908              		.cfi_offset 3, -8
+ 909              		.cfi_offset 14, -4
+ 910              	.LVL51:
+ 274:Core/Src/vcu.c ****     {
+ 911              		.loc 1 274 0
+ 912 0002 154B     		ldr	r3, .L82
+ 913 0004 1B88     		ldrh	r3, [r3]
+ 914 0006 9BB2     		uxth	r3, r3
+ 915 0008 B3F52F7F 		cmp	r3, #700
+ 916 000c 1CD8     		bhi	.L80
+ 280:Core/Src/vcu.c ****         ; //maps brake pedal regen between base and max
+ 917              		.loc 1 280 0
+ 918 000e 124B     		ldr	r3, .L82
+ 919 0010 1B88     		ldrh	r3, [r3]
+ 920 0012 9BB2     		uxth	r3, r3
+ 921 0014 013B     		subs	r3, r3, #1
+ 922 0016 6FF05D01 		mvn	r1, #93
+ 923 001a 01FB03F1 		mul	r1, r1, r3
+ 924 001e 0F4B     		ldr	r3, .L82+4
+ 925 0020 A3FB0123 		umull	r2, r3, r3, r1
+ 926 0024 6FF07841 		mvn	r1, #-134217728
+ 927 0028 01EB5321 		add	r1, r1, r3, lsr #9
+ 928              	.LVL52:
+ 929              	.L77:
+ 283:Core/Src/vcu.c **** 
+ 930              		.loc 1 283 0
+ 931 002c 2022     		movs	r2, #32
+ 932 002e 3720     		movs	r0, #55
+ 933 0030 FFF7FEFF 		bl	canSet
+ 934              	.LVL53:
+ 286:Core/Src/vcu.c ****     {
+ 935              		.loc 1 286 0
+ 936 0034 0A4B     		ldr	r3, .L82+8
+ 937 0036 1B88     		ldrh	r3, [r3]
+ 938 0038 9BB2     		uxth	r3, r3
+ 939 003a 42F21072 		movw	r2, #10000
+ 940 003e 9342     		cmp	r3, r2
+ 941 0040 04D8     		bhi	.L78
+ARM GAS  /tmp/cc06rZgr.s 			page 24
+
+
+ 288:Core/Src/vcu.c ****     }
+ 942              		.loc 1 288 0
+ 943 0042 074B     		ldr	r3, .L82+8
+ 944 0044 1B88     		ldrh	r3, [r3]
+ 945              	.LVL54:
+ 946 0046 08BD     		pop	{r3, pc}
+ 947              	.L80:
+ 276:Core/Src/vcu.c ****     }
+ 948              		.loc 1 276 0
+ 949 0048 0649     		ldr	r1, .L82+12
+ 950 004a EFE7     		b	.L77
+ 951              	.L78:
+ 952              	.LVL55:
+ 293:Core/Src/vcu.c ****     }
+ 953              		.loc 1 293 0
+ 954 004c 0122     		movs	r2, #1
+ 955 004e 0C21     		movs	r1, #12
+ 956 0050 3820     		movs	r0, #56
+ 957 0052 FFF7FEFF 		bl	canSet
+ 958              	.LVL56:
+ 959 0056 08BD     		pop	{r3, pc}
+ 960              	.L83:
+ 961              		.align	2
+ 962              	.L82:
+ 963 0058 00000000 		.word	iboost
+ 964 005c B17A83BB 		.word	-1149011279
+ 965 0060 00000000 		.word	ldu
+ 966 0064 A1FFFF07 		.word	134217633
+ 967              		.cfi_endproc
+ 968              	.LFE72:
+ 970              		.section	.text.throttleHandler,"ax",%progbits
+ 971              		.align	1
+ 972              		.global	throttleHandler
+ 973              		.syntax unified
+ 974              		.thumb
+ 975              		.thumb_func
+ 976              		.fpu softvfp
+ 978              	throttleHandler:
+ 979              	.LFB74:
+ 312:Core/Src/vcu.c **** 
+ 313:Core/Src/vcu.c **** }
+ 314:Core/Src/vcu.c **** 
+ 315:Core/Src/vcu.c **** void throttleHandler(void)
+ 316:Core/Src/vcu.c **** {
+ 980              		.loc 1 316 0
+ 981              		.cfi_startproc
+ 982              		@ args = 0, pretend = 0, frame = 0
+ 983              		@ frame_needed = 0, uses_anonymous_args = 0
+ 984 0000 08B5     		push	{r3, lr}
+ 985              	.LCFI7:
+ 986              		.cfi_def_cfa_offset 8
+ 987              		.cfi_offset 3, -8
+ 988              		.cfi_offset 14, -4
+ 317:Core/Src/vcu.c ****     ///////// idle throttle ///////////////////
+ 318:Core/Src/vcu.c ****     int idleThrotMax;
+ 319:Core/Src/vcu.c ****     int idleThrot;
+ 320:Core/Src/vcu.c **** 
+ARM GAS  /tmp/cc06rZgr.s 			page 25
+
+
+ 321:Core/Src/vcu.c ****     if (ldu.dir == FWD)
+ 989              		.loc 1 321 0
+ 990 0002 1E4B     		ldr	r3, .L93
+ 991 0004 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
+ 992 0006 DBB2     		uxtb	r3, r3
+ 993 0008 FF2B     		cmp	r3, #255
+ 994 000a 25D0     		beq	.L90
+ 322:Core/Src/vcu.c ****     {
+ 323:Core/Src/vcu.c ****         idleThrotMax = 20;
+ 324:Core/Src/vcu.c ****     }
+ 325:Core/Src/vcu.c ****     else
+ 326:Core/Src/vcu.c ****     {
+ 327:Core/Src/vcu.c ****         idleThrotMax = 18;
+ 995              		.loc 1 327 0
+ 996 000c 1221     		movs	r1, #18
+ 997              	.L85:
+ 998              	.LVL57:
+ 328:Core/Src/vcu.c ****     }
+ 329:Core/Src/vcu.c **** 
+ 330:Core/Src/vcu.c ****     idleThrot = MAP(iboost.pedal, 1, 400, idleThrotMax, 0);
+ 999              		.loc 1 330 0
+ 1000 000e 1C4B     		ldr	r3, .L93+4
+ 1001 0010 1B88     		ldrh	r3, [r3]
+ 1002 0012 9BB2     		uxth	r3, r3
+ 1003 0014 5A1E     		subs	r2, r3, #1
+ 1004 0016 4B42     		negs	r3, r1
+ 1005 0018 03FB02F3 		mul	r3, r3, r2
+ 1006 001c 194A     		ldr	r2, .L93+8
+ 1007 001e 82FB0302 		smull	r0, r2, r2, r3
+ 1008 0022 1A44     		add	r2, r2, r3
+ 1009 0024 DB17     		asrs	r3, r3, #31
+ 1010 0026 C3EB2223 		rsb	r3, r3, r2, asr #8
+ 1011              	.LVL58:
+ 331:Core/Src/vcu.c ****     canSet(IDLE_THROT_LIM, idleThrot, 32);
+ 1012              		.loc 1 331 0
+ 1013 002a 2022     		movs	r2, #32
+ 1014 002c 1944     		add	r1, r1, r3
+ 1015              	.LVL59:
+ 1016 002e 3F20     		movs	r0, #63
+ 1017 0030 FFF7FEFF 		bl	canSet
+ 1018              	.LVL60:
+ 332:Core/Src/vcu.c **** 
+ 333:Core/Src/vcu.c ****     ///////// Launch Control Enable ///////////////
+ 334:Core/Src/vcu.c ****     if (ldu.pot >= 4050 && ldu.brake == ON)
+ 1019              		.loc 1 334 0
+ 1020 0034 114B     		ldr	r3, .L93
+ 1021 0036 DB89     		ldrh	r3, [r3, #14]
+ 1022 0038 9BB2     		uxth	r3, r3
+ 1023 003a 40F6D172 		movw	r2, #4049
+ 1024 003e 9342     		cmp	r3, r2
+ 1025 0040 04D9     		bls	.L86
+ 1026              		.loc 1 334 0 is_stmt 0 discriminator 1
+ 1027 0042 0E4B     		ldr	r3, .L93
+ 1028 0044 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
+ 1029 0046 DBB2     		uxtb	r3, r3
+ 1030 0048 012B     		cmp	r3, #1
+ 1031 004a 07D0     		beq	.L91
+ARM GAS  /tmp/cc06rZgr.s 			page 26
+
+
+ 1032              	.L86:
+ 335:Core/Src/vcu.c ****     {
+ 336:Core/Src/vcu.c ****         vcu.launchFlag = ON;
+ 337:Core/Src/vcu.c ****     }
+ 338:Core/Src/vcu.c ****     if (vcu.launchFlag == ON && ldu.pot < 3000)
+ 1033              		.loc 1 338 0 is_stmt 1
+ 1034 004c 0E4B     		ldr	r3, .L93+12
+ 1035 004e 5B7B     		ldrb	r3, [r3, #13]	@ zero_extendqisi2
+ 1036 0050 DBB2     		uxtb	r3, r3
+ 1037 0052 012B     		cmp	r3, #1
+ 1038 0054 06D0     		beq	.L92
+ 1039              	.L84:
+ 1040 0056 08BD     		pop	{r3, pc}
+ 1041              	.L90:
+ 323:Core/Src/vcu.c ****     }
+ 1042              		.loc 1 323 0
+ 1043 0058 1421     		movs	r1, #20
+ 1044 005a D8E7     		b	.L85
+ 1045              	.L91:
+ 336:Core/Src/vcu.c ****     }
+ 1046              		.loc 1 336 0
+ 1047 005c 0122     		movs	r2, #1
+ 1048 005e 0A4B     		ldr	r3, .L93+12
+ 1049 0060 5A73     		strb	r2, [r3, #13]
+ 1050 0062 F3E7     		b	.L86
+ 1051              	.L92:
+ 1052              		.loc 1 338 0 discriminator 1
+ 1053 0064 054B     		ldr	r3, .L93
+ 1054 0066 DB89     		ldrh	r3, [r3, #14]
+ 1055 0068 9BB2     		uxth	r3, r3
+ 1056 006a 40F6B732 		movw	r2, #2999
+ 1057 006e 9342     		cmp	r3, r2
+ 1058 0070 F1D8     		bhi	.L84
+ 339:Core/Src/vcu.c ****     {
+ 340:Core/Src/vcu.c ****         vcu.launchFlag = OFF;
+ 1059              		.loc 1 340 0
+ 1060 0072 0022     		movs	r2, #0
+ 1061 0074 044B     		ldr	r3, .L93+12
+ 1062 0076 5A73     		strb	r2, [r3, #13]
+ 341:Core/Src/vcu.c ****     }
+ 342:Core/Src/vcu.c **** }...
+ 1063              		.loc 1 342 0
+ 1064 0078 EDE7     		b	.L84
+ 1065              	.L94:
+ 1066 007a 00BF     		.align	2
+ 1067              	.L93:
+ 1068 007c 00000000 		.word	ldu
+ 1069 0080 00000000 		.word	iboost
+ 1070 0084 112940A4 		.word	-1539299055
+ 1071 0088 00000000 		.word	vcu
+ 1072              		.cfi_endproc
+ 1073              	.LFE74:
+ 1075              		.comm	BMS,20,4
+ 1076              		.comm	charger,2,4
+ 1077              		.comm	vcu,16,4
+ 1078              		.comm	iboost,2,4
+ 1079              		.comm	ldu,18,4
+ARM GAS  /tmp/cc06rZgr.s 			page 27
+
+
+ 1080              		.comm	tempdata,4,4
+ 1081              		.comm	ADC_data,12,4
+ 1082              		.comm	canDebug,4,4
+ 1083              		.comm	txCycle2,4,4
+ 1084              		.comm	txCycle,4,4
+ 1085              		.comm	canTx2,8,4
+ 1086              		.comm	canTx,8,4
+ 1087              		.comm	canMailbox2,4,4
+ 1088              		.comm	canMailbox,4,4
+ 1089              		.comm	canRx2,8,4
+ 1090              		.comm	canRx,8,4
+ 1091              		.comm	txMsgExt2,24,4
+ 1092              		.comm	txMsg2,24,4
+ 1093              		.comm	rxMsg2,28,4
+ 1094              		.comm	txMsgExt,24,4
+ 1095              		.comm	txMsg,24,4
+ 1096              		.comm	rxMsg,28,4
+ 1097              		.comm	sf5,40,4
+ 1098              		.comm	sf4,40,4
+ 1099              		.comm	sf3,40,4
+ 1100              		.comm	sf2,40,4
+ 1101              		.comm	sf,40,4
+ 1102              		.comm	hcan2,40,4
+ 1103              		.comm	hcan1,40,4
+ 1104              		.comm	tenderActive,1,1
+ 1105              		.comm	time_now,4,4
+ 1106              		.comm	period,4,4
+ 1107              		.comm	DCDC,4,4
+ 1108              		.comm	setPrevState,1,1
+ 1109              		.comm	te,12,4
+ 1110              		.text
+ 1111              	.Letext0:
+ 1112              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 1113              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 1114              		.file 4 "Drivers/CMSIS/Include/core_cm3.h"
+ 1115              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+ 1116              		.file 6 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h"
+ 1117              		.file 7 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
+ 1118              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can.h"
+ 1119              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 1120              		.file 10 "/usr/include/newlib/sys/lock.h"
+ 1121              		.file 11 "/usr/include/newlib/sys/_types.h"
+ 1122              		.file 12 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
+ 1123              		.file 13 "/usr/include/newlib/sys/reent.h"
+ 1124              		.file 14 "Core/Inc/encoder.h"
+ 1125              		.file 15 "Core/Inc/dcdc.h"
+ 1126              		.file 16 "Core/Inc/can_setup.h"
+ 1127              		.file 17 "Core/Inc/vcu.h"
+ 1128              		.file 18 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ARM GAS  /tmp/cc06rZgr.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 vcu.c
+     /tmp/cc06rZgr.s:19     .text.decodeCAN:0000000000000000 $t
+     /tmp/cc06rZgr.s:26     .text.decodeCAN:0000000000000000 decodeCAN
+     /tmp/cc06rZgr.s:306    .text.decodeCAN:00000000000001d8 $d
+                            *COM*:0000000000000002 iboost
+                            *COM*:0000000000000012 ldu
+                            *COM*:0000000000000002 charger
+                            *COM*:0000000000000014 BMS
+     /tmp/cc06rZgr.s:319    .text.canIOset:0000000000000000 $t
+     /tmp/cc06rZgr.s:326    .text.canIOset:0000000000000000 canIOset
+     /tmp/cc06rZgr.s:365    .text.canIOset:0000000000000028 $d
+                            *COM*:0000000000000010 vcu
+                            *COM*:0000000000000018 txMsg
+                            *COM*:0000000000000008 canTx
+     /tmp/cc06rZgr.s:372    .text.canIOsend:0000000000000000 $t
+     /tmp/cc06rZgr.s:379    .text.canIOsend:0000000000000000 canIOsend
+     /tmp/cc06rZgr.s:409    .text.canIOsend:000000000000001c $d
+     /tmp/cc06rZgr.s:416    .text.vcuInit:0000000000000000 $t
+     /tmp/cc06rZgr.s:423    .text.vcuInit:0000000000000000 vcuInit
+     /tmp/cc06rZgr.s:452    .text.vcuInit:000000000000001c $d
+                            *COM*:000000000000000c ADC_data
+     /tmp/cc06rZgr.s:458    .text.ioHandler:0000000000000000 $t
+     /tmp/cc06rZgr.s:465    .text.ioHandler:0000000000000000 ioHandler
+     /tmp/cc06rZgr.s:576    .text.ioHandler:0000000000000098 $d
+     /tmp/cc06rZgr.s:584    .text.canSet:0000000000000000 $t
+     /tmp/cc06rZgr.s:591    .text.canSet:0000000000000000 canSet
+     /tmp/cc06rZgr.s:647    .text.canSet:0000000000000038 $d
+     /tmp/cc06rZgr.s:653    .text.vcuState:0000000000000000 $t
+     /tmp/cc06rZgr.s:660    .text.vcuState:0000000000000000 vcuState
+     /tmp/cc06rZgr.s:679    .text.vcuState:0000000000000010 $d
+     /tmp/cc06rZgr.s:885    .text.vcuState:000000000000013c $d
+     /tmp/cc06rZgr.s:892    .text.regenHandler:0000000000000000 $t
+     /tmp/cc06rZgr.s:899    .text.regenHandler:0000000000000000 regenHandler
+     /tmp/cc06rZgr.s:963    .text.regenHandler:0000000000000058 $d
+     /tmp/cc06rZgr.s:971    .text.throttleHandler:0000000000000000 $t
+     /tmp/cc06rZgr.s:978    .text.throttleHandler:0000000000000000 throttleHandler
+     /tmp/cc06rZgr.s:1068   .text.throttleHandler:000000000000007c $d
+                            *COM*:0000000000000004 tempdata
+                            *COM*:0000000000000004 canDebug
+                            *COM*:0000000000000004 txCycle2
+                            *COM*:0000000000000004 txCycle
+                            *COM*:0000000000000008 canTx2
+                            *COM*:0000000000000004 canMailbox2
+                            *COM*:0000000000000004 canMailbox
+                            *COM*:0000000000000008 canRx2
+                            *COM*:0000000000000008 canRx
+                            *COM*:0000000000000018 txMsgExt2
+                            *COM*:0000000000000018 txMsg2
+                            *COM*:000000000000001c rxMsg2
+                            *COM*:0000000000000018 txMsgExt
+                            *COM*:000000000000001c rxMsg
+                            *COM*:0000000000000028 sf5
+                            *COM*:0000000000000028 sf4
+                            *COM*:0000000000000028 sf3
+                            *COM*:0000000000000028 sf2
+                            *COM*:0000000000000028 sf
+ARM GAS  /tmp/cc06rZgr.s 			page 29
+
+
+                            *COM*:0000000000000028 hcan2
+                            *COM*:0000000000000028 hcan1
+                            *COM*:0000000000000001 tenderActive
+                            *COM*:0000000000000004 time_now
+                            *COM*:0000000000000004 period
+                            *COM*:0000000000000004 DCDC
+                            *COM*:0000000000000001 setPrevState
+                            *COM*:000000000000000c te
+                     .debug_frame:0000000000000010 $d
+     /tmp/cc06rZgr.s:686    .text.vcuState:0000000000000017 $d
+     /tmp/cc06rZgr.s:686    .text.vcuState:0000000000000018 $t
+
+UNDEFINED SYMBOLS
+__aeabi_i2d
+__aeabi_dmul
+__aeabi_d2uiz
+c1tx
+HAL_GPIO_ReadPin
+HAL_GPIO_WritePin

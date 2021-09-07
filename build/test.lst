@@ -1,0 +1,192 @@
+ARM GAS  /tmp/cc8RPT6b.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"test.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.testVal,"ax",%progbits
+  16              		.align	1
+  17              		.global	testVal
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	testVal:
+  24              	.LFB66:
+  25              		.file 1 "Core/Src/test.c"
+   1:Core/Src/test.c **** #include "test.h"
+   2:Core/Src/test.c **** 
+   3:Core/Src/test.c **** void testVal(void)
+   4:Core/Src/test.c **** {
+  26              		.loc 1 4 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+   5:Core/Src/test.c **** #ifdef ACTIVE
+   6:Core/Src/test.c **** 
+   7:Core/Src/test.c ****     if (ldu.amps < 1200)
+   8:Core/Src/test.c ****     {
+   9:Core/Src/test.c ****         ldu.amps += 5;
+  10:Core/Src/test.c ****     }
+  11:Core/Src/test.c **** 
+  12:Core/Src/test.c ****     if (ldu.hsTemp < 90)
+  13:Core/Src/test.c ****     {
+  14:Core/Src/test.c ****         ldu.hsTemp++;
+  15:Core/Src/test.c ****     }
+  16:Core/Src/test.c **** 
+  17:Core/Src/test.c ****     if (ldu.rpm < 18000)
+  18:Core/Src/test.c ****     {
+  19:Core/Src/test.c ****         ldu.rpm += 20;
+  20:Core/Src/test.c ****     }
+  21:Core/Src/test.c **** 
+  22:Core/Src/test.c ****     if (ldu.SOC < 100)
+  23:Core/Src/test.c ****     {
+  24:Core/Src/test.c ****         ldu.SOC ++;
+  25:Core/Src/test.c ****     }
+  26:Core/Src/test.c **** 
+  27:Core/Src/test.c **** #endif // ACTIVE 
+  28:Core/Src/test.c **** 
+ARM GAS  /tmp/cc8RPT6b.s 			page 2
+
+
+  29:Core/Src/test.c **** #ifdef PASSIVE
+  30:Core/Src/test.c ****     ldu.amps = 600;
+  31              		.loc 1 30 0
+  32 0000 064B     		ldr	r3, .L2
+  33 0002 4FF41672 		mov	r2, #600
+  34 0006 5A81     		strh	r2, [r3, #10]	@ movhi
+  31:Core/Src/test.c ****     ldu.hsTemp = 40;
+  35              		.loc 1 31 0
+  36 0008 2822     		movs	r2, #40
+  37 000a 9A80     		strh	r2, [r3, #4]	@ movhi
+  32:Core/Src/test.c ****     ldu.rpm = 4500;
+  38              		.loc 1 32 0
+  39 000c 41F29412 		movw	r2, #4500
+  40 0010 1A80     		strh	r2, [r3]	@ movhi
+  33:Core/Src/test.c ****     BMS[0].soc = 55;
+  41              		.loc 1 33 0
+  42 0012 3722     		movs	r2, #55
+  43 0014 024B     		ldr	r3, .L2+4
+  44 0016 9A71     		strb	r2, [r3, #6]
+  45 0018 7047     		bx	lr
+  46              	.L3:
+  47 001a 00BF     		.align	2
+  48              	.L2:
+  49 001c 00000000 		.word	ldu
+  50 0020 00000000 		.word	BMS
+  51              		.cfi_endproc
+  52              	.LFE66:
+  54              		.comm	canDebug,4,4
+  55              		.comm	txCycle2,4,4
+  56              		.comm	txCycle,4,4
+  57              		.comm	canTx2,8,4
+  58              		.comm	canTx,8,4
+  59              		.comm	canMailbox2,4,4
+  60              		.comm	canMailbox,4,4
+  61              		.comm	canRx2,8,4
+  62              		.comm	canRx,8,4
+  63              		.comm	txMsgExt2,24,4
+  64              		.comm	txMsg2,24,4
+  65              		.comm	rxMsg2,28,4
+  66              		.comm	txMsgExt,24,4
+  67              		.comm	txMsg,24,4
+  68              		.comm	rxMsg,28,4
+  69              		.comm	sf5,40,4
+  70              		.comm	sf4,40,4
+  71              		.comm	sf3,40,4
+  72              		.comm	sf2,40,4
+  73              		.comm	sf,40,4
+  74              		.comm	hcan2,40,4
+  75              		.comm	hcan1,40,4
+  76              		.comm	setPrevState,1,1
+  77              		.comm	te,12,4
+  78              		.comm	BMS,20,4
+  79              		.comm	charger,2,4
+  80              		.comm	vcu,16,4
+  81              		.comm	iboost,2,4
+  82              		.comm	ldu,18,4
+  83              		.comm	tempdata,4,4
+ARM GAS  /tmp/cc8RPT6b.s 			page 3
+
+
+  84              		.comm	ADC_data,12,4
+  85              		.comm	tenderActive,1,1
+  86              		.comm	time_now,4,4
+  87              		.comm	period,4,4
+  88              		.comm	DCDC,4,4
+  89              		.text
+  90              	.Letext0:
+  91              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+  92              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+  93              		.file 4 "Drivers/CMSIS/Include/core_cm3.h"
+  94              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+  95              		.file 6 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h"
+  96              		.file 7 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
+  97              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can.h"
+  98              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+  99              		.file 10 "/usr/include/newlib/sys/lock.h"
+ 100              		.file 11 "/usr/include/newlib/sys/_types.h"
+ 101              		.file 12 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
+ 102              		.file 13 "/usr/include/newlib/sys/reent.h"
+ 103              		.file 14 "Core/Inc/dcdc.h"
+ 104              		.file 15 "Core/Inc/vcu.h"
+ 105              		.file 16 "Core/Inc/encoder.h"
+ 106              		.file 17 "Core/Inc/can_setup.h"
+ARM GAS  /tmp/cc8RPT6b.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 test.c
+     /tmp/cc8RPT6b.s:16     .text.testVal:0000000000000000 $t
+     /tmp/cc8RPT6b.s:23     .text.testVal:0000000000000000 testVal
+     /tmp/cc8RPT6b.s:49     .text.testVal:000000000000001c $d
+                            *COM*:0000000000000012 ldu
+                            *COM*:0000000000000014 BMS
+                            *COM*:0000000000000004 canDebug
+                            *COM*:0000000000000004 txCycle2
+                            *COM*:0000000000000004 txCycle
+                            *COM*:0000000000000008 canTx2
+                            *COM*:0000000000000008 canTx
+                            *COM*:0000000000000004 canMailbox2
+                            *COM*:0000000000000004 canMailbox
+                            *COM*:0000000000000008 canRx2
+                            *COM*:0000000000000008 canRx
+                            *COM*:0000000000000018 txMsgExt2
+                            *COM*:0000000000000018 txMsg2
+                            *COM*:000000000000001c rxMsg2
+                            *COM*:0000000000000018 txMsgExt
+                            *COM*:0000000000000018 txMsg
+                            *COM*:000000000000001c rxMsg
+                            *COM*:0000000000000028 sf5
+                            *COM*:0000000000000028 sf4
+                            *COM*:0000000000000028 sf3
+                            *COM*:0000000000000028 sf2
+                            *COM*:0000000000000028 sf
+                            *COM*:0000000000000028 hcan2
+                            *COM*:0000000000000028 hcan1
+                            *COM*:0000000000000001 setPrevState
+                            *COM*:000000000000000c te
+                            *COM*:0000000000000002 charger
+                            *COM*:0000000000000010 vcu
+                            *COM*:0000000000000002 iboost
+                            *COM*:0000000000000004 tempdata
+                            *COM*:000000000000000c ADC_data
+                            *COM*:0000000000000001 tenderActive
+                            *COM*:0000000000000004 time_now
+                            *COM*:0000000000000004 period
+                            *COM*:0000000000000004 DCDC
+                     .debug_frame:0000000000000010 $d
+
+NO UNDEFINED SYMBOLS

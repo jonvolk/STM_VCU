@@ -1,0 +1,38 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [       
+        
+
+        {
+            "cwd": "${workspaceRoot}",
+            //"executable": "${workspaceRoot}/home/",
+            "executable":"${workspaceRoot}/build/DUAL_CAN.elf",
+            "name": "JTAG DEBUGGING ",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "armToolchainPath": "/usr/bin/",
+            "interface": "swd",
+            "svdFile": "/home/jon/svd/cmsis-svd/data/STMicro/STM32F105xx.svd",
+            "runToMain": true,
+            "configFiles": [
+                "/usr/share/openocd/scripts/interface/stlink-v2.cfg",
+                "/usr/share/openocd/scripts/target/stm32f1x_stlink.cfg"
+            ],
+            "debuggerArgs": [
+                "-d",
+                "${workspaceRoot}/home/jon/huebner_proj/stm32-template/"
+              ],
+            "preRestartCommands": [
+                "load",
+                "enable breakpoint",
+                "monitor reset"
+            ],
+            "showDevDebugOutput": true,
+          
+       }
+    ]
+}
