@@ -13,14 +13,14 @@ void gaugeInit(void)
 void updateTach(volatile uint16_t amps)
 {
     int freq = (amps * 100) / 315;
-    TIM1->ARR = CPU / freq / TIM1->PSC;
+    TIM1->ARR = (CPU / freq / TIM1->PSC)-1;
     TIM1->CCR1 = (TIM1->ARR) / 2; //50% duty variable frequency
 }
 
 void updateSpeed(volatile uint16_t motorRPM)
 {
     int freq = motorRPM / 71;
-    TIM3->ARR = (CPU / freq) / TIM3->PSC;
+    TIM3->ARR = ((CPU / freq) / TIM3->PSC)-1;
     TIM3->CCR3 = (TIM3->ARR) / 2; //50% duty variable frequency
 }
 

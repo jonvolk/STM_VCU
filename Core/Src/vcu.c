@@ -39,7 +39,7 @@ void decodeCAN(CAN_RxHeaderTypeDef *rxMsg, uint8_t *canRx)
 
     case 0x04F:
         ldu.dir = canRx[0];
-        //ldu.brake = canRx[1];
+        ldu.brake = canRx[1];
         break;
 
     case 0x136:
@@ -273,11 +273,11 @@ void regenHandler(void)
 
     if (iboost.pedal > 700)
     {
-        brkNomPedal = ((UINT32_MAX - (maxRegen * 32)) / 32); //sets POT2 value for maximum regen
+        brkNomPedal = -(maxRegen);
     }
     else
     {
-        brkNomPedal = MAP(iboost.pedal, 1, 700, ((UINT32_MAX - (baseRegen * 32)) / 32), ((UINT32_MAX - (maxRegen * 32))) / 32);
+        brkNomPedal = MAP(iboost.pedal, 1, 700, baseRegen, -(maxRegen)); 
         ; //maps brake pedal regen between base and max
     }
     canSet(BRAKE_NOM_PEDAL, brkNomPedal, 32);

@@ -79,9 +79,15 @@ void encoderHandler(void)
 
     case idle:
 
-        if (te.currentScreen != NTRL_CFM && te.currentScreen != FWD_REQ)
+        switch (te.currentScreen)
         {
+        case HOME:
+        case WINDOWS:
             setWidget(NTRL_REQ, 0, 0);
+            break;
+     
+        default:
+            break;
         }
 
         break;

@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cckMuQIl.s 			page 1
+ARM GAS  /tmp/cclogvr2.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cckMuQIl.s 			page 1
   48 0016 08BD     		pop	{r3, pc}
   49              	.L4:
   50              		.align	2
-ARM GAS  /tmp/cckMuQIl.s 			page 2
+ARM GAS  /tmp/cclogvr2.s 			page 2
 
 
   51              	.L3:
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cckMuQIl.s 			page 1
   97              	.L7:
   98 001c 00000000 		.word	txMsg
   99 0020 00000000 		.word	canTx
-ARM GAS  /tmp/cckMuQIl.s 			page 3
+ARM GAS  /tmp/cclogvr2.s 			page 3
 
 
  100              		.cfi_endproc
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cckMuQIl.s 			page 1
  148              		.section	.text.dcdc_DATA,"ax",%progbits
  149              		.align	1
  150              		.global	dcdc_DATA
-ARM GAS  /tmp/cckMuQIl.s 			page 4
+ARM GAS  /tmp/cclogvr2.s 			page 4
 
 
  151              		.syntax unified
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cckMuQIl.s 			page 1
  194              	.L17:
  195 002a 00BF     		.align	2
  196              	.L16:
-ARM GAS  /tmp/cckMuQIl.s 			page 5
+ARM GAS  /tmp/cclogvr2.s 			page 5
 
 
  197 002c 00000000 		.word	DCDC
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cckMuQIl.s 			page 1
   65:Core/Src/dcdc.c **** 
   66:Core/Src/dcdc.c ****     case on:
   67:Core/Src/dcdc.c ****     case run:
-ARM GAS  /tmp/cckMuQIl.s 			page 6
+ARM GAS  /tmp/cclogvr2.s 			page 6
 
 
   68:Core/Src/dcdc.c ****     case charge_keyOn:
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cckMuQIl.s 			page 1
   53:Core/Src/dcdc.c ****             if ((HAL_GetTick() - time_now) > period)
  271              		.loc 1 53 0
  272 0042 FFF7FEFF 		bl	dcdc_ON
-ARM GAS  /tmp/cckMuQIl.s 			page 7
+ARM GAS  /tmp/cclogvr2.s 			page 7
 
 
  273              	.LVL14:
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cckMuQIl.s 			page 1
  326              		.comm	te,12,4
  327              		.comm	BMS,20,4
  328              		.comm	charger,2,4
-ARM GAS  /tmp/cckMuQIl.s 			page 8
+ARM GAS  /tmp/cclogvr2.s 			page 8
 
 
  329              		.comm	vcu,16,4
@@ -444,32 +444,32 @@ ARM GAS  /tmp/cckMuQIl.s 			page 1
  349              		.file 15 "Core/Inc/encoder.h"
  350              		.file 16 "Core/Inc/can_setup.h"
  351              		.file 17 "Core/Inc/dcdc.h"
-ARM GAS  /tmp/cckMuQIl.s 			page 9
+ARM GAS  /tmp/cclogvr2.s 			page 9
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 dcdc.c
-     /tmp/cckMuQIl.s:16     .text.dcdcInit:0000000000000000 $t
-     /tmp/cckMuQIl.s:23     .text.dcdcInit:0000000000000000 dcdcInit
-     /tmp/cckMuQIl.s:52     .text.dcdcInit:0000000000000018 $d
+     /tmp/cclogvr2.s:16     .text.dcdcInit:0000000000000000 $t
+     /tmp/cclogvr2.s:23     .text.dcdcInit:0000000000000000 dcdcInit
+     /tmp/cclogvr2.s:52     .text.dcdcInit:0000000000000018 $d
                             *COM*:0000000000000004 time_now
                             *COM*:0000000000000004 period
                             *COM*:0000000000000001 tenderActive
-     /tmp/cckMuQIl.s:60     .text.dcdc_OFF:0000000000000000 $t
-     /tmp/cckMuQIl.s:67     .text.dcdc_OFF:0000000000000000 dcdc_OFF
-     /tmp/cckMuQIl.s:98     .text.dcdc_OFF:000000000000001c $d
+     /tmp/cclogvr2.s:60     .text.dcdc_OFF:0000000000000000 $t
+     /tmp/cclogvr2.s:67     .text.dcdc_OFF:0000000000000000 dcdc_OFF
+     /tmp/cclogvr2.s:98     .text.dcdc_OFF:000000000000001c $d
                             *COM*:0000000000000018 txMsg
                             *COM*:0000000000000008 canTx
-     /tmp/cckMuQIl.s:104    .text.dcdc_ON:0000000000000000 $t
-     /tmp/cckMuQIl.s:111    .text.dcdc_ON:0000000000000000 dcdc_ON
-     /tmp/cckMuQIl.s:143    .text.dcdc_ON:0000000000000020 $d
-     /tmp/cckMuQIl.s:149    .text.dcdc_DATA:0000000000000000 $t
-     /tmp/cckMuQIl.s:156    .text.dcdc_DATA:0000000000000000 dcdc_DATA
-     /tmp/cckMuQIl.s:197    .text.dcdc_DATA:000000000000002c $d
+     /tmp/cclogvr2.s:104    .text.dcdc_ON:0000000000000000 $t
+     /tmp/cclogvr2.s:111    .text.dcdc_ON:0000000000000000 dcdc_ON
+     /tmp/cclogvr2.s:143    .text.dcdc_ON:0000000000000020 $d
+     /tmp/cclogvr2.s:149    .text.dcdc_DATA:0000000000000000 $t
+     /tmp/cclogvr2.s:156    .text.dcdc_DATA:0000000000000000 dcdc_DATA
+     /tmp/cclogvr2.s:197    .text.dcdc_DATA:000000000000002c $d
                             *COM*:0000000000000004 DCDC
-     /tmp/cckMuQIl.s:203    .text.dcdcHandler:0000000000000000 $t
-     /tmp/cckMuQIl.s:210    .text.dcdcHandler:0000000000000000 dcdcHandler
-     /tmp/cckMuQIl.s:292    .text.dcdcHandler:0000000000000060 $d
+     /tmp/cclogvr2.s:203    .text.dcdcHandler:0000000000000000 $t
+     /tmp/cclogvr2.s:210    .text.dcdcHandler:0000000000000000 dcdcHandler
+     /tmp/cclogvr2.s:292    .text.dcdcHandler:0000000000000060 $d
                             *COM*:000000000000000c ADC_data
                             *COM*:0000000000000004 canDebug
                             *COM*:0000000000000004 txCycle2
@@ -504,6 +504,6 @@ DEFINED SYMBOLS
 UNDEFINED SYMBOLS
 HAL_GetTick
 c1tx
-ARM GAS  /tmp/cckMuQIl.s 			page 10
+ARM GAS  /tmp/cclogvr2.s 			page 10
 
 

@@ -78,7 +78,7 @@ const osThreadAttr_t TaskLoop_attributes = {
 osThreadId_t Task10msHandle;
 const osThreadAttr_t Task10ms_attributes = {
   .name = "Task10ms",
-  .priority = (osPriority_t) osPriorityRealtime,
+  .priority = (osPriority_t) osPriorityRealtime7,
   .stack_size = 128 * 4
 };
 /* Definitions for Task100ms */
@@ -92,7 +92,7 @@ const osThreadAttr_t Task100ms_attributes = {
 osThreadId_t Task250msHandle;
 const osThreadAttr_t Task250ms_attributes = {
   .name = "Task250ms",
-  .priority = (osPriority_t) osPriorityRealtime,
+  .priority = (osPriority_t) osPriorityHigh,
   .stack_size = 128 * 4
 };
 /* USER CODE BEGIN PV */
@@ -854,17 +854,18 @@ void StartTaskLoop(void *argument)
 void StartTask10ms(void *argument)
 {
   /* USER CODE BEGIN StartTask10ms */
-  TickType_t lastWakeTime;
-  const TickType_t frequency = 10;
-  lastWakeTime = xTaskGetTickCount();
+  //TickType_t lastWakeTime;
+  //const TickType_t frequency = 20; 
+  //lastWakeTime = xTaskGetTickCount();
   /* Infinite loop */
   for (;;)
   {
-    vTaskDelayUntil(&lastWakeTime, frequency);
+    //vTaskDelayUntil(&lastWakeTime, frequency);
     throttleHandler();
     canIOsend();
     regenHandler();
     dcdcHandler(vcu.state);
+    osDelay(20);
   }
   // Add termination if exit the loop accidentally
   osThreadTerminate(NULL);
@@ -881,18 +882,19 @@ void StartTask10ms(void *argument)
 void StartTask100ms(void *argument)
 {
   /* USER CODE BEGIN StartTask100ms */
-  TickType_t lastWakeTime;
-  const TickType_t frequency = 100;
-  lastWakeTime = xTaskGetTickCount();
+  //TickType_t lastWakeTime;
+  //const TickType_t frequency = 100;
+  //lastWakeTime = xTaskGetTickCount();
 
   /* Infinite loop */
 
   for (;;)
   {
-    vTaskDelayUntil(&lastWakeTime, frequency);
+    //vTaskDelayUntil(&lastWakeTime, frequency);
 
     updateSpeed(ldu.rpm);
     updateTach(ldu.amps);
+    osDelay(100);
   }
   // Add termination if exit the loop accidentally
   osThreadTerminate(NULL);
@@ -909,21 +911,21 @@ void StartTask100ms(void *argument)
 void StartTask250ms(void *argument)
 {
   /* USER CODE BEGIN StartTask250ms */
-  TickType_t lastWakeTime;
-  const TickType_t frequency = 250;
-  lastWakeTime = xTaskGetTickCount();
+  //TickType_t lastWakeTime;
+  //const TickType_t frequency = 250;
+  //lastWakeTime = xTaskGetTickCount();
   /* Infinite loop */
 
   for (;;)
 
   {
-    vTaskDelayUntil(&lastWakeTime, frequency);
+    //vTaskDelayUntil(&lastWakeTime, frequency);
     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
 
     updateTemp(ldu.hsTemp);
     updateSOC(BMS[0].chargeState);
     encoderHandler();
-
+    osDelay(250);
     //testVal();
   }
   // Add termination if exit the loop accidentally

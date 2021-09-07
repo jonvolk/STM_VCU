@@ -7,8 +7,8 @@ void wpHandler(void)
     case run:
         if (ldu.dir == FWD)
         {
-            int throttleDuty = MAP(ldu.pot, 870, 4095, 20, 100);
-            int tempDuty = MAP(ldu.hsTemp, 0, 85, 10, 100);
+            int throttleDuty = MAP(ldu.pot, 870, 4095, 40, 100);
+            int tempDuty = MAP(ldu.hsTemp, 0, 85, 40, 100);
 
             if (tempDuty > throttleDuty)
             {
