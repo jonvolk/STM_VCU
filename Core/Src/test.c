@@ -8,23 +8,24 @@ void testVal(void)
     {
         ldu.amps += 5;
     }
-
-    if (ldu.hsTemp < 90)
+    if (ldu.amps >= 1200)
     {
-        ldu.hsTemp++;
+        ldu.amps = 0;
     }
 
     if (ldu.rpm < 18000)
     {
-        ldu.rpm += 20;
+        ldu.rpm += 70;
     }
-
-    if (ldu.SOC < 100)
+    if (ldu.rpm >= 18000)
     {
-        ldu.SOC ++;
+        ldu.rpm = 0;
     }
 
-#endif // ACTIVE 
+    ldu.hsTemp = 60;
+    BMS[0].chargeState = 55;
+
+#endif // ACTIVE
 
 #ifdef PASSIVE
     ldu.amps = 600;

@@ -37,6 +37,9 @@
 
 #define LAUNCH  0x0B
 
+#define PRE_BURNOUT 0x0C
+#define READY_BURNOUT 0X0D
+
 
 
 //SWIPE DEFINES

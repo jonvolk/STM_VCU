@@ -88,13 +88,14 @@ void decodeCAN(CAN_RxHeaderTypeDef *rxMsg, uint8_t *canRx)
     }
 }
 
+//////////////// LDU DIO FUNCTIONS /////////////////////////////
 void canIOset(int bit, int val)
 {
-    if ((val = ON))
+    if (val)
     {
         vcu.dio |= (1U << (bit));
     }
-    else if ((val = OFF))
+    else
     {
         vcu.dio &= ~(1U << (bit));
     }
@@ -168,14 +169,20 @@ void vcuState(void)
         canSet(FWEAK, 280, 32);
         canSet(FSLIP_MIN, 76, 1);  // 2.3*32
         canSet(FSLIP_MAX, 101, 1); // 3.15*32
+        canSet(THROTRAMP, 15, 32);
         if (vcu.key == OFF)
         {
             vcu.state = off;
         }
 
-        if (vcu.launchFlag == ON)
+        if (vcu.launchFlag)
         {
             vcu.state = launchMode;
+        }
+
+        if (vcu.burnFlag && (te.knob != 0x80))
+        {
+            vcu.state = burnout;
         }
         break;
 
@@ -184,6 +191,17 @@ void vcuState(void)
         canSet(FSLIP_MIN, 61, 1); // 1.9*32
         canSet(FSLIP_MAX, 77, 1); // 2.4*32
         if (vcu.launchFlag == 0)
+        {
+            vcu.state = run;
+        }
+        break;
+
+    case burnout:
+        canSet(FWEAK, 220, 32);
+        canSet(FSLIP_MIN, 61, 1); // 1.9*32
+        canSet(FSLIP_MAX, 77, 1); // 2.4*32
+        canSet(THROTRAMP, 5, 32);
+        if (vcu.burnFlag == 0)
         {
             vcu.state = run;
         }
@@ -200,6 +218,8 @@ void vcuInit(void)
     vcu.dio = 0;
     vcu.key = 0;
     vcu.launchFlag = 0;
+    vcu.burnFlag = 0;
+    iboost.pedal = 700;
     ADC_data[0] = 4095; // LVREAD PIN
     ADC_data[1] = 0;
     ADC_data[2] = 0;
@@ -271,13 +291,13 @@ void regenHandler(void)
     int brkNomPedal;
     int regenRamp;
 
-    if (iboost.pedal > 700)
+    if (iboost.pedal > 650)
     {
         brkNomPedal = -(maxRegen);
     }
     else
     {
-        brkNomPedal = MAP(iboost.pedal, 1, 700, baseRegen, -(maxRegen)); 
+        brkNomPedal = MAP(iboost.pedal, 1, 650, baseRegen, -(maxRegen));
         ; //maps brake pedal regen between base and max
     }
     canSet(BRAKE_NOM_PEDAL, brkNomPedal, 32);
@@ -309,7 +329,6 @@ void canSet(uint8_t index, uint32_t value, uint8_t gain) // LDU param Index, uns
     canTx[6] = (val >> 16) & 0xFF;
     canTx[7] = (val >> 24) & 0xFF;
     c1tx(&txMsg, canTx);
-
 }
 
 void throttleHandler(void)
@@ -320,23 +339,52 @@ void throttleHandler(void)
 
     if (ldu.dir == FWD)
     {
-        idleThrotMax = 20;
+        idleThrotMax = 22;
     }
     else
     {
         idleThrotMax = 18;
     }
 
-    idleThrot = MAP(iboost.pedal, 1, 400, idleThrotMax, 0);
-    canSet(IDLE_THROT_LIM, idleThrot, 32);
+    if (iboost.pedal > 400)
+    {
+        canSet(IDLE_THROT_LIM, 0, 32);
+    }
+    else
+    {
+        idleThrot = MAP(iboost.pedal, 1, 400, idleThrotMax, 0);
+        canSet(IDLE_THROT_LIM, idleThrot, 32);
+    }
 
     ///////// Launch Control Enable ///////////////
-    if (ldu.pot >= 4050 && ldu.brake == ON)
+    switch (te.currentScreen)
     {
-        vcu.launchFlag = ON;
+    case PRE_BURNOUT:
+    case READY_BURNOUT:
+        /* code */
+        break;
+
+    default:
+        if (ldu.pot >= 4050 && ldu.brake == ON)
+        {
+            vcu.launchFlag = ON;
+        }
+        if (vcu.launchFlag == ON && ldu.pot < 1000)
+        {
+            vcu.launchFlag = OFF;
+        }
+        break;
     }
-    if (vcu.launchFlag == ON && ldu.pot < 3000)
+}
+
+void brakeHandler(void)
+{
+    if (vcu.state != burnout && iboost.pedal > 10)
     {
-        vcu.launchFlag = OFF;
+        canIOset(brake, ON);
+    }
+    else
+    {
+        canIOset(brake, OFF);
     }
 }

@@ -70,31 +70,27 @@ UART_HandleTypeDef huart1;
 /* Definitions for TaskLoop */
 osThreadId_t TaskLoopHandle;
 const osThreadAttr_t TaskLoop_attributes = {
-  .name = "TaskLoop",
-  .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 128 * 4
-};
+    .name = "TaskLoop",
+    .priority = (osPriority_t)osPriorityNormal,
+    .stack_size = 128 * 4};
 /* Definitions for Task10ms */
 osThreadId_t Task10msHandle;
 const osThreadAttr_t Task10ms_attributes = {
-  .name = "Task10ms",
-  .priority = (osPriority_t) osPriorityRealtime7,
-  .stack_size = 128 * 4
-};
+    .name = "Task10ms",
+    .priority = (osPriority_t)osPriorityRealtime7,
+    .stack_size = 128 * 4};
 /* Definitions for Task100ms */
 osThreadId_t Task100msHandle;
 const osThreadAttr_t Task100ms_attributes = {
-  .name = "Task100ms",
-  .priority = (osPriority_t) osPriorityRealtime,
-  .stack_size = 128 * 4
-};
+    .name = "Task100ms",
+    .priority = (osPriority_t)osPriorityRealtime,
+    .stack_size = 128 * 4};
 /* Definitions for Task250ms */
 osThreadId_t Task250msHandle;
 const osThreadAttr_t Task250ms_attributes = {
-  .name = "Task250ms",
-  .priority = (osPriority_t) osPriorityHigh,
-  .stack_size = 128 * 4
-};
+    .name = "Task250ms",
+    .priority = (osPriority_t)osPriorityHigh,
+    .stack_size = 128 * 4};
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -274,8 +270,7 @@ void SystemClock_Config(void)
   }
   /** Initializes the CPU, AHB and APB buses clocks
   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
@@ -355,7 +350,6 @@ static void MX_ADC1_Init(void)
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */
-
 }
 
 /**
@@ -392,7 +386,6 @@ static void MX_CAN1_Init(void)
   /* USER CODE BEGIN CAN1_Init 2 */
 
   /* USER CODE END CAN1_Init 2 */
-
 }
 
 /**
@@ -429,7 +422,6 @@ static void MX_CAN2_Init(void)
   /* USER CODE BEGIN CAN2_Init 2 */
 
   /* USER CODE END CAN2_Init 2 */
-
 }
 
 /**
@@ -450,7 +442,6 @@ static void MX_I2C1_SMBUS_Init(void)
   /* USER CODE BEGIN I2C1_Init 2 */
 
   /* USER CODE END I2C1_Init 2 */
-
 }
 
 /**
@@ -473,7 +464,7 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 1050;
+  htim1.Init.Prescaler = 240;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim1.Init.Period = 65535;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -515,7 +506,6 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 2 */
   HAL_TIM_MspPostInit(&htim1);
-
 }
 
 /**
@@ -563,7 +553,6 @@ static void MX_TIM2_Init(void)
   /* USER CODE BEGIN TIM2_Init 2 */
 
   /* USER CODE END TIM2_Init 2 */
-
 }
 
 /**
@@ -586,7 +575,7 @@ static void MX_TIM3_Init(void)
 
   /* USER CODE END TIM3_Init 1 */
   htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 5000;
+  htim3.Init.Prescaler = 120;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim3.Init.Period = 600;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -622,7 +611,6 @@ static void MX_TIM3_Init(void)
 
   /* USER CODE END TIM3_Init 2 */
   HAL_TIM_MspPostInit(&htim3);
-
 }
 
 /**
@@ -674,7 +662,6 @@ static void MX_TIM5_Init(void)
   /* USER CODE BEGIN TIM5_Init 2 */
 
   /* USER CODE END TIM5_Init 2 */
-
 }
 
 /**
@@ -707,7 +694,6 @@ static void MX_UART4_Init(void)
   /* USER CODE BEGIN UART4_Init 2 */
 
   /* USER CODE END UART4_Init 2 */
-
 }
 
 /**
@@ -740,7 +726,6 @@ static void MX_USART1_UART_Init(void)
   /* USER CODE BEGIN USART1_Init 2 */
 
   /* USER CODE END USART1_Init 2 */
-
 }
 
 /**
@@ -766,7 +751,6 @@ static void MX_DMA_Init(void)
   /* DMA2_Channel5_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Channel5_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA2_Channel5_IRQn);
-
 }
 
 /**
@@ -785,41 +769,41 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, LED_Pin|WP_Pin|TEMP_Pin|SOC_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, LED_Pin | WP_Pin | TEMP_Pin | SOC_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, PS_INIT_Pin|HEAT_OUT_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, PS_INIT_Pin | HEAT_OUT_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : LED_Pin WP_Pin */
-  GPIO_InitStruct.Pin = LED_Pin|WP_Pin;
+  GPIO_InitStruct.Pin = LED_Pin | WP_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PS_INIT_Pin HEAT_OUT_Pin */
-  GPIO_InitStruct.Pin = PS_INIT_Pin|HEAT_OUT_Pin;
+  GPIO_InitStruct.Pin = PS_INIT_Pin | HEAT_OUT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : TEMP_Pin SOC_Pin */
-  GPIO_InitStruct.Pin = TEMP_Pin|SOC_Pin;
+  GPIO_InitStruct.Pin = TEMP_Pin | SOC_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : SW12_Pin HEAT_REQ_Pin */
-  GPIO_InitStruct.Pin = SW12_Pin|HEAT_REQ_Pin;
+  GPIO_InitStruct.Pin = SW12_Pin | HEAT_REQ_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
 }
 
 /* USER CODE BEGIN 4 */
+// Callback: timer has rolled over
 
 /* USER CODE END 4 */
 
@@ -839,6 +823,7 @@ void StartTaskLoop(void *argument)
     wpHandler();
     vcuState();
     ioHandler();
+
     osDelay(1);
   }
   /* USER CODE END 5 */
@@ -855,7 +840,7 @@ void StartTask10ms(void *argument)
 {
   /* USER CODE BEGIN StartTask10ms */
   //TickType_t lastWakeTime;
-  //const TickType_t frequency = 20; 
+  //const TickType_t frequency = 20;
   //lastWakeTime = xTaskGetTickCount();
   /* Infinite loop */
   for (;;)
@@ -864,7 +849,9 @@ void StartTask10ms(void *argument)
     throttleHandler();
     canIOsend();
     regenHandler();
+    brakeHandler();
     dcdcHandler(vcu.state);
+
     osDelay(20);
   }
   // Add termination if exit the loop accidentally
@@ -894,6 +881,8 @@ void StartTask100ms(void *argument)
 
     updateSpeed(ldu.rpm);
     updateTach(ldu.amps);
+    //testVal();
+
     osDelay(100);
   }
   // Add termination if exit the loop accidentally
@@ -925,6 +914,7 @@ void StartTask250ms(void *argument)
     updateTemp(ldu.hsTemp);
     updateSOC(BMS[0].chargeState);
     encoderHandler();
+
     osDelay(250);
     //testVal();
   }
@@ -933,7 +923,7 @@ void StartTask250ms(void *argument)
   /* USER CODE END StartTask250ms */
 }
 
- /**
+/**
   * @brief  Period elapsed callback in non blocking mode
   * @note   This function is called  when TIM7 interrupt took place, inside
   * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
@@ -946,7 +936,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 0 */
 
   /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM7) {
+  if (htim->Instance == TIM7)
+  {
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
@@ -969,7 +960,7 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

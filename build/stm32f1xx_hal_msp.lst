@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccJ91hH3.s 			page 1
+ARM GAS  /tmp/ccILwLbs.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
   31:Core/Src/stm32f1xx_hal_msp.c **** extern DMA_HandleTypeDef hdma_tim5_ch1;
   32:Core/Src/stm32f1xx_hal_msp.c **** 
   33:Core/Src/stm32f1xx_hal_msp.c **** extern DMA_HandleTypeDef hdma_tim5_ch2;
-ARM GAS  /tmp/ccJ91hH3.s 			page 2
+ARM GAS  /tmp/ccILwLbs.s 			page 2
 
 
   34:Core/Src/stm32f1xx_hal_msp.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
   76:Core/Src/stm32f1xx_hal_msp.c **** 
   77:Core/Src/stm32f1xx_hal_msp.c ****   /* USER CODE END MspInit 0 */
   78:Core/Src/stm32f1xx_hal_msp.c **** 
-ARM GAS  /tmp/ccJ91hH3.s 			page 3
+ARM GAS  /tmp/ccILwLbs.s 			page 3
 
 
   79:Core/Src/stm32f1xx_hal_msp.c ****   __HAL_RCC_AFIO_CLK_ENABLE();
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
   77              	.LCFI2:
   78              		.cfi_def_cfa_offset 4
   79              		@ sp needed
-ARM GAS  /tmp/ccJ91hH3.s 			page 4
+ARM GAS  /tmp/ccILwLbs.s 			page 4
 
 
   80 0046 5DF804FB 		ldr	pc, [sp], #4
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  125              	.L5:
  105:Core/Src/stm32f1xx_hal_msp.c ****   {
  106:Core/Src/stm32f1xx_hal_msp.c ****   /* USER CODE BEGIN ADC1_MspInit 0 */
-ARM GAS  /tmp/ccJ91hH3.s 			page 5
+ARM GAS  /tmp/ccILwLbs.s 			page 5
 
 
  107:Core/Src/stm32f1xx_hal_msp.c **** 
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  137 001a 0446     		mov	r4, r0
  138              	.LBB5:
  110:Core/Src/stm32f1xx_hal_msp.c **** 
-ARM GAS  /tmp/ccJ91hH3.s 			page 6
+ARM GAS  /tmp/ccILwLbs.s 			page 6
 
 
  139              		.loc 1 110 0
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  125:Core/Src/stm32f1xx_hal_msp.c **** 
  186              		.loc 1 125 0
  187 006c 04A9     		add	r1, sp, #16
-ARM GAS  /tmp/ccJ91hH3.s 			page 7
+ARM GAS  /tmp/ccILwLbs.s 			page 7
 
 
  188 006e 1148     		ldr	r0, .L11+8
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  231 00aa 00BF     		.align	2
  232              	.L11:
  233 00ac 00240140 		.word	1073816576
-ARM GAS  /tmp/ccJ91hH3.s 			page 8
+ARM GAS  /tmp/ccILwLbs.s 			page 8
 
 
  234 00b0 00100140 		.word	1073811456
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  273 0012 23F40073 		bic	r3, r3, #512
  274 0016 9361     		str	r3, [r2, #24]
  166:Core/Src/stm32f1xx_hal_msp.c **** 
-ARM GAS  /tmp/ccJ91hH3.s 			page 9
+ARM GAS  /tmp/ccILwLbs.s 			page 9
 
 
  167:Core/Src/stm32f1xx_hal_msp.c ****     /**ADC1 GPIO Configuration
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  186:Core/Src/stm32f1xx_hal_msp.c **** 
  187:Core/Src/stm32f1xx_hal_msp.c **** /**
  188:Core/Src/stm32f1xx_hal_msp.c **** * @brief CAN MSP Initialization
-ARM GAS  /tmp/ccJ91hH3.s 			page 10
+ARM GAS  /tmp/ccILwLbs.s 			page 10
 
 
  189:Core/Src/stm32f1xx_hal_msp.c **** * This function configures the hardware resources used in this example
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  218:Core/Src/stm32f1xx_hal_msp.c ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
  219:Core/Src/stm32f1xx_hal_msp.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
  220:Core/Src/stm32f1xx_hal_msp.c ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-ARM GAS  /tmp/ccJ91hH3.s 			page 11
+ARM GAS  /tmp/ccILwLbs.s 			page 11
 
 
  221:Core/Src/stm32f1xx_hal_msp.c **** 
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  347              		.cfi_def_cfa_offset 12
  348              		@ sp needed
  349 001e 30BD     		pop	{r4, r5, pc}
-ARM GAS  /tmp/ccJ91hH3.s 			page 12
+ARM GAS  /tmp/ccILwLbs.s 			page 12
 
 
  350              	.LVL20:
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  395 0062 2146     		mov	r1, r4
  396 0064 2846     		mov	r0, r5
  397 0066 FFF7FEFF 		bl	HAL_GPIO_Init
-ARM GAS  /tmp/ccJ91hH3.s 			page 13
+ARM GAS  /tmp/ccILwLbs.s 			page 13
 
 
  398              	.LVL23:
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  241:Core/Src/stm32f1xx_hal_msp.c ****     /**CAN2 GPIO Configuration
  446              		.loc 1 241 0
  447 00b2 1C4B     		ldr	r3, .L32+12
-ARM GAS  /tmp/ccJ91hH3.s 			page 14
+ARM GAS  /tmp/ccILwLbs.s 			page 14
 
 
  448 00b4 9A69     		ldr	r2, [r3, #24]
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  494              	.L31:
  495              	.LBB12:
  238:Core/Src/stm32f1xx_hal_msp.c ****     }
-ARM GAS  /tmp/ccJ91hH3.s 			page 15
+ARM GAS  /tmp/ccILwLbs.s 			page 15
 
 
  496              		.loc 1 238 0
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  542 0006 9342     		cmp	r3, r2
  543 0008 03D0     		beq	.L40
  275:Core/Src/stm32f1xx_hal_msp.c ****   {
-ARM GAS  /tmp/ccJ91hH3.s 			page 16
+ARM GAS  /tmp/ccILwLbs.s 			page 16
 
 
  276:Core/Src/stm32f1xx_hal_msp.c ****   /* USER CODE BEGIN CAN1_MspDeInit 0 */
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  292:Core/Src/stm32f1xx_hal_msp.c ****   /* USER CODE BEGIN CAN1_MspDeInit 1 */
  572              		.loc 1 292 0
  573 0030 1420     		movs	r0, #20
-ARM GAS  /tmp/ccJ91hH3.s 			page 17
+ARM GAS  /tmp/ccILwLbs.s 			page 17
 
 
  574 0032 FFF7FEFF 		bl	HAL_NVIC_DisableIRQ
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  319:Core/Src/stm32f1xx_hal_msp.c ****   /* USER CODE END CAN2_MspDeInit 1 */
  320:Core/Src/stm32f1xx_hal_msp.c ****   }
  321:Core/Src/stm32f1xx_hal_msp.c **** 
-ARM GAS  /tmp/ccJ91hH3.s 			page 18
+ARM GAS  /tmp/ccILwLbs.s 			page 18
 
 
  322:Core/Src/stm32f1xx_hal_msp.c **** }
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  342:Core/Src/stm32f1xx_hal_msp.c ****   }
  343:Core/Src/stm32f1xx_hal_msp.c **** 
  344:Core/Src/stm32f1xx_hal_msp.c **** }
-ARM GAS  /tmp/ccJ91hH3.s 			page 19
+ARM GAS  /tmp/ccILwLbs.s 			page 19
 
 
  643              		.loc 1 344 0
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  688              	.LVL44:
  689 0000 10B5     		push	{r4, lr}
  690              	.LCFI15:
-ARM GAS  /tmp/ccJ91hH3.s 			page 20
+ARM GAS  /tmp/ccILwLbs.s 			page 20
 
 
  691              		.cfi_def_cfa_offset 8
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  391:Core/Src/stm32f1xx_hal_msp.c ****     /* TIM5 DMA Init */
  392:Core/Src/stm32f1xx_hal_msp.c ****     /* TIM5_CH1 Init */
  393:Core/Src/stm32f1xx_hal_msp.c ****     hdma_tim5_ch1.Instance = DMA2_Channel5;
-ARM GAS  /tmp/ccJ91hH3.s 			page 21
+ARM GAS  /tmp/ccILwLbs.s 			page 21
 
 
  394:Core/Src/stm32f1xx_hal_msp.c ****     hdma_tim5_ch1.Init.Direction = DMA_MEMORY_TO_PERIPH;
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  725 0024 DB69     		ldr	r3, [r3, #28]
  726 0026 03F00103 		and	r3, r3, #1
  727 002a 0093     		str	r3, [sp]
-ARM GAS  /tmp/ccJ91hH3.s 			page 22
+ARM GAS  /tmp/ccILwLbs.s 			page 22
 
 
  728 002c 009B     		ldr	r3, [sp]
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  771              	.L62:
  772              	.LBB15:
  389:Core/Src/stm32f1xx_hal_msp.c **** 
-ARM GAS  /tmp/ccJ91hH3.s 			page 23
+ARM GAS  /tmp/ccILwLbs.s 			page 23
 
 
  773              		.loc 1 389 0
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  817 00ac 5C62     		str	r4, [r3, #36]
  409:Core/Src/stm32f1xx_hal_msp.c ****     hdma_tim5_ch2.Init.Direction = DMA_MEMORY_TO_PERIPH;
  818              		.loc 1 409 0
-ARM GAS  /tmp/ccJ91hH3.s 			page 24
+ARM GAS  /tmp/ccILwLbs.s 			page 24
 
 
  819 00ae 1648     		ldr	r0, .L66+24
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  862              	.LVL55:
  863 00ee F5E7     		b	.L59
  864              	.L67:
-ARM GAS  /tmp/ccJ91hH3.s 			page 25
+ARM GAS  /tmp/ccILwLbs.s 			page 25
 
 
  865              		.align	2
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  451:Core/Src/stm32f1xx_hal_msp.c **** }
  900              		.loc 1 451 0
  901 0008 7047     		bx	lr
-ARM GAS  /tmp/ccJ91hH3.s 			page 26
+ARM GAS  /tmp/ccILwLbs.s 			page 26
 
 
  902              	.L75:
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  455:Core/Src/stm32f1xx_hal_msp.c ****   GPIO_InitTypeDef GPIO_InitStruct = {0};
  953              		.loc 1 455 0
  954 0004 0023     		movs	r3, #0
-ARM GAS  /tmp/ccJ91hH3.s 			page 27
+ARM GAS  /tmp/ccILwLbs.s 			page 27
 
 
  955 0006 0293     		str	r3, [sp, #8]
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  495:Core/Src/stm32f1xx_hal_msp.c **** 
  496:Core/Src/stm32f1xx_hal_msp.c **** }
  970              		.loc 1 496 0
-ARM GAS  /tmp/ccJ91hH3.s 			page 28
+ARM GAS  /tmp/ccILwLbs.s 			page 28
 
 
  971 001c 07B0     		add	sp, sp, #28
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  1019              	.LBE18:
  484:Core/Src/stm32f1xx_hal_msp.c ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
  1020              		.loc 1 484 0
-ARM GAS  /tmp/ccJ91hH3.s 			page 29
+ARM GAS  /tmp/ccILwLbs.s 			page 29
 
 
  1021 0060 4FF48073 		mov	r3, #256
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  501:Core/Src/stm32f1xx_hal_msp.c **** * @retval None
  502:Core/Src/stm32f1xx_hal_msp.c **** */
  503:Core/Src/stm32f1xx_hal_msp.c **** void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* htim_pwm)
-ARM GAS  /tmp/ccJ91hH3.s 			page 30
+ARM GAS  /tmp/ccILwLbs.s 			page 30
 
 
  504:Core/Src/stm32f1xx_hal_msp.c **** {
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  521:Core/Src/stm32f1xx_hal_msp.c **** * This function freeze the hardware resources used in this example
  522:Core/Src/stm32f1xx_hal_msp.c **** * @param htim_oc: TIM_OC handle pointer
  523:Core/Src/stm32f1xx_hal_msp.c **** * @retval None
-ARM GAS  /tmp/ccJ91hH3.s 			page 31
+ARM GAS  /tmp/ccILwLbs.s 			page 31
 
 
  524:Core/Src/stm32f1xx_hal_msp.c **** */
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  1142 0024 10BD     		pop	{r4, pc}
  1143              	.LVL74:
  1144              	.L96:
-ARM GAS  /tmp/ccJ91hH3.s 			page 32
+ARM GAS  /tmp/ccILwLbs.s 			page 32
 
 
  542:Core/Src/stm32f1xx_hal_msp.c ****   {
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  564:Core/Src/stm32f1xx_hal_msp.c **** */
  565:Core/Src/stm32f1xx_hal_msp.c **** void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* htim_base)
  566:Core/Src/stm32f1xx_hal_msp.c **** {
-ARM GAS  /tmp/ccJ91hH3.s 			page 33
+ARM GAS  /tmp/ccILwLbs.s 			page 33
 
 
  1179              		.loc 1 566 0
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  584:Core/Src/stm32f1xx_hal_msp.c **** * @param huart: UART handle pointer
  585:Core/Src/stm32f1xx_hal_msp.c **** * @retval None
  586:Core/Src/stm32f1xx_hal_msp.c **** */
-ARM GAS  /tmp/ccJ91hH3.s 			page 34
+ARM GAS  /tmp/ccILwLbs.s 			page 34
 
 
  587:Core/Src/stm32f1xx_hal_msp.c **** void HAL_UART_MspInit(UART_HandleTypeDef* huart)
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  617:Core/Src/stm32f1xx_hal_msp.c ****   else if(huart->Instance==USART1)
  1242              		.loc 1 617 0
  1243 0016 2D4A     		ldr	r2, .L110+4
-ARM GAS  /tmp/ccJ91hH3.s 			page 35
+ARM GAS  /tmp/ccILwLbs.s 			page 35
 
 
  1244 0018 9342     		cmp	r3, r2
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  1269              	.LBE20:
  1270              	.LBB21:
  598:Core/Src/stm32f1xx_hal_msp.c ****     /**UART4 GPIO Configuration
-ARM GAS  /tmp/ccJ91hH3.s 			page 36
+ARM GAS  /tmp/ccILwLbs.s 			page 36
 
 
  1271              		.loc 1 598 0
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  1316 0078 42F48042 		orr	r2, r2, #16384
  1317 007c 9A61     		str	r2, [r3, #24]
  1318 007e 9A69     		ldr	r2, [r3, #24]
-ARM GAS  /tmp/ccJ91hH3.s 			page 37
+ARM GAS  /tmp/ccILwLbs.s 			page 37
 
 
  1319 0080 02F48042 		and	r2, r2, #16384
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  1364              	.L111:
  1365              		.align	2
  1366              	.L110:
-ARM GAS  /tmp/ccJ91hH3.s 			page 38
+ARM GAS  /tmp/ccILwLbs.s 			page 38
 
 
  1367 00c8 004C0040 		.word	1073761280
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  669:Core/Src/stm32f1xx_hal_msp.c ****   /* USER CODE BEGIN UART4_MspDeInit 1 */
  670:Core/Src/stm32f1xx_hal_msp.c **** 
  671:Core/Src/stm32f1xx_hal_msp.c ****   /* USER CODE END UART4_MspDeInit 1 */
-ARM GAS  /tmp/ccJ91hH3.s 			page 39
+ARM GAS  /tmp/ccILwLbs.s 			page 39
 
 
  672:Core/Src/stm32f1xx_hal_msp.c ****   }
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  690:Core/Src/stm32f1xx_hal_msp.c ****   }
  691:Core/Src/stm32f1xx_hal_msp.c **** 
  692:Core/Src/stm32f1xx_hal_msp.c **** }
-ARM GAS  /tmp/ccJ91hH3.s 			page 40
+ARM GAS  /tmp/ccILwLbs.s 			page 40
 
 
  1434              		.loc 1 692 0
@@ -2375,55 +2375,55 @@ ARM GAS  /tmp/ccJ91hH3.s 			page 1
  1468              		.file 15 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
  1469              		.file 16 "Core/Inc/main.h"
  1470              		.file 17 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h"
-ARM GAS  /tmp/ccJ91hH3.s 			page 41
+ARM GAS  /tmp/ccILwLbs.s 			page 41
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32f1xx_hal_msp.c
-     /tmp/ccJ91hH3.s:16     .text.HAL_MspInit:0000000000000000 $t
-     /tmp/ccJ91hH3.s:23     .text.HAL_MspInit:0000000000000000 HAL_MspInit
-     /tmp/ccJ91hH3.s:84     .text.HAL_MspInit:000000000000004c $d
-     /tmp/ccJ91hH3.s:90     .text.HAL_ADC_MspInit:0000000000000000 $t
-     /tmp/ccJ91hH3.s:97     .text.HAL_ADC_MspInit:0000000000000000 HAL_ADC_MspInit
-     /tmp/ccJ91hH3.s:233    .text.HAL_ADC_MspInit:00000000000000ac $d
-     /tmp/ccJ91hH3.s:242    .text.HAL_ADC_MspDeInit:0000000000000000 $t
-     /tmp/ccJ91hH3.s:249    .text.HAL_ADC_MspDeInit:0000000000000000 HAL_ADC_MspDeInit
-     /tmp/ccJ91hH3.s:295    .text.HAL_ADC_MspDeInit:0000000000000030 $d
-     /tmp/ccJ91hH3.s:303    .text.HAL_CAN_MspInit:0000000000000000 $t
-     /tmp/ccJ91hH3.s:310    .text.HAL_CAN_MspInit:0000000000000000 HAL_CAN_MspInit
-     /tmp/ccJ91hH3.s:509    .text.HAL_CAN_MspInit:0000000000000118 $d
-     /tmp/ccJ91hH3.s:520    .text.HAL_CAN_MspDeInit:0000000000000000 $t
-     /tmp/ccJ91hH3.s:527    .text.HAL_CAN_MspDeInit:0000000000000000 HAL_CAN_MspDeInit
-     /tmp/ccJ91hH3.s:612    .text.HAL_CAN_MspDeInit:000000000000006c $d
-     /tmp/ccJ91hH3.s:622    .text.HAL_TIM_PWM_MspInit:0000000000000000 $t
-     /tmp/ccJ91hH3.s:629    .text.HAL_TIM_PWM_MspInit:0000000000000000 HAL_TIM_PWM_MspInit
-     /tmp/ccJ91hH3.s:670    .text.HAL_TIM_PWM_MspInit:0000000000000028 $d
-     /tmp/ccJ91hH3.s:675    .text.HAL_TIM_OC_MspInit:0000000000000000 $t
-     /tmp/ccJ91hH3.s:682    .text.HAL_TIM_OC_MspInit:0000000000000000 HAL_TIM_OC_MspInit
-     /tmp/ccJ91hH3.s:867    .text.HAL_TIM_OC_MspInit:00000000000000f0 $d
-     /tmp/ccJ91hH3.s:879    .text.HAL_TIM_Base_MspInit:0000000000000000 $t
-     /tmp/ccJ91hH3.s:886    .text.HAL_TIM_Base_MspInit:0000000000000000 HAL_TIM_Base_MspInit
-     /tmp/ccJ91hH3.s:927    .text.HAL_TIM_Base_MspInit:0000000000000028 $d
-     /tmp/ccJ91hH3.s:932    .text.HAL_TIM_MspPostInit:0000000000000000 $t
-     /tmp/ccJ91hH3.s:939    .text.HAL_TIM_MspPostInit:0000000000000000 HAL_TIM_MspPostInit
-     /tmp/ccJ91hH3.s:1050   .text.HAL_TIM_MspPostInit:0000000000000084 $d
-     /tmp/ccJ91hH3.s:1060   .text.HAL_TIM_PWM_MspDeInit:0000000000000000 $t
-     /tmp/ccJ91hH3.s:1067   .text.HAL_TIM_PWM_MspDeInit:0000000000000000 HAL_TIM_PWM_MspDeInit
-     /tmp/ccJ91hH3.s:1093   .text.HAL_TIM_PWM_MspDeInit:0000000000000018 $d
-     /tmp/ccJ91hH3.s:1099   .text.HAL_TIM_OC_MspDeInit:0000000000000000 $t
-     /tmp/ccJ91hH3.s:1106   .text.HAL_TIM_OC_MspDeInit:0000000000000000 HAL_TIM_OC_MspDeInit
-     /tmp/ccJ91hH3.s:1164   .text.HAL_TIM_OC_MspDeInit:0000000000000040 $d
-     /tmp/ccJ91hH3.s:1170   .text.HAL_TIM_Base_MspDeInit:0000000000000000 $t
-     /tmp/ccJ91hH3.s:1177   .text.HAL_TIM_Base_MspDeInit:0000000000000000 HAL_TIM_Base_MspDeInit
-     /tmp/ccJ91hH3.s:1203   .text.HAL_TIM_Base_MspDeInit:0000000000000018 $d
-     /tmp/ccJ91hH3.s:1209   .text.HAL_UART_MspInit:0000000000000000 $t
-     /tmp/ccJ91hH3.s:1216   .text.HAL_UART_MspInit:0000000000000000 HAL_UART_MspInit
-     /tmp/ccJ91hH3.s:1367   .text.HAL_UART_MspInit:00000000000000c8 $d
-     /tmp/ccJ91hH3.s:1376   .text.HAL_UART_MspDeInit:0000000000000000 $t
-     /tmp/ccJ91hH3.s:1383   .text.HAL_UART_MspDeInit:0000000000000000 HAL_UART_MspDeInit
-     /tmp/ccJ91hH3.s:1439   .text.HAL_UART_MspDeInit:0000000000000044 $d
-     /tmp/ccJ91hH3.s:1447   .bss.HAL_RCC_CAN1_CLK_ENABLED:0000000000000000 $d
-     /tmp/ccJ91hH3.s:1451   .bss.HAL_RCC_CAN1_CLK_ENABLED:0000000000000000 HAL_RCC_CAN1_CLK_ENABLED
+     /tmp/ccILwLbs.s:16     .text.HAL_MspInit:0000000000000000 $t
+     /tmp/ccILwLbs.s:23     .text.HAL_MspInit:0000000000000000 HAL_MspInit
+     /tmp/ccILwLbs.s:84     .text.HAL_MspInit:000000000000004c $d
+     /tmp/ccILwLbs.s:90     .text.HAL_ADC_MspInit:0000000000000000 $t
+     /tmp/ccILwLbs.s:97     .text.HAL_ADC_MspInit:0000000000000000 HAL_ADC_MspInit
+     /tmp/ccILwLbs.s:233    .text.HAL_ADC_MspInit:00000000000000ac $d
+     /tmp/ccILwLbs.s:242    .text.HAL_ADC_MspDeInit:0000000000000000 $t
+     /tmp/ccILwLbs.s:249    .text.HAL_ADC_MspDeInit:0000000000000000 HAL_ADC_MspDeInit
+     /tmp/ccILwLbs.s:295    .text.HAL_ADC_MspDeInit:0000000000000030 $d
+     /tmp/ccILwLbs.s:303    .text.HAL_CAN_MspInit:0000000000000000 $t
+     /tmp/ccILwLbs.s:310    .text.HAL_CAN_MspInit:0000000000000000 HAL_CAN_MspInit
+     /tmp/ccILwLbs.s:509    .text.HAL_CAN_MspInit:0000000000000118 $d
+     /tmp/ccILwLbs.s:520    .text.HAL_CAN_MspDeInit:0000000000000000 $t
+     /tmp/ccILwLbs.s:527    .text.HAL_CAN_MspDeInit:0000000000000000 HAL_CAN_MspDeInit
+     /tmp/ccILwLbs.s:612    .text.HAL_CAN_MspDeInit:000000000000006c $d
+     /tmp/ccILwLbs.s:622    .text.HAL_TIM_PWM_MspInit:0000000000000000 $t
+     /tmp/ccILwLbs.s:629    .text.HAL_TIM_PWM_MspInit:0000000000000000 HAL_TIM_PWM_MspInit
+     /tmp/ccILwLbs.s:670    .text.HAL_TIM_PWM_MspInit:0000000000000028 $d
+     /tmp/ccILwLbs.s:675    .text.HAL_TIM_OC_MspInit:0000000000000000 $t
+     /tmp/ccILwLbs.s:682    .text.HAL_TIM_OC_MspInit:0000000000000000 HAL_TIM_OC_MspInit
+     /tmp/ccILwLbs.s:867    .text.HAL_TIM_OC_MspInit:00000000000000f0 $d
+     /tmp/ccILwLbs.s:879    .text.HAL_TIM_Base_MspInit:0000000000000000 $t
+     /tmp/ccILwLbs.s:886    .text.HAL_TIM_Base_MspInit:0000000000000000 HAL_TIM_Base_MspInit
+     /tmp/ccILwLbs.s:927    .text.HAL_TIM_Base_MspInit:0000000000000028 $d
+     /tmp/ccILwLbs.s:932    .text.HAL_TIM_MspPostInit:0000000000000000 $t
+     /tmp/ccILwLbs.s:939    .text.HAL_TIM_MspPostInit:0000000000000000 HAL_TIM_MspPostInit
+     /tmp/ccILwLbs.s:1050   .text.HAL_TIM_MspPostInit:0000000000000084 $d
+     /tmp/ccILwLbs.s:1060   .text.HAL_TIM_PWM_MspDeInit:0000000000000000 $t
+     /tmp/ccILwLbs.s:1067   .text.HAL_TIM_PWM_MspDeInit:0000000000000000 HAL_TIM_PWM_MspDeInit
+     /tmp/ccILwLbs.s:1093   .text.HAL_TIM_PWM_MspDeInit:0000000000000018 $d
+     /tmp/ccILwLbs.s:1099   .text.HAL_TIM_OC_MspDeInit:0000000000000000 $t
+     /tmp/ccILwLbs.s:1106   .text.HAL_TIM_OC_MspDeInit:0000000000000000 HAL_TIM_OC_MspDeInit
+     /tmp/ccILwLbs.s:1164   .text.HAL_TIM_OC_MspDeInit:0000000000000040 $d
+     /tmp/ccILwLbs.s:1170   .text.HAL_TIM_Base_MspDeInit:0000000000000000 $t
+     /tmp/ccILwLbs.s:1177   .text.HAL_TIM_Base_MspDeInit:0000000000000000 HAL_TIM_Base_MspDeInit
+     /tmp/ccILwLbs.s:1203   .text.HAL_TIM_Base_MspDeInit:0000000000000018 $d
+     /tmp/ccILwLbs.s:1209   .text.HAL_UART_MspInit:0000000000000000 $t
+     /tmp/ccILwLbs.s:1216   .text.HAL_UART_MspInit:0000000000000000 HAL_UART_MspInit
+     /tmp/ccILwLbs.s:1367   .text.HAL_UART_MspInit:00000000000000c8 $d
+     /tmp/ccILwLbs.s:1376   .text.HAL_UART_MspDeInit:0000000000000000 $t
+     /tmp/ccILwLbs.s:1383   .text.HAL_UART_MspDeInit:0000000000000000 HAL_UART_MspDeInit
+     /tmp/ccILwLbs.s:1439   .text.HAL_UART_MspDeInit:0000000000000044 $d
+     /tmp/ccILwLbs.s:1447   .bss.HAL_RCC_CAN1_CLK_ENABLED:0000000000000000 $d
+     /tmp/ccILwLbs.s:1451   .bss.HAL_RCC_CAN1_CLK_ENABLED:0000000000000000 HAL_RCC_CAN1_CLK_ENABLED
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
@@ -2435,7 +2435,7 @@ hdma_adc1
 HAL_GPIO_DeInit
 HAL_DMA_DeInit
 HAL_NVIC_EnableIRQ
-ARM GAS  /tmp/ccJ91hH3.s 			page 42
+ARM GAS  /tmp/ccILwLbs.s 			page 42
 
 
 HAL_NVIC_DisableIRQ

@@ -2,8 +2,8 @@
 #define __TEST
 
 #include "can_setup.h"
-#define  PASSIVE  
-//#define  ACTIVE  
+//#define  PASSIVE  
+#define  ACTIVE  
 
 void testVal(void);
 

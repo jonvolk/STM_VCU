@@ -12,22 +12,34 @@ void gaugeInit(void)
 
 void updateTach(volatile uint16_t amps)
 {
-    int freq = (amps * 100) / 315;
-    TIM1->ARR = (CPU / freq / TIM1->PSC)-1;
-    TIM1->CCR1 = (TIM1->ARR) / 2; //50% duty variable frequency
+    int freq = 0;
+    if (amps > 50)
+    {
+        freq = (amps * 100) / 315;
+    }
+
+    TIM1->CNT = 0;
+    TIM1->ARR = CPU / freq / TIM1->PSC; 
+    TIM1->CCR1 = TIM1->ARR / 2;         //50% duty variable frequency
 }
 
 void updateSpeed(volatile uint16_t motorRPM)
 {
-    int freq = motorRPM / 71;
-    TIM3->ARR = ((CPU / freq) / TIM3->PSC)-1;
-    TIM3->CCR3 = (TIM3->ARR) / 2; //50% duty variable frequency
+    int freq = 0;
+    if (motorRPM > 900)
+    {
+        freq = motorRPM / 71;
+    }
+
+    TIM3->CNT = 0;
+    TIM3->ARR = CPU / freq / TIM3->PSC; 
+    TIM3->CCR3 = TIM3->ARR / 2;           //50% duty variable frequency
 }
 
 void updateTemp(volatile uint16_t temp)
 {
 
-    uint16_t highPulse = MAP(temp, 0, 90, 19, 95); //gauge range calibration
+    uint16_t highPulse = MAP(temp, 0, 90, 19, 55); //gauge range calibration  
 
     for (size_t i = 0; i < highPulse; i++)
     {
@@ -43,15 +55,14 @@ void updateTemp(volatile uint16_t temp)
 void updateSOC(volatile uint16_t soc)
 {
     uint16_t highPulse = MAP(soc, 1, 100, 400, 880); //gauge range calibration
-    
+
     for (size_t i = 0; i < highPulse; i++)
     {
-        socPWM[i] = (uint32_t)SOC_Pin; 
+        socPWM[i] = (uint32_t)SOC_Pin;
     }
 
     for (size_t i = highPulse; i < 1000; i++)
     {
         socPWM[i] = (uint32_t)SOC_Pin << 16U;
-    
     }
 }

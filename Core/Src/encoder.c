@@ -85,7 +85,7 @@ void encoderHandler(void)
         case WINDOWS:
             setWidget(NTRL_REQ, 0, 0);
             break;
-     
+
         default:
             break;
         }
@@ -112,7 +112,8 @@ void encoderHandler(void)
     /////// Gear Selection Screens /////////
     case FWD_REQ:
 
-        vcu.dio = FORWARD;
+        //vcu.dio = FORWARD;
+        canIOset(forward, ON);
         if (ldu.dir == FWD)
         {
             setWidget(FWD_CFM, 0, 0);
@@ -128,7 +129,8 @@ void encoderHandler(void)
         break;
 
     case NTRL_REQ:
-        vcu.dio = NUETRAL;
+        canIOset(forward, OFF);
+        canIOset(reverse, OFF);
         if (ldu.dir == NTRL)
         {
             setWidget(NTRL_CFM, 0, 0);
@@ -136,7 +138,8 @@ void encoderHandler(void)
         break;
 
     case REV_REQ:
-        vcu.dio = REVERSE;
+        //vcu.dio = REVERSE;
+        canIOset(reverse, ON);
         if (ldu.dir == REV)
         {
             setWidget(REV_CFM, 0, 0);
@@ -149,7 +152,6 @@ void encoderHandler(void)
         setWidget(BATTERY, BATT_TEMP, BMS[0].temp);
         break;
 
-
     ////////// Launch Control ////////////////////////
     case LAUNCH:
         if (vcu.state != launchMode)
@@ -157,6 +159,22 @@ void encoderHandler(void)
             setWidget(HOME, 0, 0);
         }
         break;
+
+    ////////// Burnout Mode //////////////////////////////
+    case PRE_BURNOUT:
+        if (ldu.pot > 4025 && iboost.pedal > 650)
+        {
+            vcu.burnFlag = ON;
+            setWidget(READY_BURNOUT, 0, 0);
+        }
+        break;
+
+    case READY_BURNOUT:  //HOME BUTTON DISBLED
+        if (ldu.pot < 1000)
+        {
+            vcu.burnFlag = OFF;
+            setWidget(HOME, 0, 0);  
+        }
 
     default:
         break;

@@ -33,11 +33,11 @@ Bit 5: bms
 #define FSLIP_MIN 5
 #define FSLIP_MAX 6
 #define THROTMAX 34
+#define THROTRAMP 51
 #define BRAKE_NOM_PEDAL 55
 #define BRAKE_PEDAL_RAMP 56
 #define IDLE_THROT_LIM 63
-#define IDLE_MODE 64  
-#define THROTRAMP
+#define IDLE_MODE 64
 
 //LDU Direction
 #define FWD 255
@@ -91,15 +91,16 @@ iBooster_t iboost;
 typedef struct vcu_t
 {
     volatile uint8_t dio;
-    volatile uint8_t gear;
-    volatile uint8_t mode;
+    //volatile uint8_t gear;
+    //volatile uint8_t mode;
     volatile uint8_t key;
     volatile uint8_t charge;
     volatile uint8_t chargeReq;
-    volatile uint16_t hp;
-    volatile uint32_t sprint60;
+    //volatile uint16_t hp;
+    //volatile uint32_t sprint60;
     volatile uint8_t state;
     volatile uint8_t launchFlag;
+    volatile uint8_t burnFlag;
 
 } vcu_t;
 vcu_t vcu;
@@ -145,6 +146,7 @@ typedef enum vcuStates
     idle,         //key on, inverter on
     run,          //key on direction selected
     launchMode,   //break shit
+    burnout,      //destroy tires
 } vcuStates;
 
 void vcuInit(void);
@@ -152,6 +154,7 @@ void decodeCAN(CAN_RxHeaderTypeDef *rxMsg, uint8_t *canRx);
 void canIOset(int bit, int val);
 void canIOsend(void);
 void vcuState(void);
+void brakeHandler(void);
 void ioHandler(void);
 void regenHandler(void);
 void throttleHandler(void);

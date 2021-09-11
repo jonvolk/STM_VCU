@@ -5,10 +5,10 @@ void wpHandler(void)
     switch (vcu.state)
     {
     case run:
-        if (ldu.dir == FWD)
+        if (ldu.dir == FWD || ldu.dir == REV)
         {
-            int throttleDuty = MAP(ldu.pot, 870, 4095, 40, 100);
-            int tempDuty = MAP(ldu.hsTemp, 0, 85, 40, 100);
+            int throttleDuty = MAP(ldu.pot, 870, 4095, 50, 100);
+            int tempDuty = MAP(ldu.hsTemp, 0, 85, 50, 100);
 
             if (tempDuty > throttleDuty)
             {
