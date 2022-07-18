@@ -7,8 +7,8 @@ void wpHandler(void)
     case run:
         if (ldu.dir == FWD || ldu.dir == REV)
         {
-            int throttleDuty = MAP(ldu.pot, 870, 4095, 50, 100);
-            int tempDuty = MAP(ldu.hsTemp, 0, 85, 50, 100);
+            int throttleDuty = MAP(ldu.pot, 870, 4095, 100, 100);
+            int tempDuty = MAP(ldu.hsTemp, 0, 85, 100, 100);
 
             if (tempDuty > throttleDuty)
             {
@@ -19,6 +19,9 @@ void wpHandler(void)
                 wpDuty(throttleDuty);
             }
         }
+
+
+        
         else
         {
             wpDuty(0);
@@ -28,7 +31,7 @@ void wpHandler(void)
 
     case charge_keyOff:
     case charge_keyOn:
-        wpDuty(50);
+        wpDuty(100);   
         break;
 
     case off:

@@ -1,0 +1,832 @@
+ARM GAS  /tmp/ccbZicWi.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"dynamics.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.global	__aeabi_dmul
+  16              		.global	__aeabi_ddiv
+  17              		.section	.text.deg2rad,"ax",%progbits
+  18              		.align	1
+  19              		.global	deg2rad
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu softvfp
+  25              	deg2rad:
+  26              	.LFB67:
+  27              		.file 1 "Core/Inc/distance.h"
+   1:Core/Inc/distance.h **** #if !defined(__DISTANCE_H__)
+   2:Core/Inc/distance.h **** #define __DISTANCE_H__
+   3:Core/Inc/distance.h **** 
+   4:Core/Inc/distance.h **** /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+   5:Core/Inc/distance.h **** /*::                                                                         :*/
+   6:Core/Inc/distance.h **** /*::  This routine calculates the distance between two points (given the     :*/
+   7:Core/Inc/distance.h **** /*::  latitude/longitude of those points). It is being used to calculate     :*/
+   8:Core/Inc/distance.h **** /*::  the distance between two locations using GeoDataSource(TM) products.   :*/
+   9:Core/Inc/distance.h **** /*::                                                                         :*/
+  10:Core/Inc/distance.h **** /*::  Definitions:                                                           :*/
+  11:Core/Inc/distance.h **** /*::    South latitudes are negative, east longitudes are positive           :*/
+  12:Core/Inc/distance.h **** /*::                                                                         :*/
+  13:Core/Inc/distance.h **** /*::  Passed to function:                                                    :*/
+  14:Core/Inc/distance.h **** /*::    lat1, lon1 = Latitude and Longitude of point 1 (in decimal degrees)  :*/
+  15:Core/Inc/distance.h **** /*::    lat2, lon2 = Latitude and Longitude of point 2 (in decimal degrees)  :*/
+  16:Core/Inc/distance.h **** /*::    unit = the unit you desire for results                               :*/
+  17:Core/Inc/distance.h **** /*::           where: 'M' is statute miles (default)                         :*/
+  18:Core/Inc/distance.h **** /*::                  'K' is kilometers                                      :*/
+  19:Core/Inc/distance.h **** /*::                  'N' is nautical miles                                  :*/
+  20:Core/Inc/distance.h **** /*::  Worldwide cities and other features databases with latitude longitude  :*/
+  21:Core/Inc/distance.h **** /*::  are available at https://www.geodatasource.com                         :*/
+  22:Core/Inc/distance.h **** /*::                                                                         :*/
+  23:Core/Inc/distance.h **** /*::  For enquiries, please contact sales@geodatasource.com                  :*/
+  24:Core/Inc/distance.h **** /*::                                                                         :*/
+  25:Core/Inc/distance.h **** /*::  Official Web site: https://www.geodatasource.com                       :*/
+  26:Core/Inc/distance.h **** /*::                                                                         :*/
+  27:Core/Inc/distance.h **** /*::           GeoDataSource.com (C) All Rights Reserved 2018                :*/
+  28:Core/Inc/distance.h **** /*::                                                                         :*/
+  29:Core/Inc/distance.h **** /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  30:Core/Inc/distance.h **** 
+  31:Core/Inc/distance.h **** #include <math.h>
+ARM GAS  /tmp/ccbZicWi.s 			page 2
+
+
+  32:Core/Inc/distance.h **** #include "my_math.h"
+  33:Core/Inc/distance.h **** 
+  34:Core/Inc/distance.h **** #define pi 3.14159265358979323846
+  35:Core/Inc/distance.h **** 
+  36:Core/Inc/distance.h **** /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  37:Core/Inc/distance.h **** /*::  Function prototypes                                           :*/
+  38:Core/Inc/distance.h **** /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  39:Core/Inc/distance.h **** double deg2rad(double);
+  40:Core/Inc/distance.h **** double rad2deg(double);
+  41:Core/Inc/distance.h **** 
+  42:Core/Inc/distance.h **** double distance(double lat1, double lon1, double lat2, double lon2, char unit)
+  43:Core/Inc/distance.h **** {
+  44:Core/Inc/distance.h ****     double theta, dist;
+  45:Core/Inc/distance.h ****     if ((lat1 == lat2) && (lon1 == lon2))
+  46:Core/Inc/distance.h ****     {
+  47:Core/Inc/distance.h ****         return 0;
+  48:Core/Inc/distance.h ****     }
+  49:Core/Inc/distance.h ****     else
+  50:Core/Inc/distance.h ****     {
+  51:Core/Inc/distance.h ****         theta = lon1 - lon2;
+  52:Core/Inc/distance.h ****         dist = sin(deg2rad(lat1)) * sin(deg2rad(lat2)) + cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * 
+  53:Core/Inc/distance.h ****         dist = acos(dist);
+  54:Core/Inc/distance.h ****         dist = rad2deg(dist);
+  55:Core/Inc/distance.h ****         dist = dist * 60 * 1.1515;
+  56:Core/Inc/distance.h ****         switch (unit)
+  57:Core/Inc/distance.h ****         {
+  58:Core/Inc/distance.h ****         case 'M':
+  59:Core/Inc/distance.h ****             break;
+  60:Core/Inc/distance.h ****         case 'K':
+  61:Core/Inc/distance.h ****             dist = dist * 1.609344;
+  62:Core/Inc/distance.h ****             break;
+  63:Core/Inc/distance.h ****         case 'N':
+  64:Core/Inc/distance.h ****             dist = dist * 0.8684;
+  65:Core/Inc/distance.h ****             break;
+  66:Core/Inc/distance.h ****         }
+  67:Core/Inc/distance.h ****         return (dist);
+  68:Core/Inc/distance.h ****     }
+  69:Core/Inc/distance.h **** }
+  70:Core/Inc/distance.h **** 
+  71:Core/Inc/distance.h **** /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  72:Core/Inc/distance.h **** /*::  This function converts decimal degrees to radians             :*/
+  73:Core/Inc/distance.h **** /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  74:Core/Inc/distance.h **** double deg2rad(double deg)
+  75:Core/Inc/distance.h **** {
+  28              		.loc 1 75 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+  76:Core/Inc/distance.h ****     return (deg * pi / 180);
+  38              		.loc 1 76 0
+  39 0002 05A3     		adr	r3, .L3
+ARM GAS  /tmp/ccbZicWi.s 			page 3
+
+
+  40 0004 D3E90023 		ldrd	r2, [r3]
+  41 0008 FFF7FEFF 		bl	__aeabi_dmul
+  42              	.LVL1:
+  43 000c 0022     		movs	r2, #0
+  44 000e 044B     		ldr	r3, .L3+8
+  45 0010 FFF7FEFF 		bl	__aeabi_ddiv
+  46              	.LVL2:
+  77:Core/Inc/distance.h **** }
+  47              		.loc 1 77 0
+  48 0014 08BD     		pop	{r3, pc}
+  49              	.L4:
+  50 0016 00BF     		.align	3
+  51              	.L3:
+  52 0018 182D4454 		.word	1413754136
+  53 001c FB210940 		.word	1074340347
+  54 0020 00806640 		.word	1080459264
+  55              		.cfi_endproc
+  56              	.LFE67:
+  58              		.section	.text.rad2deg,"ax",%progbits
+  59              		.align	1
+  60              		.global	rad2deg
+  61              		.syntax unified
+  62              		.thumb
+  63              		.thumb_func
+  64              		.fpu softvfp
+  66              	rad2deg:
+  67              	.LFB68:
+  78:Core/Inc/distance.h **** 
+  79:Core/Inc/distance.h **** /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  80:Core/Inc/distance.h **** /*::  This function converts radians to decimal degrees             :*/
+  81:Core/Inc/distance.h **** /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  82:Core/Inc/distance.h **** double rad2deg(double rad)
+  83:Core/Inc/distance.h **** {
+  68              		.loc 1 83 0
+  69              		.cfi_startproc
+  70              		@ args = 0, pretend = 0, frame = 0
+  71              		@ frame_needed = 0, uses_anonymous_args = 0
+  72              	.LVL3:
+  73 0000 08B5     		push	{r3, lr}
+  74              	.LCFI1:
+  75              		.cfi_def_cfa_offset 8
+  76              		.cfi_offset 3, -8
+  77              		.cfi_offset 14, -4
+  84:Core/Inc/distance.h ****     return (rad * 180 / pi);
+  78              		.loc 1 84 0
+  79 0002 0022     		movs	r2, #0
+  80 0004 064B     		ldr	r3, .L7+8
+  81 0006 FFF7FEFF 		bl	__aeabi_dmul
+  82              	.LVL4:
+  83 000a 03A3     		adr	r3, .L7
+  84 000c D3E90023 		ldrd	r2, [r3]
+  85 0010 FFF7FEFF 		bl	__aeabi_ddiv
+  86              	.LVL5:
+  85:Core/Inc/distance.h **** }
+  87              		.loc 1 85 0
+  88 0014 08BD     		pop	{r3, pc}
+  89              	.L8:
+ARM GAS  /tmp/ccbZicWi.s 			page 4
+
+
+  90 0016 00BF     		.align	3
+  91              	.L7:
+  92 0018 182D4454 		.word	1413754136
+  93 001c FB210940 		.word	1074340347
+  94 0020 00806640 		.word	1080459264
+  95              		.cfi_endproc
+  96              	.LFE68:
+  98              		.global	__aeabi_dcmpeq
+  99              		.global	__aeabi_dsub
+ 100              		.global	__aeabi_dadd
+ 101              		.section	.text.distance,"ax",%progbits
+ 102              		.align	1
+ 103              		.global	distance
+ 104              		.syntax unified
+ 105              		.thumb
+ 106              		.thumb_func
+ 107              		.fpu softvfp
+ 109              	distance:
+ 110              	.LFB66:
+  43:Core/Inc/distance.h ****     double theta, dist;
+ 111              		.loc 1 43 0
+ 112              		.cfi_startproc
+ 113              		@ args = 20, pretend = 0, frame = 16
+ 114              		@ frame_needed = 0, uses_anonymous_args = 0
+ 115              	.LVL6:
+ 116 0000 2DE9D04F 		push	{r4, r6, r7, r8, r9, r10, fp, lr}
+ 117              	.LCFI2:
+ 118              		.cfi_def_cfa_offset 32
+ 119              		.cfi_offset 4, -32
+ 120              		.cfi_offset 6, -28
+ 121              		.cfi_offset 7, -24
+ 122              		.cfi_offset 8, -20
+ 123              		.cfi_offset 9, -16
+ 124              		.cfi_offset 10, -12
+ 125              		.cfi_offset 11, -8
+ 126              		.cfi_offset 14, -4
+ 127 0004 84B0     		sub	sp, sp, #16
+ 128              	.LCFI3:
+ 129              		.cfi_def_cfa_offset 48
+ 130 0006 0646     		mov	r6, r0
+ 131 0008 0F46     		mov	r7, r1
+ 132 000a 9046     		mov	r8, r2
+ 133 000c 9946     		mov	r9, r3
+ 134 000e 9DF84040 		ldrb	r4, [sp, #64]	@ zero_extendqisi2
+  45:Core/Inc/distance.h ****     {
+ 135              		.loc 1 45 0
+ 136 0012 DDE90C23 		ldrd	r2, [sp, #48]
+ 137              	.LVL7:
+ 138 0016 FFF7FEFF 		bl	__aeabi_dcmpeq
+ 139              	.LVL8:
+ 140 001a 38B1     		cbz	r0, .L10
+  45:Core/Inc/distance.h ****     {
+ 141              		.loc 1 45 0 is_stmt 0 discriminator 1
+ 142 001c DDE90E23 		ldrd	r2, [sp, #56]
+ 143 0020 4046     		mov	r0, r8
+ 144 0022 4946     		mov	r1, r9
+ 145 0024 FFF7FEFF 		bl	__aeabi_dcmpeq
+ARM GAS  /tmp/ccbZicWi.s 			page 5
+
+
+ 146              	.LVL9:
+ 147 0028 0028     		cmp	r0, #0
+ 148 002a 62D1     		bne	.L15
+ 149              	.L10:
+  51:Core/Inc/distance.h ****         dist = sin(deg2rad(lat1)) * sin(deg2rad(lat2)) + cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * 
+ 150              		.loc 1 51 0 is_stmt 1
+ 151 002c DDE90E23 		ldrd	r2, [sp, #56]
+ 152 0030 4046     		mov	r0, r8
+ 153 0032 4946     		mov	r1, r9
+ 154 0034 FFF7FEFF 		bl	__aeabi_dsub
+ 155              	.LVL10:
+ 156 0038 8046     		mov	r8, r0
+ 157 003a 8946     		mov	r9, r1
+ 158              	.LVL11:
+  52:Core/Inc/distance.h ****         dist = acos(dist);
+ 159              		.loc 1 52 0
+ 160 003c 3046     		mov	r0, r6
+ 161 003e 3946     		mov	r1, r7
+ 162 0040 FFF7FEFF 		bl	deg2rad
+ 163              	.LVL12:
+ 164 0044 CDE90001 		strd	r0, [sp]
+ 165 0048 FFF7FEFF 		bl	sin
+ 166              	.LVL13:
+ 167 004c 0646     		mov	r6, r0
+ 168 004e 0F46     		mov	r7, r1
+ 169 0050 DDE90C01 		ldrd	r0, [sp, #48]
+ 170 0054 FFF7FEFF 		bl	deg2rad
+ 171              	.LVL14:
+ 172 0058 CDE90201 		strd	r0, [sp, #8]
+ 173 005c FFF7FEFF 		bl	sin
+ 174              	.LVL15:
+ 175 0060 0246     		mov	r2, r0
+ 176 0062 0B46     		mov	r3, r1
+ 177 0064 3046     		mov	r0, r6
+ 178 0066 3946     		mov	r1, r7
+ 179 0068 FFF7FEFF 		bl	__aeabi_dmul
+ 180              	.LVL16:
+ 181 006c 8246     		mov	r10, r0
+ 182 006e 8B46     		mov	fp, r1
+ 183 0070 DDE90001 		ldrd	r0, [sp]
+ 184 0074 FFF7FEFF 		bl	cos
+ 185              	.LVL17:
+ 186 0078 0646     		mov	r6, r0
+ 187 007a 0F46     		mov	r7, r1
+ 188 007c DDE90201 		ldrd	r0, [sp, #8]
+ 189 0080 FFF7FEFF 		bl	cos
+ 190              	.LVL18:
+ 191 0084 0246     		mov	r2, r0
+ 192 0086 0B46     		mov	r3, r1
+ 193 0088 3046     		mov	r0, r6
+ 194 008a 3946     		mov	r1, r7
+ 195 008c FFF7FEFF 		bl	__aeabi_dmul
+ 196              	.LVL19:
+ 197 0090 0646     		mov	r6, r0
+ 198 0092 0F46     		mov	r7, r1
+ 199 0094 4046     		mov	r0, r8
+ 200 0096 4946     		mov	r1, r9
+ARM GAS  /tmp/ccbZicWi.s 			page 6
+
+
+ 201 0098 FFF7FEFF 		bl	deg2rad
+ 202              	.LVL20:
+ 203 009c FFF7FEFF 		bl	cos
+ 204              	.LVL21:
+ 205 00a0 0246     		mov	r2, r0
+ 206 00a2 0B46     		mov	r3, r1
+ 207 00a4 3046     		mov	r0, r6
+ 208 00a6 3946     		mov	r1, r7
+ 209 00a8 FFF7FEFF 		bl	__aeabi_dmul
+ 210              	.LVL22:
+ 211 00ac 0246     		mov	r2, r0
+ 212 00ae 0B46     		mov	r3, r1
+ 213 00b0 5046     		mov	r0, r10
+ 214 00b2 5946     		mov	r1, fp
+ 215 00b4 FFF7FEFF 		bl	__aeabi_dadd
+ 216              	.LVL23:
+  53:Core/Inc/distance.h ****         dist = rad2deg(dist);
+ 217              		.loc 1 53 0
+ 218 00b8 FFF7FEFF 		bl	acos
+ 219              	.LVL24:
+  54:Core/Inc/distance.h ****         dist = dist * 60 * 1.1515;
+ 220              		.loc 1 54 0
+ 221 00bc FFF7FEFF 		bl	rad2deg
+ 222              	.LVL25:
+  55:Core/Inc/distance.h ****         switch (unit)
+ 223              		.loc 1 55 0
+ 224 00c0 0022     		movs	r2, #0
+ 225 00c2 154B     		ldr	r3, .L18+24
+ 226 00c4 FFF7FEFF 		bl	__aeabi_dmul
+ 227              	.LVL26:
+ 228 00c8 0DA3     		adr	r3, .L18
+ 229 00ca D3E90023 		ldrd	r2, [r3]
+ 230 00ce FFF7FEFF 		bl	__aeabi_dmul
+ 231              	.LVL27:
+  56:Core/Inc/distance.h ****         {
+ 232              		.loc 1 56 0
+ 233 00d2 4B2C     		cmp	r4, #75
+ 234 00d4 07D0     		beq	.L13
+ 235 00d6 4E2C     		cmp	r4, #78
+ 236 00d8 0DD1     		bne	.L9
+  64:Core/Inc/distance.h ****             break;
+ 237              		.loc 1 64 0
+ 238 00da 0BA3     		adr	r3, .L18+8
+ 239 00dc D3E90023 		ldrd	r2, [r3]
+ 240 00e0 FFF7FEFF 		bl	__aeabi_dmul
+ 241              	.LVL28:
+  65:Core/Inc/distance.h ****         }
+ 242              		.loc 1 65 0
+ 243 00e4 07E0     		b	.L9
+ 244              	.L13:
+  61:Core/Inc/distance.h ****             break;
+ 245              		.loc 1 61 0
+ 246 00e6 0AA3     		adr	r3, .L18+16
+ 247 00e8 D3E90023 		ldrd	r2, [r3]
+ 248 00ec FFF7FEFF 		bl	__aeabi_dmul
+ 249              	.LVL29:
+  62:Core/Inc/distance.h ****         case 'N':
+ARM GAS  /tmp/ccbZicWi.s 			page 7
+
+
+ 250              		.loc 1 62 0
+ 251 00f0 01E0     		b	.L9
+ 252              	.LVL30:
+ 253              	.L15:
+  47:Core/Inc/distance.h ****     }
+ 254              		.loc 1 47 0
+ 255 00f2 0020     		movs	r0, #0
+ 256 00f4 0021     		movs	r1, #0
+ 257              	.L9:
+  69:Core/Inc/distance.h **** 
+ 258              		.loc 1 69 0
+ 259 00f6 04B0     		add	sp, sp, #16
+ 260              	.LCFI4:
+ 261              		.cfi_def_cfa_offset 32
+ 262              		@ sp needed
+ 263 00f8 BDE8D08F 		pop	{r4, r6, r7, r8, r9, r10, fp, pc}
+ 264              	.LVL31:
+ 265              	.L19:
+ 266 00fc AFF30080 		.align	3
+ 267              	.L18:
+ 268 0100 06819543 		.word	1133871366
+ 269 0104 8B6CF23F 		.word	1072852107
+ 270 0108 B515FBCB 		.word	3422229941
+ 271 010c EEC9EB3F 		.word	1072417262
+ 272 0110 A038807E 		.word	2122332320
+ 273 0114 DFBFF93F 		.word	1073332191
+ 274 0118 00004E40 		.word	1078853632
+ 275              		.cfi_endproc
+ 276              	.LFE66:
+ 278              		.global	__aeabi_f2iz
+ 279              		.section	.text.zero2sixty,"ax",%progbits
+ 280              		.align	1
+ 281              		.global	zero2sixty
+ 282              		.syntax unified
+ 283              		.thumb
+ 284              		.thumb_func
+ 285              		.fpu softvfp
+ 287              	zero2sixty:
+ 288              	.LFB69:
+ 289              		.file 2 "Core/Src/dynamics.c"
+   1:Core/Src/dynamics.c **** #include "dynamics.h"
+   2:Core/Src/dynamics.c **** 
+   3:Core/Src/dynamics.c **** int zero2sixty(void)
+   4:Core/Src/dynamics.c **** {
+ 290              		.loc 2 4 0
+ 291              		.cfi_startproc
+ 292              		@ args = 0, pretend = 0, frame = 0
+ 293              		@ frame_needed = 0, uses_anonymous_args = 0
+ 294 0000 08B5     		push	{r3, lr}
+ 295              	.LCFI5:
+ 296              		.cfi_def_cfa_offset 8
+ 297              		.cfi_offset 3, -8
+ 298              		.cfi_offset 14, -4
+   5:Core/Src/dynamics.c ****     return GPS.lon;
+ 299              		.loc 2 5 0
+ 300 0002 024B     		ldr	r3, .L22
+ 301 0004 5868     		ldr	r0, [r3, #4]	@ float
+ARM GAS  /tmp/ccbZicWi.s 			page 8
+
+
+ 302 0006 FFF7FEFF 		bl	__aeabi_f2iz
+ 303              	.LVL32:
+   6:Core/Src/dynamics.c **** }
+ 304              		.loc 2 6 0
+ 305 000a 08BD     		pop	{r3, pc}
+ 306              	.L23:
+ 307              		.align	2
+ 308              	.L22:
+ 309 000c 00000000 		.word	GPS
+ 310              		.cfi_endproc
+ 311              	.LFE69:
+ 313              		.section	.text.getPitch,"ax",%progbits
+ 314              		.align	1
+ 315              		.global	getPitch
+ 316              		.syntax unified
+ 317              		.thumb
+ 318              		.thumb_func
+ 319              		.fpu softvfp
+ 321              	getPitch:
+ 322              	.LFB70:
+   7:Core/Src/dynamics.c **** 
+   8:Core/Src/dynamics.c **** int getPitch(void)
+   9:Core/Src/dynamics.c **** {
+ 323              		.loc 2 9 0
+ 324              		.cfi_startproc
+ 325              		@ args = 0, pretend = 0, frame = 0
+ 326              		@ frame_needed = 0, uses_anonymous_args = 0
+ 327 0000 08B5     		push	{r3, lr}
+ 328              	.LCFI6:
+ 329              		.cfi_def_cfa_offset 8
+ 330              		.cfi_offset 3, -8
+ 331              		.cfi_offset 14, -4
+  10:Core/Src/dynamics.c ****     return GPS.lat;
+ 332              		.loc 2 10 0
+ 333 0002 024B     		ldr	r3, .L26
+ 334 0004 1868     		ldr	r0, [r3]	@ float
+ 335 0006 FFF7FEFF 		bl	__aeabi_f2iz
+ 336              	.LVL33:
+  11:Core/Src/dynamics.c **** }
+ 337              		.loc 2 11 0
+ 338 000a 08BD     		pop	{r3, pc}
+ 339              	.L27:
+ 340              		.align	2
+ 341              	.L26:
+ 342 000c 00000000 		.word	GPS
+ 343              		.cfi_endproc
+ 344              	.LFE70:
+ 346              		.global	__aeabi_i2f
+ 347              		.section	.text.getDynamics,"ax",%progbits
+ 348              		.align	1
+ 349              		.global	getDynamics
+ 350              		.syntax unified
+ 351              		.thumb
+ 352              		.thumb_func
+ 353              		.fpu softvfp
+ 355              	getDynamics:
+ 356              	.LFB71:
+ARM GAS  /tmp/ccbZicWi.s 			page 9
+
+
+  12:Core/Src/dynamics.c **** 
+  13:Core/Src/dynamics.c **** void getDynamics(CAN_RxHeaderTypeDef *rxMsg, uint8_t *canRx)
+  14:Core/Src/dynamics.c **** {
+ 357              		.loc 2 14 0
+ 358              		.cfi_startproc
+ 359              		@ args = 0, pretend = 0, frame = 0
+ 360              		@ frame_needed = 0, uses_anonymous_args = 0
+ 361              	.LVL34:
+ 362 0000 38B5     		push	{r3, r4, r5, lr}
+ 363              	.LCFI7:
+ 364              		.cfi_def_cfa_offset 16
+ 365              		.cfi_offset 3, -16
+ 366              		.cfi_offset 4, -12
+ 367              		.cfi_offset 5, -8
+ 368              		.cfi_offset 14, -4
+  15:Core/Src/dynamics.c ****     switch (rxMsg->ExtId)
+ 369              		.loc 2 15 0
+ 370 0002 4368     		ldr	r3, [r0, #4]
+ 371 0004 A3F52023 		sub	r3, r3, #655360
+ 372 0008 042B     		cmp	r3, #4
+ 373 000a 67D8     		bhi	.L28
+ 374 000c DFE803F0 		tbb	[pc, r3]
+ 375              	.L31:
+ 376 0010 03       		.byte	(.L30-.L31)/2
+ 377 0011 20       		.byte	(.L32-.L31)/2
+ 378 0012 35       		.byte	(.L33-.L31)/2
+ 379 0013 45       		.byte	(.L34-.L31)/2
+ 380 0014 56       		.byte	(.L35-.L31)/2
+ 381 0015 00       		.p2align 1
+ 382              	.L30:
+ 383 0016 0C46     		mov	r4, r1
+  16:Core/Src/dynamics.c ****     {
+  17:Core/Src/dynamics.c ****     case 0x0000A0000:
+  18:Core/Src/dynamics.c ****         GPS.lat = (canRx[0] << 24) + (canRx[1] << 16) + (canRx[2] << 8) + canRx[3];
+ 384              		.loc 2 18 0
+ 385 0018 0878     		ldrb	r0, [r1]	@ zero_extendqisi2
+ 386              	.LVL35:
+ 387 001a 4B78     		ldrb	r3, [r1, #1]	@ zero_extendqisi2
+ 388 001c 1B04     		lsls	r3, r3, #16
+ 389 001e 03EB0063 		add	r3, r3, r0, lsl #24
+ 390 0022 8878     		ldrb	r0, [r1, #2]	@ zero_extendqisi2
+ 391 0024 03EB0023 		add	r3, r3, r0, lsl #8
+ 392 0028 C878     		ldrb	r0, [r1, #3]	@ zero_extendqisi2
+ 393 002a 2D4D     		ldr	r5, .L37
+ 394 002c 1844     		add	r0, r0, r3
+ 395 002e FFF7FEFF 		bl	__aeabi_i2f
+ 396              	.LVL36:
+ 397 0032 2860     		str	r0, [r5]	@ float
+  19:Core/Src/dynamics.c ****         GPS.lon = (canRx[4] << 24) + (canRx[5] << 16) + (canRx[6] << 8) + canRx[7];
+ 398              		.loc 2 19 0
+ 399 0034 2079     		ldrb	r0, [r4, #4]	@ zero_extendqisi2
+ 400 0036 6379     		ldrb	r3, [r4, #5]	@ zero_extendqisi2
+ 401 0038 1B04     		lsls	r3, r3, #16
+ 402 003a 03EB0063 		add	r3, r3, r0, lsl #24
+ 403 003e A079     		ldrb	r0, [r4, #6]	@ zero_extendqisi2
+ 404 0040 03EB0023 		add	r3, r3, r0, lsl #8
+ 405 0044 E079     		ldrb	r0, [r4, #7]	@ zero_extendqisi2
+ARM GAS  /tmp/ccbZicWi.s 			page 10
+
+
+ 406 0046 1844     		add	r0, r0, r3
+ 407 0048 FFF7FEFF 		bl	__aeabi_i2f
+ 408              	.LVL37:
+ 409 004c 6860     		str	r0, [r5, #4]	@ float
+  20:Core/Src/dynamics.c ****         break;
+ 410              		.loc 2 20 0
+ 411 004e 38BD     		pop	{r3, r4, r5, pc}
+ 412              	.LVL38:
+ 413              	.L32:
+  21:Core/Src/dynamics.c **** 
+  22:Core/Src/dynamics.c ****     case 0x0000A0001:
+  23:Core/Src/dynamics.c ****         GPS.speed = (canRx[0] << 8) + canRx[1];
+ 414              		.loc 2 23 0
+ 415 0050 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+ 416 0052 4A78     		ldrb	r2, [r1, #1]	@ zero_extendqisi2
+ 417 0054 02EB0322 		add	r2, r2, r3, lsl #8
+ 418 0058 214B     		ldr	r3, .L37
+ 419 005a 1A81     		strh	r2, [r3, #8]	@ movhi
+  24:Core/Src/dynamics.c ****         GPS.alt = (canRx[2] << 8) + canRx[3];
+ 420              		.loc 2 24 0
+ 421 005c 8878     		ldrb	r0, [r1, #2]	@ zero_extendqisi2
+ 422              	.LVL39:
+ 423 005e CA78     		ldrb	r2, [r1, #3]	@ zero_extendqisi2
+ 424 0060 02EB0022 		add	r2, r2, r0, lsl #8
+ 425 0064 5A81     		strh	r2, [r3, #10]	@ movhi
+  25:Core/Src/dynamics.c ****         GPS.course = (canRx[4] << 8) + canRx[5];
+ 426              		.loc 2 25 0
+ 427 0066 0879     		ldrb	r0, [r1, #4]	@ zero_extendqisi2
+ 428 0068 4A79     		ldrb	r2, [r1, #5]	@ zero_extendqisi2
+ 429 006a 02EB0022 		add	r2, r2, r0, lsl #8
+ 430 006e 9A81     		strh	r2, [r3, #12]	@ movhi
+  26:Core/Src/dynamics.c ****         GPS.speed = canRx[6];
+ 431              		.loc 2 26 0
+ 432 0070 8A79     		ldrb	r2, [r1, #6]	@ zero_extendqisi2
+ 433 0072 1A81     		strh	r2, [r3, #8]	@ movhi
+  27:Core/Src/dynamics.c ****         GPS.valid_10hz = canRx[7];
+ 434              		.loc 2 27 0
+ 435 0074 CA79     		ldrb	r2, [r1, #7]	@ zero_extendqisi2
+ 436 0076 DA73     		strb	r2, [r3, #15]
+  28:Core/Src/dynamics.c ****         break;
+ 437              		.loc 2 28 0
+ 438 0078 38BD     		pop	{r3, r4, r5, pc}
+ 439              	.LVL40:
+ 440              	.L33:
+  29:Core/Src/dynamics.c **** 
+  30:Core/Src/dynamics.c ****     case 0x0000A0002:
+  31:Core/Src/dynamics.c ****         UTC.valid_5hz = canRx[0];
+ 441              		.loc 2 31 0
+ 442 007a 0A78     		ldrb	r2, [r1]	@ zero_extendqisi2
+ 443 007c 194B     		ldr	r3, .L37+4
+ 444 007e 1A70     		strb	r2, [r3]
+  32:Core/Src/dynamics.c ****         UTC.year = canRx[1];
+ 445              		.loc 2 32 0
+ 446 0080 4A78     		ldrb	r2, [r1, #1]	@ zero_extendqisi2
+ 447 0082 5A70     		strb	r2, [r3, #1]
+  33:Core/Src/dynamics.c ****         UTC.month = canRx[2];
+ 448              		.loc 2 33 0
+ARM GAS  /tmp/ccbZicWi.s 			page 11
+
+
+ 449 0084 8A78     		ldrb	r2, [r1, #2]	@ zero_extendqisi2
+ 450 0086 9A70     		strb	r2, [r3, #2]
+  34:Core/Src/dynamics.c ****         UTC.day = canRx[3];
+ 451              		.loc 2 34 0
+ 452 0088 CA78     		ldrb	r2, [r1, #3]	@ zero_extendqisi2
+ 453 008a DA70     		strb	r2, [r3, #3]
+  35:Core/Src/dynamics.c ****         UTC.hours = canRx[5];
+ 454              		.loc 2 35 0
+ 455 008c 4A79     		ldrb	r2, [r1, #5]	@ zero_extendqisi2
+ 456 008e 1A71     		strb	r2, [r3, #4]
+  36:Core/Src/dynamics.c ****         UTC.minutes = canRx[6];
+ 457              		.loc 2 36 0
+ 458 0090 8A79     		ldrb	r2, [r1, #6]	@ zero_extendqisi2
+ 459 0092 5A71     		strb	r2, [r3, #5]
+  37:Core/Src/dynamics.c ****         UTC.seconds = canRx[7];
+ 460              		.loc 2 37 0
+ 461 0094 CA79     		ldrb	r2, [r1, #7]	@ zero_extendqisi2
+ 462 0096 9A71     		strb	r2, [r3, #6]
+  38:Core/Src/dynamics.c ****         break;
+ 463              		.loc 2 38 0
+ 464 0098 38BD     		pop	{r3, r4, r5, pc}
+ 465              	.L34:
+  39:Core/Src/dynamics.c **** 
+  40:Core/Src/dynamics.c ****     case 0x0000A0003: // val*0x000244141 +8g to -8g
+  41:Core/Src/dynamics.c ****         ACCEL.x = (canRx[0] << 8) + canRx[1];
+ 466              		.loc 2 41 0
+ 467 009a 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+ 468 009c 4A78     		ldrb	r2, [r1, #1]	@ zero_extendqisi2
+ 469 009e 02EB0322 		add	r2, r2, r3, lsl #8
+ 470 00a2 114B     		ldr	r3, .L37+8
+ 471 00a4 1A80     		strh	r2, [r3]	@ movhi
+  42:Core/Src/dynamics.c ****         ACCEL.y = (canRx[2] << 8) + canRx[3];
+ 472              		.loc 2 42 0
+ 473 00a6 8878     		ldrb	r0, [r1, #2]	@ zero_extendqisi2
+ 474              	.LVL41:
+ 475 00a8 CA78     		ldrb	r2, [r1, #3]	@ zero_extendqisi2
+ 476 00aa 02EB0022 		add	r2, r2, r0, lsl #8
+ 477 00ae 5A80     		strh	r2, [r3, #2]	@ movhi
+  43:Core/Src/dynamics.c ****         ACCEL.z = (canRx[4] << 8) + canRx[5];
+ 478              		.loc 2 43 0
+ 479 00b0 0879     		ldrb	r0, [r1, #4]	@ zero_extendqisi2
+ 480 00b2 4A79     		ldrb	r2, [r1, #5]	@ zero_extendqisi2
+ 481 00b4 02EB0022 		add	r2, r2, r0, lsl #8
+ 482 00b8 9A80     		strh	r2, [r3, #4]	@ movhi
+  44:Core/Src/dynamics.c ****         break;
+ 483              		.loc 2 44 0
+ 484 00ba 38BD     		pop	{r3, r4, r5, pc}
+ 485              	.LVL42:
+ 486              	.L35:
+  45:Core/Src/dynamics.c **** 
+  46:Core/Src/dynamics.c ****     case 0x0000A0004: // val*0x015258789 +500deg/s to -500deg/s
+  47:Core/Src/dynamics.c ****         YAW.x = (canRx[0] << 8) + canRx[1];
+ 487              		.loc 2 47 0
+ 488 00bc 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+ 489 00be 4A78     		ldrb	r2, [r1, #1]	@ zero_extendqisi2
+ 490 00c0 02EB0322 		add	r2, r2, r3, lsl #8
+ 491 00c4 094B     		ldr	r3, .L37+12
+ARM GAS  /tmp/ccbZicWi.s 			page 12
+
+
+ 492 00c6 1A80     		strh	r2, [r3]	@ movhi
+  48:Core/Src/dynamics.c ****         YAW.y = (canRx[2] << 8) + canRx[3];
+ 493              		.loc 2 48 0
+ 494 00c8 8878     		ldrb	r0, [r1, #2]	@ zero_extendqisi2
+ 495              	.LVL43:
+ 496 00ca CA78     		ldrb	r2, [r1, #3]	@ zero_extendqisi2
+ 497 00cc 02EB0022 		add	r2, r2, r0, lsl #8
+ 498 00d0 5A80     		strh	r2, [r3, #2]	@ movhi
+  49:Core/Src/dynamics.c ****         YAW.z = (canRx[4] << 8) + canRx[5];
+ 499              		.loc 2 49 0
+ 500 00d2 0879     		ldrb	r0, [r1, #4]	@ zero_extendqisi2
+ 501 00d4 4A79     		ldrb	r2, [r1, #5]	@ zero_extendqisi2
+ 502 00d6 02EB0022 		add	r2, r2, r0, lsl #8
+ 503 00da 9A80     		strh	r2, [r3, #4]	@ movhi
+ 504              	.L28:
+ 505 00dc 38BD     		pop	{r3, r4, r5, pc}
+ 506              	.L38:
+ 507 00de 00BF     		.align	2
+ 508              	.L37:
+ 509 00e0 00000000 		.word	GPS
+ 510 00e4 00000000 		.word	UTC
+ 511 00e8 00000000 		.word	ACCEL
+ 512 00ec 00000000 		.word	YAW
+ 513              		.cfi_endproc
+ 514              	.LFE71:
+ 516              		.comm	YAW,6,4
+ 517              		.comm	ACCEL,6,4
+ 518              		.comm	UTC,7,4
+ 519              		.comm	GPS,16,4
+ 520              		.comm	canDebug,4,4
+ 521              		.comm	txCycle2,4,4
+ 522              		.comm	txCycle,4,4
+ 523              		.comm	canTx2,8,4
+ 524              		.comm	canTx,8,4
+ 525              		.comm	canMailbox2,4,4
+ 526              		.comm	canMailbox,4,4
+ 527              		.comm	canRx2,8,4
+ 528              		.comm	canRx,8,4
+ 529              		.comm	txMsgExt2,24,4
+ 530              		.comm	txMsg2,24,4
+ 531              		.comm	rxMsg2,28,4
+ 532              		.comm	txMsgExt,24,4
+ 533              		.comm	txMsg,24,4
+ 534              		.comm	rxMsg,28,4
+ 535              		.comm	sf5,40,4
+ 536              		.comm	sf4,40,4
+ 537              		.comm	sf3,40,4
+ 538              		.comm	sf2,40,4
+ 539              		.comm	sf,40,4
+ 540              		.comm	hcan2,40,4
+ 541              		.comm	hcan1,40,4
+ 542              		.comm	LIDAR,8,4
+ 543              		.comm	te,12,4
+ 544              		.comm	BMS,20,4
+ 545              		.comm	charger,3,4
+ 546              		.comm	vcu,7,4
+ 547              		.comm	iboost,2,4
+ARM GAS  /tmp/ccbZicWi.s 			page 13
+
+
+ 548              		.comm	ldu,18,4
+ 549              		.comm	tempdata,4,4
+ 550              		.comm	ADC_data,12,4
+ 551              		.comm	tenderActive,1,1
+ 552              		.comm	time_now,4,4
+ 553              		.comm	period,4,4
+ 554              		.comm	DCDC,4,4
+ 555              		.text
+ 556              	.Letext0:
+ 557              		.file 3 "/usr/include/newlib/machine/_default_types.h"
+ 558              		.file 4 "/usr/include/newlib/sys/_stdint.h"
+ 559              		.file 5 "Drivers/CMSIS/Include/core_cm3.h"
+ 560              		.file 6 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+ 561              		.file 7 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h"
+ 562              		.file 8 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
+ 563              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can.h"
+ 564              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 565              		.file 11 "/usr/include/newlib/sys/lock.h"
+ 566              		.file 12 "/usr/include/newlib/sys/_types.h"
+ 567              		.file 13 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
+ 568              		.file 14 "/usr/include/newlib/sys/reent.h"
+ 569              		.file 15 "Core/Inc/dcdc.h"
+ 570              		.file 16 "Core/Inc/vcu.h"
+ 571              		.file 17 "Core/Inc/encoder.h"
+ 572              		.file 18 "Core/Inc/lidar.h"
+ 573              		.file 19 "Core/Inc/can_setup.h"
+ 574              		.file 20 "/usr/include/newlib/math.h"
+ 575              		.file 21 "Core/Inc/dynamics.h"
+ARM GAS  /tmp/ccbZicWi.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 dynamics.c
+     /tmp/ccbZicWi.s:18     .text.deg2rad:0000000000000000 $t
+     /tmp/ccbZicWi.s:25     .text.deg2rad:0000000000000000 deg2rad
+     /tmp/ccbZicWi.s:52     .text.deg2rad:0000000000000018 $d
+     /tmp/ccbZicWi.s:59     .text.rad2deg:0000000000000000 $t
+     /tmp/ccbZicWi.s:66     .text.rad2deg:0000000000000000 rad2deg
+     /tmp/ccbZicWi.s:92     .text.rad2deg:0000000000000018 $d
+     /tmp/ccbZicWi.s:102    .text.distance:0000000000000000 $t
+     /tmp/ccbZicWi.s:109    .text.distance:0000000000000000 distance
+     /tmp/ccbZicWi.s:268    .text.distance:0000000000000100 $d
+     /tmp/ccbZicWi.s:280    .text.zero2sixty:0000000000000000 $t
+     /tmp/ccbZicWi.s:287    .text.zero2sixty:0000000000000000 zero2sixty
+     /tmp/ccbZicWi.s:309    .text.zero2sixty:000000000000000c $d
+                            *COM*:0000000000000010 GPS
+     /tmp/ccbZicWi.s:314    .text.getPitch:0000000000000000 $t
+     /tmp/ccbZicWi.s:321    .text.getPitch:0000000000000000 getPitch
+     /tmp/ccbZicWi.s:342    .text.getPitch:000000000000000c $d
+     /tmp/ccbZicWi.s:348    .text.getDynamics:0000000000000000 $t
+     /tmp/ccbZicWi.s:355    .text.getDynamics:0000000000000000 getDynamics
+     /tmp/ccbZicWi.s:376    .text.getDynamics:0000000000000010 $d
+     /tmp/ccbZicWi.s:509    .text.getDynamics:00000000000000e0 $d
+                            *COM*:0000000000000007 UTC
+                            *COM*:0000000000000006 ACCEL
+                            *COM*:0000000000000006 YAW
+                            *COM*:0000000000000004 canDebug
+                            *COM*:0000000000000004 txCycle2
+                            *COM*:0000000000000004 txCycle
+                            *COM*:0000000000000008 canTx2
+                            *COM*:0000000000000008 canTx
+                            *COM*:0000000000000004 canMailbox2
+                            *COM*:0000000000000004 canMailbox
+                            *COM*:0000000000000008 canRx2
+                            *COM*:0000000000000008 canRx
+                            *COM*:0000000000000018 txMsgExt2
+                            *COM*:0000000000000018 txMsg2
+                            *COM*:000000000000001c rxMsg2
+                            *COM*:0000000000000018 txMsgExt
+                            *COM*:0000000000000018 txMsg
+                            *COM*:000000000000001c rxMsg
+                            *COM*:0000000000000028 sf5
+                            *COM*:0000000000000028 sf4
+                            *COM*:0000000000000028 sf3
+                            *COM*:0000000000000028 sf2
+                            *COM*:0000000000000028 sf
+                            *COM*:0000000000000028 hcan2
+                            *COM*:0000000000000028 hcan1
+                            *COM*:0000000000000008 LIDAR
+                            *COM*:000000000000000c te
+                            *COM*:0000000000000014 BMS
+                            *COM*:0000000000000003 charger
+                            *COM*:0000000000000007 vcu
+                            *COM*:0000000000000002 iboost
+                            *COM*:0000000000000012 ldu
+                            *COM*:0000000000000004 tempdata
+                            *COM*:000000000000000c ADC_data
+                            *COM*:0000000000000001 tenderActive
+ARM GAS  /tmp/ccbZicWi.s 			page 15
+
+
+                            *COM*:0000000000000004 time_now
+                            *COM*:0000000000000004 period
+                            *COM*:0000000000000004 DCDC
+                     .debug_frame:0000000000000010 $d
+     /tmp/ccbZicWi.s:381    .text.getDynamics:0000000000000015 $d
+     /tmp/ccbZicWi.s:381    .text.getDynamics:0000000000000016 $t
+
+UNDEFINED SYMBOLS
+__aeabi_dmul
+__aeabi_ddiv
+__aeabi_dcmpeq
+__aeabi_dsub
+__aeabi_dadd
+sin
+cos
+acos
+__aeabi_f2iz
+__aeabi_i2f

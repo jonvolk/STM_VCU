@@ -1,21 +1,21 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ * @attention
+ *
+ * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+ * All rights reserved.</center></h2>
+ *
+ * This software component is licensed by ST under Ultimate Liberty license
+ * SLA0044, the "License"; You may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at:
+ *                             www.st.com/SLA0044
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -56,6 +56,8 @@ DMA_HandleTypeDef hdma_adc1;
 CAN_HandleTypeDef hcan1;
 CAN_HandleTypeDef hcan2;
 
+IWDG_HandleTypeDef hiwdg;
+
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
@@ -77,19 +79,19 @@ const osThreadAttr_t TaskLoop_attributes = {
 osThreadId_t Task10msHandle;
 const osThreadAttr_t Task10ms_attributes = {
     .name = "Task10ms",
-    .priority = (osPriority_t)osPriorityRealtime7,
+    .priority = (osPriority_t)osPriorityNormal,
     .stack_size = 128 * 4};
 /* Definitions for Task100ms */
 osThreadId_t Task100msHandle;
 const osThreadAttr_t Task100ms_attributes = {
     .name = "Task100ms",
-    .priority = (osPriority_t)osPriorityRealtime,
+    .priority = (osPriority_t)osPriorityNormal,
     .stack_size = 128 * 4};
 /* Definitions for Task250ms */
 osThreadId_t Task250msHandle;
 const osThreadAttr_t Task250ms_attributes = {
     .name = "Task250ms",
-    .priority = (osPriority_t)osPriorityHigh,
+    .priority = (osPriority_t)osPriorityNormal,
     .stack_size = 128 * 4};
 /* USER CODE BEGIN PV */
 
@@ -109,6 +111,7 @@ static void MX_TIM3_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM5_Init(void);
 static void MX_TIM2_Init(void);
+static void MX_IWDG_Init(void);
 void StartTaskLoop(void *argument);
 void StartTask10ms(void *argument);
 void StartTask100ms(void *argument);
@@ -124,9 +127,9 @@ void StartTask250ms(void *argument);
 /* USER CODE END 0 */
 
 /**
-  * @brief  The application entry point.
-  * @retval int
-  */
+ * @brief  The application entry point.
+ * @retval int
+ */
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -162,6 +165,7 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM5_Init();
   MX_TIM2_Init();
+  MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
   canSettings();
   gaugeInit();
@@ -170,7 +174,7 @@ int main(void)
   wpInit();
 
   HAL_TIM_Base_Start(&htim2);
-  HAL_DMA_Start(&hdma_tim2_ch1, (uint32_t) & (waterPWM[0]), GPIOC_BASE + 16, 100); //water pump pwm
+  HAL_DMA_Start(&hdma_tim2_ch1, (uint32_t) & (waterPWM[0]), GPIOC_BASE + 16, 100); // water pump pwm
   __HAL_TIM_ENABLE_DMA(&htim2, TIM_DMA_CC1);
 
   HAL_TIM_Base_Start(&htim5);
@@ -243,9 +247,9 @@ int main(void)
 }
 
 /**
-  * @brief System Clock Configuration
-  * @retval None
-  */
+ * @brief System Clock Configuration
+ * @retval None
+ */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
@@ -253,12 +257,13 @@ void SystemClock_Config(void)
   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+   * in the RCC_OscInitTypeDef structure.
+   */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI | RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.Prediv1Source = RCC_PREDIV1_SOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
@@ -269,7 +274,7 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   /** Initializes the CPU, AHB and APB buses clocks
-  */
+   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
@@ -287,15 +292,15 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   /** Configure the Systick interrupt time
-  */
+   */
   __HAL_RCC_PLLI2S_ENABLE();
 }
 
 /**
-  * @brief ADC1 Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief ADC1 Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_ADC1_Init(void)
 {
 
@@ -309,7 +314,7 @@ static void MX_ADC1_Init(void)
 
   /* USER CODE END ADC1_Init 1 */
   /** Common config
-  */
+   */
   hadc1.Instance = ADC1;
   hadc1.Init.ScanConvMode = ADC_SCAN_ENABLE;
   hadc1.Init.ContinuousConvMode = ENABLE;
@@ -322,7 +327,7 @@ static void MX_ADC1_Init(void)
     Error_Handler();
   }
   /** Configure Regular Channel
-  */
+   */
   sConfig.Channel = ADC_CHANNEL_11;
   sConfig.Rank = ADC_REGULAR_RANK_1;
   sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
@@ -331,7 +336,7 @@ static void MX_ADC1_Init(void)
     Error_Handler();
   }
   /** Configure Regular Channel
-  */
+   */
   sConfig.Channel = ADC_CHANNEL_5;
   sConfig.Rank = ADC_REGULAR_RANK_2;
   sConfig.SamplingTime = ADC_SAMPLETIME_41CYCLES_5;
@@ -340,7 +345,7 @@ static void MX_ADC1_Init(void)
     Error_Handler();
   }
   /** Configure Regular Channel
-  */
+   */
   sConfig.Channel = ADC_CHANNEL_6;
   sConfig.Rank = ADC_REGULAR_RANK_3;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
@@ -353,10 +358,10 @@ static void MX_ADC1_Init(void)
 }
 
 /**
-  * @brief CAN1 Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief CAN1 Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_CAN1_Init(void)
 {
 
@@ -374,7 +379,7 @@ static void MX_CAN1_Init(void)
   hcan1.Init.TimeSeg1 = CAN_BS1_2TQ;
   hcan1.Init.TimeSeg2 = CAN_BS2_3TQ;
   hcan1.Init.TimeTriggeredMode = DISABLE;
-  hcan1.Init.AutoBusOff = DISABLE;
+  hcan1.Init.AutoBusOff = ENABLE;
   hcan1.Init.AutoWakeUp = DISABLE;
   hcan1.Init.AutoRetransmission = DISABLE;
   hcan1.Init.ReceiveFifoLocked = DISABLE;
@@ -389,10 +394,10 @@ static void MX_CAN1_Init(void)
 }
 
 /**
-  * @brief CAN2 Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief CAN2 Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_CAN2_Init(void)
 {
 
@@ -410,7 +415,7 @@ static void MX_CAN2_Init(void)
   hcan2.Init.TimeSeg1 = CAN_BS1_2TQ;
   hcan2.Init.TimeSeg2 = CAN_BS2_3TQ;
   hcan2.Init.TimeTriggeredMode = DISABLE;
-  hcan2.Init.AutoBusOff = DISABLE;
+  hcan2.Init.AutoBusOff = ENABLE;
   hcan2.Init.AutoWakeUp = DISABLE;
   hcan2.Init.AutoRetransmission = DISABLE;
   hcan2.Init.ReceiveFifoLocked = DISABLE;
@@ -425,10 +430,10 @@ static void MX_CAN2_Init(void)
 }
 
 /**
-  * @brief I2C1 Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief I2C1 Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_I2C1_SMBUS_Init(void)
 {
 
@@ -445,10 +450,37 @@ static void MX_I2C1_SMBUS_Init(void)
 }
 
 /**
-  * @brief TIM1 Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief IWDG Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_IWDG_Init(void)
+{
+
+  /* USER CODE BEGIN IWDG_Init 0 */
+
+  /* USER CODE END IWDG_Init 0 */
+
+  /* USER CODE BEGIN IWDG_Init 1 */
+
+  /* USER CODE END IWDG_Init 1 */
+  hiwdg.Instance = IWDG;
+  hiwdg.Init.Prescaler = IWDG_PRESCALER_8;
+  hiwdg.Init.Reload = 1000; //439
+  if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN IWDG_Init 2 */
+
+  /* USER CODE END IWDG_Init 2 */
+}
+
+/**
+ * @brief TIM1 Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_TIM1_Init(void)
 {
 
@@ -509,10 +541,10 @@ static void MX_TIM1_Init(void)
 }
 
 /**
-  * @brief TIM2 Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief TIM2 Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_TIM2_Init(void)
 {
 
@@ -556,10 +588,10 @@ static void MX_TIM2_Init(void)
 }
 
 /**
-  * @brief TIM3 Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief TIM3 Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_TIM3_Init(void)
 {
 
@@ -614,10 +646,10 @@ static void MX_TIM3_Init(void)
 }
 
 /**
-  * @brief TIM5 Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief TIM5 Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_TIM5_Init(void)
 {
 
@@ -665,10 +697,10 @@ static void MX_TIM5_Init(void)
 }
 
 /**
-  * @brief UART4 Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief UART4 Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_UART4_Init(void)
 {
 
@@ -697,10 +729,10 @@ static void MX_UART4_Init(void)
 }
 
 /**
-  * @brief USART1 Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief USART1 Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_USART1_UART_Init(void)
 {
 
@@ -729,8 +761,8 @@ static void MX_USART1_UART_Init(void)
 }
 
 /**
-  * Enable DMA controller clock
-  */
+ * Enable DMA controller clock
+ */
 static void MX_DMA_Init(void)
 {
 
@@ -754,10 +786,10 @@ static void MX_DMA_Init(void)
 }
 
 /**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief GPIO Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -809,10 +841,10 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN Header_StartTaskLoop */
 /**
-  * @brief  Function implementing the TaskLoop thread.
-  * @param  argument: Not used
-  * @retval None
-  */
+ * @brief  Function implementing the TaskLoop thread.
+ * @param  argument: Not used
+ * @retval None
+ */
 /* USER CODE END Header_StartTaskLoop */
 void StartTaskLoop(void *argument)
 {
@@ -831,21 +863,21 @@ void StartTaskLoop(void *argument)
 
 /* USER CODE BEGIN Header_StartTask10ms */
 /**
-* @brief Function implementing the Task10ms thread.
-* @param argument: Not used
-* @retval None
-*/
+ * @brief Function implementing the Task10ms thread.
+ * @param argument: Not used
+ * @retval None
+ */
 /* USER CODE END Header_StartTask10ms */
 void StartTask10ms(void *argument)
 {
   /* USER CODE BEGIN StartTask10ms */
-  //TickType_t lastWakeTime;
-  //const TickType_t frequency = 20;
-  //lastWakeTime = xTaskGetTickCount();
+  // TickType_t lastWakeTime;
+  // const TickType_t frequency = 20;
+  // lastWakeTime = xTaskGetTickCount();
   /* Infinite loop */
   for (;;)
   {
-    //vTaskDelayUntil(&lastWakeTime, frequency);
+    // vTaskDelayUntil(&lastWakeTime, frequency);
     throttleHandler();
     canIOsend();
     regenHandler();
@@ -861,27 +893,28 @@ void StartTask10ms(void *argument)
 
 /* USER CODE BEGIN Header_StartTask100ms */
 /**
-* @brief Function implementing the Task100ms thread.
-* @param argument: Not used
-* @retval None
-*/
+ * @brief Function implementing the Task100ms thread.
+ * @param argument: Not used
+ * @retval None
+ */
 /* USER CODE END Header_StartTask100ms */
 void StartTask100ms(void *argument)
 {
   /* USER CODE BEGIN StartTask100ms */
-  //TickType_t lastWakeTime;
-  //const TickType_t frequency = 100;
-  //lastWakeTime = xTaskGetTickCount();
+  // TickType_t lastWakeTime;
+  // const TickType_t frequency = 100;
+  // lastWakeTime = xTaskGetTickCount();
 
   /* Infinite loop */
 
   for (;;)
   {
-    //vTaskDelayUntil(&lastWakeTime, frequency);
+    // vTaskDelayUntil(&lastWakeTime, frequency);
 
     updateSpeed(ldu.rpm);
     updateTach(ldu.amps);
-    //testVal();
+    HAL_IWDG_Refresh(&hiwdg);
+    // testVal();
 
     osDelay(100);
   }
@@ -892,31 +925,32 @@ void StartTask100ms(void *argument)
 
 /* USER CODE BEGIN Header_StartTask250ms */
 /**
-* @brief Function implementing the Task250ms thread.
-* @param argument: Not used
-* @retval None
-*/
+ * @brief Function implementing the Task250ms thread.
+ * @param argument: Not used
+ * @retval None
+ */
 /* USER CODE END Header_StartTask250ms */
 void StartTask250ms(void *argument)
 {
   /* USER CODE BEGIN StartTask250ms */
-  //TickType_t lastWakeTime;
-  //const TickType_t frequency = 250;
-  //lastWakeTime = xTaskGetTickCount();
+  // TickType_t lastWakeTime;
+  // const TickType_t frequency = 250;
+  // lastWakeTime = xTaskGetTickCount();
   /* Infinite loop */
 
   for (;;)
 
   {
-    //vTaskDelayUntil(&lastWakeTime, frequency);
+    // vTaskDelayUntil(&lastWakeTime, frequency);
     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
 
     updateTemp(ldu.hsTemp);
     updateSOC(BMS[0].chargeState);
+    vehicleComms();
     encoderHandler();
 
     osDelay(250);
-    //testVal();
+    // testVal();
   }
   // Add termination if exit the loop accidentally
   osThreadTerminate(NULL);
@@ -924,13 +958,13 @@ void StartTask250ms(void *argument)
 }
 
 /**
-  * @brief  Period elapsed callback in non blocking mode
-  * @note   This function is called  when TIM7 interrupt took place, inside
-  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
-  * a global variable "uwTick" used as application time base.
-  * @param  htim : TIM handle
-  * @retval None
-  */
+ * @brief  Period elapsed callback in non blocking mode
+ * @note   This function is called  when TIM7 interrupt took place, inside
+ * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+ * a global variable "uwTick" used as application time base.
+ * @param  htim : TIM handle
+ * @retval None
+ */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
@@ -946,9 +980,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 }
 
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
+ * @brief  This function is executed in case of error occurrence.
+ * @retval None
+ */
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
@@ -962,12 +996,12 @@ void Error_Handler(void)
 
 #ifdef USE_FULL_ASSERT
 /**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
+ * @brief  Reports the name of the source file and the source line number
+ *         where the assert_param error has occurred.
+ * @param  file: pointer to the source file name
+ * @param  line: assert_param error line source number
+ * @retval None
+ */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */

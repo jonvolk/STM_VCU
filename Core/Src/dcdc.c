@@ -69,6 +69,7 @@ void dcdcHandler(int vehicleState)
     case charge_keyOff:
     case idle:
     case launchMode:
+    case burnout:
         dcdc_ON();
         break; 
 

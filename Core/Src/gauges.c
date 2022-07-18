@@ -39,7 +39,7 @@ void updateSpeed(volatile uint16_t motorRPM)
 void updateTemp(volatile uint16_t temp)
 {
 
-    uint16_t highPulse = MAP(temp, 0, 90, 19, 55); //gauge range calibration  
+    uint16_t highPulse = MAP(temp, 0, 90, 19, 65); //gauge range calibration  
 
     for (size_t i = 0; i < highPulse; i++)
     {

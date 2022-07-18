@@ -21,12 +21,13 @@ build/water_pump.o: Core/Src/water_pump.c Core/Inc/water_pump.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
+ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_iwdg.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h Core/Inc/vcu.h \
  Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h \
- Core/Inc/can_setup.h Core/Inc/encoder.h Core/Inc/dcdc.h \
+ Core/Inc/can_setup.h Core/Inc/encoder.h Core/Inc/dcdc.h Core/Inc/lidar.h \
  Core/Inc/my_math.h
 
 Core/Inc/water_pump.h:
@@ -81,6 +82,8 @@ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h:
 
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
 
+Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_iwdg.h:
+
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
 
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
@@ -98,5 +101,7 @@ Core/Inc/can_setup.h:
 Core/Inc/encoder.h:
 
 Core/Inc/dcdc.h:
+
+Core/Inc/lidar.h:
 
 Core/Inc/my_math.h:

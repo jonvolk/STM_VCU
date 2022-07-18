@@ -19,12 +19,12 @@ void decodeCAN(CAN_RxHeaderTypeDef *rxMsg, uint8_t *canRx)
         /**************************************************************************/
         if ((canRx[4]) > 0)
         {
-            ldu.mTemp = (canRx[5]); //motor temp C
+            ldu.mTemp = (canRx[5]); // motor temp C
         }
         /**************************************************************************/
         if ((canRx[5]) > 0)
         {
-            ldu.hsTemp = (canRx[4]); //heatsink temp C
+            ldu.hsTemp = (canRx[4]); // heatsink temp C
         }
         /**************************************************************************/
         if ((((canRx[7] << 8)) + canRx[6]) <= 2000)
@@ -51,34 +51,38 @@ void decodeCAN(CAN_RxHeaderTypeDef *rxMsg, uint8_t *canRx)
         charger.current = (canRx[3] * 100) / 55;
         break;
 
+    case 0x110:
+        charger.proximity = (canRx[0]);
+        break;
+
     case 0x113:
         ldu.pot = ((canRx[1] << 8) + canRx[0]);
         ldu.pot2 = ((canRx[3] << 8) + canRx[2]);
         break;
 
     case 0x12D:
-        //restart = ((canRx[1] << 8) + canRx[0]);
+        // restart = ((canRx[1] << 8) + canRx[0]);
         break;
     case 0x38E:
-        iboost.pedal = ((canRx[4] << 8) + (canRx[3])) - 4415; //0-750
+        iboost.pedal = ((canRx[4] << 8) + (canRx[3])) - 4415; // 0-750
         break;
 
     case 0x138:
-        BMS[0].chargeRequest = canRx[0];
-        BMS[0].volt = ((canRx[2] << 8) + canRx[1]) / 100;
-        BMS[0].temp = canRx[3];
-        BMS[0].highCell = (canRx[4]) / 51;
-        BMS[0].lowCell = (canRx[5]) / 51;
+        // BMS[0].chargeRequest = canRx[0];
+        BMS[0].volt = ((canRx[1] << 8) + canRx[0]) / 100;
+        BMS[0].temp = ((canRx[3] << 8) + canRx[2]) / 100; // canRx[3];
+        BMS[0].highCell = (canRx[4]) / 100;
+        BMS[0].lowCell = (canRx[5]) / 100;
         BMS[0].chargeState = canRx[6];
         BMS[0].soc = canRx[7];
         break;
 
     case 0x139:
-        BMS[1].chargeRequest = canRx[0];
-        BMS[1].volt = ((canRx[2] << 8) + canRx[1]) / 100;
-        BMS[1].temp = canRx[3];
-        BMS[1].highCell = (canRx[4]) / 51;
-        BMS[1].lowCell = (canRx[5]) / 51;
+        // BMS[1].chargeRequest = canRx[0];
+        BMS[1].volt = ((canRx[1] << 8) + canRx[0]) / 100;
+        BMS[1].temp = ((canRx[3] << 8) + canRx[2]) / 100; // canRx[3];
+        BMS[1].highCell = (canRx[4]) / 100;
+        BMS[1].lowCell = (canRx[5]) / 100;
         BMS[1].chargeState = canRx[6];
         BMS[1].soc = canRx[7];
         break;
@@ -111,6 +115,15 @@ void canIOsend(void)
     txMsg.StdId = 0x113;
     txMsg.DLC = 1;
     canTx[0] = vcu.dio;
+    c1tx(&txMsg, canTx);
+}
+
+/////////////////////////////////////////////////////////////////////////
+void vehicleComms(void)
+{
+    txMsg.StdId = 0x313;
+    txMsg.DLC = 1;
+    canTx[0] = vcu.state;
     c1tx(&txMsg, canTx);
 }
 /////////////////////////////////////////////////////////////////////////
@@ -167,6 +180,7 @@ void vcuState(void)
     case run:
         canSet(IDLE_MODE, 0, 32);
         canSet(FWEAK, 280, 32);
+        canSet(FWEAKSTRT, 400, 32);
         canSet(FSLIP_MIN, 76, 1);  // 2.3*32
         canSet(FSLIP_MAX, 101, 1); // 3.15*32
         canSet(THROTRAMP, 15, 32);
@@ -180,7 +194,7 @@ void vcuState(void)
             vcu.state = launchMode;
         }
 
-        if (vcu.burnFlag && (te.knob != 0x80))
+        if (vcu.burnFlag)
         {
             vcu.state = burnout;
         }
@@ -198,12 +212,29 @@ void vcuState(void)
 
     case burnout:
         canSet(FWEAK, 220, 32);
+        canSet(FWEAKSTRT, 238, 32);
         canSet(FSLIP_MIN, 61, 1); // 1.9*32
         canSet(FSLIP_MAX, 77, 1); // 2.4*32
-        canSet(THROTRAMP, 5, 32);
-        if (vcu.burnFlag == 0)
+        int throttleramp;
+        if (ldu.rpm < 2000)
+        {
+            throttleramp = 2;
+        }
+        else
+        {
+            throttleramp = MAP(ldu.rpm, 2000, 16000, 2, 30);
+        }
+        canSet(THROTRAMP, throttleramp, 32); // canSet(THROTRAMP, 5, 32);
+        if (vcu.burnFlag == OFF)
         {
             vcu.state = run;
+        }
+        break;
+
+    case charge_keyOn:
+        if (vcu.key == OFF)
+        {
+            vcu.state = off;
         }
         break;
 
@@ -242,13 +273,18 @@ void ioHandler(void)
             vcu.state = off;
         }
     }
-
+    
     //////////////////  Heater Switching ///////////////////////////////
     int heatRequest = HAL_GPIO_ReadPin(HEAT_REQ_GPIO_Port, HEAT_REQ_Pin);
 
     switch (vcu.state)
     {
-    case on:
+    case off:
+    case charge_keyOff:
+        HAL_GPIO_WritePin(HEAT_OUT_GPIO_Port, HEAT_OUT_Pin, OFF);
+        break;
+
+    default:
         if (heatRequest)
         {
             HAL_GPIO_WritePin(HEAT_OUT_GPIO_Port, HEAT_OUT_Pin, ON);
@@ -258,12 +294,6 @@ void ioHandler(void)
             HAL_GPIO_WritePin(HEAT_OUT_GPIO_Port, HEAT_OUT_Pin, OFF);
         }
         break;
-
-    case off:
-        HAL_GPIO_WritePin(HEAT_OUT_GPIO_Port, HEAT_OUT_Pin, OFF);
-        break;
-
-    default:
         break;
     }
 
@@ -286,8 +316,8 @@ void ioHandler(void)
 void regenHandler(void)
 {
 
-    int baseRegen = 0; //base throttle off regen value
-    int maxRegen = 94; //maximum full brake pressure regen value
+    int baseRegen = 5; // base throttle off regen value
+    int maxRegen = 94; // maximum full brake pressure regen value
     int brkNomPedal;
     int regenRamp;
 
@@ -298,18 +328,18 @@ void regenHandler(void)
     else
     {
         brkNomPedal = MAP(iboost.pedal, 1, 650, baseRegen, -(maxRegen));
-        ; //maps brake pedal regen between base and max
+        ; // maps brake pedal regen between base and max
     }
     canSet(BRAKE_NOM_PEDAL, brkNomPedal, 32);
 
-    //regenramp
+    // regenramp
     if (ldu.rpm <= 10000)
     {
-        regenRamp = MAP(ldu.rpm, 0, 10000, 2, 12); // mapped values alredy 32x for gain
+        regenRamp = MAP(ldu.rpm, 0, 10000, 6, 24); // mapped values alredy 32x for gain  was 2, 12
     }
     else
     {
-        regenRamp = 12; // value already 32x for gain
+        regenRamp = 24; // value already 32x for gain
         canSet(BRAKE_PEDAL_RAMP, regenRamp, 1);
     }
 }
@@ -318,7 +348,7 @@ void canSet(uint8_t index, uint32_t value, uint8_t gain) // LDU param Index, uns
 {
     int val = value * gain;
 
-    txMsg.StdId = 0x601; //set parameter ID
+    txMsg.StdId = 0x601; // set parameter ID
     txMsg.DLC = 8;
     canTx[0] = 0x40;
     canTx[1] = 0x00;
@@ -357,29 +387,20 @@ void throttleHandler(void)
     }
 
     ///////// Launch Control Enable ///////////////
-    switch (te.currentScreen)
-    {
-    case PRE_BURNOUT:
-    case READY_BURNOUT:
-        /* code */
-        break;
 
-    default:
-        if (ldu.pot >= 4050 && ldu.brake == ON)
-        {
-            vcu.launchFlag = ON;
-        }
-        if (vcu.launchFlag == ON && ldu.pot < 1000)
-        {
-            vcu.launchFlag = OFF;
-        }
-        break;
+    if (ldu.pot >= 4050 && ldu.brake == ON)
+    {
+        vcu.launchFlag = ON;
+    }
+    if (vcu.launchFlag == ON && ldu.pot < 1000)
+    {
+        vcu.launchFlag = OFF;
     }
 }
 
 void brakeHandler(void)
 {
-    if (vcu.state != burnout && iboost.pedal > 10)
+    if (vcu.state != burnout && iboost.pedal > 15)
     {
         canIOset(brake, ON);
     }

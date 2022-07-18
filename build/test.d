@@ -1,5 +1,5 @@
 build/test.o: Core/Src/test.c Core/Inc/test.h Core/Inc/can_setup.h \
- Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
+ Core/Inc/main.h Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  Core/Inc/stm32f1xx_hal_conf.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h \
@@ -21,16 +21,19 @@ build/test.o: Core/Src/test.c Core/Inc/test.h Core/Inc/can_setup.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
+ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_iwdg.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
- Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h Core/Inc/main.h \
- Core/Inc/vcu.h Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h \
- Core/Inc/dcdc.h Core/Inc/my_math.h Core/Inc/encoder.h
+ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h Core/Inc/vcu.h \
+ Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h Core/Inc/dcdc.h \
+ Core/Inc/my_math.h Core/Inc/encoder.h Core/Inc/lidar.h
 
 Core/Inc/test.h:
 
 Core/Inc/can_setup.h:
+
+Core/Inc/main.h:
 
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 
@@ -80,6 +83,8 @@ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h:
 
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
 
+Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_iwdg.h:
+
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
 
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
@@ -87,8 +92,6 @@ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
 
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
-
-Core/Inc/main.h:
 
 Core/Inc/vcu.h:
 
@@ -99,3 +102,5 @@ Core/Inc/dcdc.h:
 Core/Inc/my_math.h:
 
 Core/Inc/encoder.h:
+
+Core/Inc/lidar.h:

@@ -3,8 +3,7 @@
 
 #include "can_setup.h"
 #include "vcu.h"
-
-//#include "stm32f1xx_hal.h"
+#include "stm32f1xx_hal.h"
 
 //event ID 
 #define EVENT 0x18FF0FF2   //canID swipe tap or turn
@@ -37,9 +36,10 @@
 
 #define LAUNCH  0x0B
 
-#define PRE_BURNOUT 0x0C
-#define READY_BURNOUT 0X0D
-
+#define BURNOUT 0x0C
+//#define READY_BURNOUT 0X0D
+ 
+#define DRIVEAWAY 0X10
 
 
 //SWIPE DEFINES
@@ -49,8 +49,14 @@
 #define SWIPE_RIGHT 0x84
 #define SWIPE_NONE 0x80
 
+//DISPLAY CODE BYTE 
+#define x1 0x00
+#define x10 0x10 // Value x 10
+#define x100 0x20 
+#define d100 0xE0 
+#define d10 0xF0  // Value / 10
 
-//ACTIVE VALUE DEFINES  
+//ACTIVE VALUE ID DEFINES 
 #define VAL_0 0x00  
 #define VAL_1 0X01
 #define VAL_2 0X02
@@ -78,10 +84,14 @@
 #define ZONE_14 0XA000
 #define ZONE_15 0XC000  
 
+//ENCODER KNOB DEFINES
+#define NO_TURN 0X80  
+
+
 typedef struct
 {
     // Set Values
-    uint8_t currentScreen; // 0x00 Screen 0, 0x01 Screen 1, etc
+    volatile uint8_t currentScreen; // 0x00 Screen 0, 0x01 Screen 1, etc
     uint8_t knob;          // = 0x00;
     uint16_t tap;          // = 0x00;
     uint8_t swipe;         // = 0x00;
@@ -89,10 +99,11 @@ typedef struct
     uint16_t currentVal;
     uint8_t dispCode;
     uint8_t activeId;
-    uint8_t state;
+    volatile uint8_t state;
 } encoder_t;
 encoder_t te;
 
+/*
 typedef enum te_state
 {
     sleep,
@@ -107,9 +118,10 @@ typedef enum te_state
 
 //uint8_t te.state;
 uint8_t setPrevState;
+*/
 
 void encoderHandler(void);
-void setWidget(uint8_t screenNum, uint8_t valueId, uint16_t currentVal);
+void setWidget(uint8_t screenNum, uint8_t valueId, uint16_t currentVal, int gain);
 void resetWidget(uint8_t screenNum, uint8_t valueId, uint16_t currentVal);
 void setBacklight(uint8_t level);
 void getEvent(CAN_RxHeaderTypeDef *rxMsg, uint8_t *canRx);

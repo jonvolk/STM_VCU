@@ -14,6 +14,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan1)
     }
     //do stuff
     decodeCAN(&rxMsg, canRx);
+    getLidar(&rxMsg,canRx);
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -31,8 +33,14 @@ void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef *hcan2)
     //do stuff
     getData(&rxMsg2, canRx2);
     getEvent(&rxMsg2, canRx2);
+    
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan)
+{
+  
+}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void canSettings(void)
 {
@@ -197,7 +205,7 @@ void c1tx(CAN_TxHeaderTypeDef *txMsg, uint8_t *canTx)
 
     HAL_CAN_AddTxMessage(&hcan1, txMsg, canTx, &canMailbox);
     txCycle++;
-    if (txCycle >= 3)
+    if (txCycle >= 2)
     {
         HAL_Delay(1);
         txCycle = 0;
@@ -209,7 +217,7 @@ void c2tx(CAN_TxHeaderTypeDef *txMsg2, uint8_t *canTx2)
 
     HAL_CAN_AddTxMessage(&hcan2, txMsg2, canTx2, &canMailbox2);
     txCycle2++;
-    if (txCycle2 >= 3)
+    if (txCycle2 >= 2)
     {
         HAL_Delay(1);
         txCycle2 = 0;
@@ -221,7 +229,7 @@ void c1txExt(CAN_TxHeaderTypeDef *txMsgExt, uint8_t *canTx)
 
     HAL_CAN_AddTxMessage(&hcan1, txMsgExt, canTx, &canMailbox);
     txCycle++;
-    if (txCycle >= 3)
+    if (txCycle >= 2)
     {
         HAL_Delay(1);
         txCycle = 0;
@@ -233,7 +241,7 @@ void c2txExt(CAN_TxHeaderTypeDef *txMsg2Ext, uint8_t *canTx2)
 
     HAL_CAN_AddTxMessage(&hcan2, txMsg2Ext, canTx2, &canMailbox2);
     txCycle2++;
-    if (txCycle2 >= 3)
+    if (txCycle2 >= 2)
     {
         HAL_Delay(1);
         txCycle2 = 0;

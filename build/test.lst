@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc455Hff.s 			page 1
+ARM GAS  /tmp/cciMaRJi.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc455Hff.s 			page 1
   45              		.loc 1 11 0
   46 0018 134B     		ldr	r3, .L6
   47 001a 5B89     		ldrh	r3, [r3, #10]
-ARM GAS  /tmp/cc455Hff.s 			page 2
+ARM GAS  /tmp/cciMaRJi.s 			page 2
 
 
   48 001c 9BB2     		uxth	r3, r3
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc455Hff.s 			page 1
   87              		.loc 1 26 0
   88 005e 3722     		movs	r2, #55
   89 0060 024B     		ldr	r3, .L6+4
-ARM GAS  /tmp/cc455Hff.s 			page 3
+ARM GAS  /tmp/cciMaRJi.s 			page 3
 
 
   90 0062 1A72     		strb	r2, [r3, #8]
@@ -152,10 +152,10 @@ ARM GAS  /tmp/cc455Hff.s 			page 1
  119              		.comm	sf,40,4
  120              		.comm	hcan2,40,4
  121              		.comm	hcan1,40,4
- 122              		.comm	setPrevState,1,1
+ 122              		.comm	LIDAR,8,4
  123              		.comm	te,12,4
  124              		.comm	BMS,20,4
- 125              		.comm	charger,2,4
+ 125              		.comm	charger,3,4
  126              		.comm	vcu,7,4
  127              		.comm	iboost,2,4
  128              		.comm	ldu,18,4
@@ -178,22 +178,23 @@ ARM GAS  /tmp/cc455Hff.s 			page 1
  145              		.file 10 "/usr/include/newlib/sys/lock.h"
  146              		.file 11 "/usr/include/newlib/sys/_types.h"
  147              		.file 12 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
-ARM GAS  /tmp/cc455Hff.s 			page 4
+ARM GAS  /tmp/cciMaRJi.s 			page 4
 
 
  148              		.file 13 "/usr/include/newlib/sys/reent.h"
  149              		.file 14 "Core/Inc/dcdc.h"
  150              		.file 15 "Core/Inc/vcu.h"
  151              		.file 16 "Core/Inc/encoder.h"
- 152              		.file 17 "Core/Inc/can_setup.h"
-ARM GAS  /tmp/cc455Hff.s 			page 5
+ 152              		.file 17 "Core/Inc/lidar.h"
+ 153              		.file 18 "Core/Inc/can_setup.h"
+ARM GAS  /tmp/cciMaRJi.s 			page 5
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 test.c
-     /tmp/cc455Hff.s:16     .text.testVal:0000000000000000 $t
-     /tmp/cc455Hff.s:23     .text.testVal:0000000000000000 testVal
-     /tmp/cc455Hff.s:95     .text.testVal:0000000000000068 $d
+     /tmp/cciMaRJi.s:16     .text.testVal:0000000000000000 $t
+     /tmp/cciMaRJi.s:23     .text.testVal:0000000000000000 testVal
+     /tmp/cciMaRJi.s:95     .text.testVal:0000000000000068 $d
                             *COM*:0000000000000012 ldu
                             *COM*:0000000000000014 BMS
                             *COM*:0000000000000004 canDebug
@@ -218,9 +219,9 @@ DEFINED SYMBOLS
                             *COM*:0000000000000028 sf
                             *COM*:0000000000000028 hcan2
                             *COM*:0000000000000028 hcan1
-                            *COM*:0000000000000001 setPrevState
+                            *COM*:0000000000000008 LIDAR
                             *COM*:000000000000000c te
-                            *COM*:0000000000000002 charger
+                            *COM*:0000000000000003 charger
                             *COM*:0000000000000007 vcu
                             *COM*:0000000000000002 iboost
                             *COM*:0000000000000004 tempdata

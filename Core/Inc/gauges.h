@@ -1,7 +1,7 @@
 #if !defined(__GAUGES_H_)
 #define __GAUGES_H_
 
-#include "stm32f105xc.h"
+//#include "stm32f105xc.h"
 #include "main.h"
 #include "my_math.h"
 

@@ -2,12 +2,13 @@
 #ifndef __CAN_SETUP_H
 #define __CAN_SETUP_H
 
-#include "stm32f1xx_hal.h"
+//#include "stm32f1xx_hal.h"
 #include "main.h"
 #include "stdio.h"
 #include "vcu.h"
 #include "encoder.h"
 #include "dcdc.h"
+#include "lidar.h"
 
 //CAN_HandleTypeDef hcan;
 CAN_HandleTypeDef hcan1;

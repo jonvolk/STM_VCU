@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccQ7QqDc.s 			page 1
+ARM GAS  /tmp/ccyGmcRX.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccQ7QqDc.s 			page 1
   46 0012 0133     		adds	r3, r3, #1
   47              	.LVL2:
   48              	.L2:
-ARM GAS  /tmp/ccQ7QqDc.s 			page 2
+ARM GAS  /tmp/ccyGmcRX.s 			page 2
 
 
    6:Core/Src/gauges.c ****     {
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccQ7QqDc.s 			page 1
   95 001e 82FB0312 		smull	r1, r2, r2, r3
   96 0022 1A44     		add	r2, r2, r3
   97 0024 DB17     		asrs	r3, r3, #31
-ARM GAS  /tmp/ccQ7QqDc.s 			page 3
+ARM GAS  /tmp/ccyGmcRX.s 			page 3
 
 
   98 0026 C3EB2223 		rsb	r3, r3, r2, asr #8
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccQ7QqDc.s 			page 1
  147              	updateSpeed:
  148              	.LFB68:
   25:Core/Src/gauges.c **** 
-ARM GAS  /tmp/ccQ7QqDc.s 			page 4
+ARM GAS  /tmp/ccyGmcRX.s 			page 4
 
 
   26:Core/Src/gauges.c **** void updateSpeed(volatile uint16_t motorRPM)
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccQ7QqDc.s 			page 1
  191              		.cfi_remember_state
  192              		.cfi_def_cfa_offset 0
  193              		@ sp needed
-ARM GAS  /tmp/ccQ7QqDc.s 			page 5
+ARM GAS  /tmp/ccyGmcRX.s 			page 5
 
 
  194 003c 7047     		bx	lr
@@ -281,12 +281,12 @@ ARM GAS  /tmp/ccQ7QqDc.s 			page 1
  229              		.cfi_def_cfa_offset 8
  230 0002 ADF80600 		strh	r0, [sp, #6]	@ movhi
   41:Core/Src/gauges.c **** 
-  42:Core/Src/gauges.c ****     uint16_t highPulse = MAP(temp, 0, 90, 19, 55); //gauge range calibration  
+  42:Core/Src/gauges.c ****     uint16_t highPulse = MAP(temp, 0, 90, 19, 65); //gauge range calibration  
  231              		.loc 1 42 0
- 232 0006 BDF80620 		ldrh	r2, [sp, #6]
- 233 000a 92B2     		uxth	r2, r2
- 234 000c 02EBC202 		add	r2, r2, r2, lsl #3
- 235 0010 9300     		lsls	r3, r2, #2
+ 232 0006 BDF80630 		ldrh	r3, [sp, #6]
+ 233 000a 9AB2     		uxth	r2, r3
+ 234 000c 2E23     		movs	r3, #46
+ 235 000e 03FB02F3 		mul	r3, r3, r2
  236 0012 0F4A     		ldr	r2, .L24
  237 0014 82FB0312 		smull	r1, r2, r2, r3
  238 0018 1A44     		add	r2, r2, r3
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccQ7QqDc.s 			page 1
  244              	.LVL14:
  245              	.LBB3:
   43:Core/Src/gauges.c **** 
-ARM GAS  /tmp/ccQ7QqDc.s 			page 6
+ARM GAS  /tmp/ccyGmcRX.s 			page 6
 
 
   44:Core/Src/gauges.c ****     for (size_t i = 0; i < highPulse; i++)
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccQ7QqDc.s 			page 1
  286 004e 7047     		bx	lr
  287              	.L25:
  288              		.align	2
-ARM GAS  /tmp/ccQ7QqDc.s 			page 7
+ARM GAS  /tmp/ccyGmcRX.s 			page 7
 
 
  289              	.L24:
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccQ7QqDc.s 			page 1
  337 002e 4FF40070 		mov	r0, #512
  338 0032 0A4B     		ldr	r3, .L32+4
  339 0034 43F82200 		str	r0, [r3, r2, lsl #2]
-ARM GAS  /tmp/ccQ7QqDc.s 			page 8
+ARM GAS  /tmp/ccyGmcRX.s 			page 8
 
 
   59:Core/Src/gauges.c ****     {
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccQ7QqDc.s 			page 1
  384              		.file 2 "/usr/include/newlib/machine/_default_types.h"
  385              		.file 3 "/usr/include/newlib/sys/_stdint.h"
  386              		.file 4 "Drivers/CMSIS/Include/core_cm3.h"
-ARM GAS  /tmp/ccQ7QqDc.s 			page 9
+ARM GAS  /tmp/ccyGmcRX.s 			page 9
 
 
  387              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
@@ -489,28 +489,28 @@ ARM GAS  /tmp/ccQ7QqDc.s 			page 1
  392              		.file 10 "/usr/include/newlib/sys/_types.h"
  393              		.file 11 "/usr/include/newlib/sys/reent.h"
  394              		.file 12 "Core/Inc/gauges.h"
-ARM GAS  /tmp/ccQ7QqDc.s 			page 10
+ARM GAS  /tmp/ccyGmcRX.s 			page 10
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 gauges.c
-     /tmp/ccQ7QqDc.s:16     .text.gaugeInit:0000000000000000 $t
-     /tmp/ccQ7QqDc.s:23     .text.gaugeInit:0000000000000000 gaugeInit
-     /tmp/ccQ7QqDc.s:58     .text.gaugeInit:000000000000001c $d
+     /tmp/ccyGmcRX.s:16     .text.gaugeInit:0000000000000000 $t
+     /tmp/ccyGmcRX.s:23     .text.gaugeInit:0000000000000000 gaugeInit
+     /tmp/ccyGmcRX.s:58     .text.gaugeInit:000000000000001c $d
                             *COM*:0000000000000190 tempPWM
                             *COM*:0000000000000fa0 socPWM
-     /tmp/ccQ7QqDc.s:64     .text.updateTach:0000000000000000 $t
-     /tmp/ccQ7QqDc.s:71     .text.updateTach:0000000000000000 updateTach
-     /tmp/ccQ7QqDc.s:133    .text.updateTach:000000000000004c $d
-     /tmp/ccQ7QqDc.s:140    .text.updateSpeed:0000000000000000 $t
-     /tmp/ccQ7QqDc.s:147    .text.updateSpeed:0000000000000000 updateSpeed
-     /tmp/ccQ7QqDc.s:205    .text.updateSpeed:0000000000000044 $d
-     /tmp/ccQ7QqDc.s:212    .text.updateTemp:0000000000000000 $t
-     /tmp/ccQ7QqDc.s:219    .text.updateTemp:0000000000000000 updateTemp
-     /tmp/ccQ7QqDc.s:290    .text.updateTemp:0000000000000050 $d
-     /tmp/ccQ7QqDc.s:296    .text.updateSOC:0000000000000000 $t
-     /tmp/ccQ7QqDc.s:303    .text.updateSOC:0000000000000000 updateSOC
-     /tmp/ccQ7QqDc.s:375    .text.updateSOC:0000000000000058 $d
+     /tmp/ccyGmcRX.s:64     .text.updateTach:0000000000000000 $t
+     /tmp/ccyGmcRX.s:71     .text.updateTach:0000000000000000 updateTach
+     /tmp/ccyGmcRX.s:133    .text.updateTach:000000000000004c $d
+     /tmp/ccyGmcRX.s:140    .text.updateSpeed:0000000000000000 $t
+     /tmp/ccyGmcRX.s:147    .text.updateSpeed:0000000000000000 updateSpeed
+     /tmp/ccyGmcRX.s:205    .text.updateSpeed:0000000000000044 $d
+     /tmp/ccyGmcRX.s:212    .text.updateTemp:0000000000000000 $t
+     /tmp/ccyGmcRX.s:219    .text.updateTemp:0000000000000000 updateTemp
+     /tmp/ccyGmcRX.s:290    .text.updateTemp:0000000000000050 $d
+     /tmp/ccyGmcRX.s:296    .text.updateSOC:0000000000000000 $t
+     /tmp/ccyGmcRX.s:303    .text.updateSOC:0000000000000000 updateSOC
+     /tmp/ccyGmcRX.s:375    .text.updateSOC:0000000000000058 $d
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

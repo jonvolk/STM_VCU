@@ -30,6 +30,7 @@ Bit 5: bms
 //LDU Parameter Index Defines
 #define BOOST 0
 #define FWEAK 1
+#define FWEAKSTRT 2  
 #define FSLIP_MIN 5
 #define FSLIP_MAX 6
 #define THROTMAX 34
@@ -109,6 +110,7 @@ typedef struct charger_t
 {
     uint8_t current;
     uint8_t chargerStatus;
+    uint8_t proximity;
     /* data */
 } charger_t;
 charger_t charger;
@@ -159,6 +161,6 @@ void ioHandler(void);
 void regenHandler(void);
 void throttleHandler(void);
 void canSet(uint8_t index, uint32_t value, uint8_t gain);
-//void batteryTender(void);
+void vehicleComms(void);
 
 #endif // __VCU_H_

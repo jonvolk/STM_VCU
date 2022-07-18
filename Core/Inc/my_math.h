@@ -8,6 +8,10 @@
 #define RAMPDOWN(current, target, rate) ((target > current || (current - rate) < target) ? target : current - rate)
 //#define DUTY(pcnt)((65535/100)*pcnt)
 
+//Fixed Point format 
+
+
+
 
 #endif // __MY_MATH_H_
 

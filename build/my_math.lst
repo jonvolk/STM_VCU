@@ -1,0 +1,917 @@
+ARM GAS  /tmp/cc32fGUr.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"my_math.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.log2_approx,"ax",%progbits
+  16              		.align	1
+  17              		.syntax unified
+  18              		.thumb
+  19              		.thumb_func
+  20              		.fpu softvfp
+  22              	log2_approx:
+  23              	.LFB6:
+  24              		.file 1 "Core/Src/my_math.c"
+   1:Core/Src/my_math.c **** #include "my_math.h"
+   2:Core/Src/my_math.c **** 
+   3:Core/Src/my_math.c **** 
+   4:Core/Src/my_math.c **** #define FRAC_MASK ((1 << FRAC_DIGITS) - 1)
+   5:Core/Src/my_math.c **** 
+   6:Core/Src/my_math.c **** static s32fp log2_approx(s32fp x, int loopLimit);
+   7:Core/Src/my_math.c **** 
+   8:Core/Src/my_math.c **** 
+   9:Core/Src/my_math.c **** int my_ltoa(char *buf, int val, int base)
+  10:Core/Src/my_math.c **** {
+  11:Core/Src/my_math.c ****    char *start = buf;
+  12:Core/Src/my_math.c ****    char temp;
+  13:Core/Src/my_math.c ****    int len = 0;
+  14:Core/Src/my_math.c **** 
+  15:Core/Src/my_math.c ****    if (val < 0)
+  16:Core/Src/my_math.c ****    {
+  17:Core/Src/my_math.c ****       *buf = '-';
+  18:Core/Src/my_math.c ****       buf++;
+  19:Core/Src/my_math.c ****       start++;
+  20:Core/Src/my_math.c ****       len++;
+  21:Core/Src/my_math.c ****       val = -val;
+  22:Core/Src/my_math.c ****    }
+  23:Core/Src/my_math.c ****    else if (0 == val)
+  24:Core/Src/my_math.c ****    {
+  25:Core/Src/my_math.c ****       *buf = '0';
+  26:Core/Src/my_math.c ****       *(buf + 1) = 0;
+  27:Core/Src/my_math.c ****       return 1;
+  28:Core/Src/my_math.c ****    }
+  29:Core/Src/my_math.c **** 
+  30:Core/Src/my_math.c ****    for (; val > 0; val /= base, buf++, len++)
+  31:Core/Src/my_math.c ****    {
+  32:Core/Src/my_math.c ****       *buf = (val % base) + '0';
+  33:Core/Src/my_math.c ****    }
+  34:Core/Src/my_math.c ****    *buf = 0;
+ARM GAS  /tmp/cc32fGUr.s 			page 2
+
+
+  35:Core/Src/my_math.c ****    buf--;
+  36:Core/Src/my_math.c ****    for (; buf > start; buf--, start++)
+  37:Core/Src/my_math.c ****    {
+  38:Core/Src/my_math.c ****       temp = *start;
+  39:Core/Src/my_math.c ****       *start = *buf;
+  40:Core/Src/my_math.c ****       *buf = temp;
+  41:Core/Src/my_math.c ****    }
+  42:Core/Src/my_math.c ****    return len;
+  43:Core/Src/my_math.c **** }
+  44:Core/Src/my_math.c **** 
+  45:Core/Src/my_math.c **** char* fp_itoa(char * buf, s32fp a)
+  46:Core/Src/my_math.c **** {
+  47:Core/Src/my_math.c ****    int sign = a < 0?-1:1;
+  48:Core/Src/my_math.c ****    int32_t nat = (sign * a) >> FRAC_DIGITS;
+  49:Core/Src/my_math.c ****    uint32_t frac = ((UTOA_FRACDEC * ((sign * a) & FRAC_MASK))) >> FRAC_DIGITS;
+  50:Core/Src/my_math.c ****    char *p = buf;
+  51:Core/Src/my_math.c ****    if (sign < 0)
+  52:Core/Src/my_math.c ****    {
+  53:Core/Src/my_math.c ****       *p = '-';
+  54:Core/Src/my_math.c ****       p++;
+  55:Core/Src/my_math.c ****    }
+  56:Core/Src/my_math.c ****    p += my_ltoa(p, nat, 10);
+  57:Core/Src/my_math.c ****    *p = '.';
+  58:Core/Src/my_math.c ****    p++;
+  59:Core/Src/my_math.c ****    for (uint32_t dec = UTOA_FRACDEC / 10; dec > 1; dec /= 10)
+  60:Core/Src/my_math.c ****    {
+  61:Core/Src/my_math.c ****       if ((frac / dec) == 0)
+  62:Core/Src/my_math.c ****       {
+  63:Core/Src/my_math.c ****          *p = '0';
+  64:Core/Src/my_math.c ****          p++;
+  65:Core/Src/my_math.c ****       }
+  66:Core/Src/my_math.c ****    }
+  67:Core/Src/my_math.c ****    my_ltoa(p, frac, 10);
+  68:Core/Src/my_math.c ****    return buf;
+  69:Core/Src/my_math.c **** }
+  70:Core/Src/my_math.c **** 
+  71:Core/Src/my_math.c **** s32fp fp_atoi(const char *str, int fracDigits)
+  72:Core/Src/my_math.c **** {
+  73:Core/Src/my_math.c ****    int nat = 0;
+  74:Core/Src/my_math.c ****    int frac = 0;
+  75:Core/Src/my_math.c ****    int div = 10;
+  76:Core/Src/my_math.c ****    int sign = 1;
+  77:Core/Src/my_math.c ****    if ('-' == *str)
+  78:Core/Src/my_math.c ****    {
+  79:Core/Src/my_math.c ****       sign = -1;
+  80:Core/Src/my_math.c ****       str++;
+  81:Core/Src/my_math.c ****    }
+  82:Core/Src/my_math.c ****    for (; *str >= '0' && *str <= '9'; str++)
+  83:Core/Src/my_math.c ****    {
+  84:Core/Src/my_math.c ****       nat *= 10;
+  85:Core/Src/my_math.c ****       nat += *str - '0';
+  86:Core/Src/my_math.c ****    }
+  87:Core/Src/my_math.c ****    if (*str != 0)
+  88:Core/Src/my_math.c ****    {
+  89:Core/Src/my_math.c ****       for (str++; *str >= '0' && *str <= '9'; str++)
+  90:Core/Src/my_math.c ****       {
+  91:Core/Src/my_math.c ****          frac += (div / 2 + ((*str - '0') << fracDigits)) / div;
+ARM GAS  /tmp/cc32fGUr.s 			page 3
+
+
+  92:Core/Src/my_math.c ****          div *= 10;
+  93:Core/Src/my_math.c ****       }
+  94:Core/Src/my_math.c ****    }
+  95:Core/Src/my_math.c **** 
+  96:Core/Src/my_math.c ****    return sign * ((nat << fracDigits) + frac);
+  97:Core/Src/my_math.c **** }
+  98:Core/Src/my_math.c **** 
+  99:Core/Src/my_math.c **** u32fp fp_sqrt(u32fp rad)
+ 100:Core/Src/my_math.c **** {
+ 101:Core/Src/my_math.c ****    u32fp sqrt = rad >> (rad<1000?4:8); //Starting value for newton iteration
+ 102:Core/Src/my_math.c ****    u32fp sqrtl;
+ 103:Core/Src/my_math.c ****    sqrt = sqrt>FP_FROMINT(1)?sqrt:FP_FROMINT(1); //Must be > 0
+ 104:Core/Src/my_math.c **** 
+ 105:Core/Src/my_math.c ****    do {
+ 106:Core/Src/my_math.c ****       sqrtl = sqrt;
+ 107:Core/Src/my_math.c ****       sqrt = (sqrt + FP_DIV(rad, sqrt)) >> 1;
+ 108:Core/Src/my_math.c ****    } while ((sqrtl - sqrt) > 1);
+ 109:Core/Src/my_math.c **** 
+ 110:Core/Src/my_math.c ****    return sqrt;
+ 111:Core/Src/my_math.c **** }
+ 112:Core/Src/my_math.c **** 
+ 113:Core/Src/my_math.c **** s32fp fp_ln(unsigned int x)
+ 114:Core/Src/my_math.c **** {
+ 115:Core/Src/my_math.c ****    int n = 0;
+ 116:Core/Src/my_math.c ****    const s32fp ln2 = FP_FROMFLT(0.6931471806);
+ 117:Core/Src/my_math.c **** 
+ 118:Core/Src/my_math.c ****    if (x == 0)
+ 119:Core/Src/my_math.c ****    {
+ 120:Core/Src/my_math.c ****       return -1;
+ 121:Core/Src/my_math.c ****    }
+ 122:Core/Src/my_math.c ****    else
+ 123:Core/Src/my_math.c ****    { //count leading zeros
+ 124:Core/Src/my_math.c ****       uint32_t mask = 0xFFFFFFFF;
+ 125:Core/Src/my_math.c ****       for (int i = 16; i > 0; i /= 2)
+ 126:Core/Src/my_math.c ****       {
+ 127:Core/Src/my_math.c ****          mask <<= i;
+ 128:Core/Src/my_math.c ****          if ((x & mask) == 0)
+ 129:Core/Src/my_math.c ****          {
+ 130:Core/Src/my_math.c ****             n += i;
+ 131:Core/Src/my_math.c ****             x <<= i;
+ 132:Core/Src/my_math.c ****          }
+ 133:Core/Src/my_math.c ****       }
+ 134:Core/Src/my_math.c ****    }
+ 135:Core/Src/my_math.c **** 
+ 136:Core/Src/my_math.c ****    s32fp ln = FP_FROMINT(31 - n);
+ 137:Core/Src/my_math.c ****    x >>= 32 - FRAC_DIGITS - 1; //will result in fixed point number in [1,2)
+ 138:Core/Src/my_math.c ****    ln += log2_approx(x, 5);
+ 139:Core/Src/my_math.c ****    ln = FP_MUL(ln2, ln);
+ 140:Core/Src/my_math.c ****    return ln;
+ 141:Core/Src/my_math.c **** }
+ 142:Core/Src/my_math.c **** 
+ 143:Core/Src/my_math.c **** static s32fp log2_approx(s32fp x, int loopLimit)
+ 144:Core/Src/my_math.c **** {
+  25              		.loc 1 144 0
+  26              		.cfi_startproc
+  27              		@ args = 0, pretend = 0, frame = 0
+  28              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/cc32fGUr.s 			page 4
+
+
+  29              	.LVL0:
+ 145:Core/Src/my_math.c ****    int m = 0;
+ 146:Core/Src/my_math.c ****    s32fp result = 0;
+ 147:Core/Src/my_math.c **** 
+ 148:Core/Src/my_math.c ****    if (loopLimit == 0) return FP_FROMINT(1);
+  30              		.loc 1 148 0
+  31 0000 09B9     		cbnz	r1, .L11
+  32 0002 2020     		movs	r0, #32
+  33              	.LVL1:
+  34 0004 7047     		bx	lr
+  35              	.LVL2:
+  36              	.L11:
+  37 0006 0A46     		mov	r2, r1
+ 149:Core/Src/my_math.c ****    if (x == FP_FROMINT(1)) return 0;
+  38              		.loc 1 149 0
+  39 0008 2028     		cmp	r0, #32
+  40 000a 15D0     		beq	.L6
+ 144:Core/Src/my_math.c ****    int m = 0;
+  41              		.loc 1 144 0
+  42 000c 10B5     		push	{r4, lr}
+  43              	.LCFI0:
+  44              		.cfi_def_cfa_offset 8
+  45              		.cfi_offset 4, -8
+  46              		.cfi_offset 14, -4
+  47 000e 0023     		movs	r3, #0
+  48 0010 03E0     		b	.L3
+  49              	.LVL3:
+  50              	.L4:
+ 150:Core/Src/my_math.c **** 
+ 151:Core/Src/my_math.c ****    while (x < FP_FROMINT(2))
+ 152:Core/Src/my_math.c ****    {
+ 153:Core/Src/my_math.c ****       x = FP_MUL(x, x);
+  51              		.loc 1 153 0
+  52 0012 00FB00F0 		mul	r0, r0, r0
+  53              	.LVL4:
+  54 0016 4011     		asrs	r0, r0, #5
+  55              	.LVL5:
+ 154:Core/Src/my_math.c ****       m++;
+  56              		.loc 1 154 0
+  57 0018 0133     		adds	r3, r3, #1
+  58              	.LVL6:
+  59              	.L3:
+ 151:Core/Src/my_math.c ****    {
+  60              		.loc 1 151 0
+  61 001a 3F28     		cmp	r0, #63
+  62 001c F9DD     		ble	.L4
+ 155:Core/Src/my_math.c ****    }
+ 156:Core/Src/my_math.c ****    s32fp p = FRAC_FAC >> m;
+  63              		.loc 1 156 0
+  64 001e 2024     		movs	r4, #32
+  65 0020 1C41     		asrs	r4, r4, r3
+  66              	.LVL7:
+ 157:Core/Src/my_math.c ****    result = FP_MUL(p, FP_FROMINT(1) + log2_approx(x / 2, loopLimit - 1));
+  67              		.loc 1 157 0
+  68 0022 00EBD070 		add	r0, r0, r0, lsr #31
+  69              	.LVL8:
+  70 0026 511E     		subs	r1, r2, #1
+ARM GAS  /tmp/cc32fGUr.s 			page 5
+
+
+  71              	.LVL9:
+  72 0028 4010     		asrs	r0, r0, #1
+  73 002a FFF7E9FF 		bl	log2_approx
+  74              	.LVL10:
+  75 002e 2030     		adds	r0, r0, #32
+  76 0030 00FB04F0 		mul	r0, r0, r4
+  77 0034 4011     		asrs	r0, r0, #5
+  78              	.LVL11:
+ 158:Core/Src/my_math.c **** 
+ 159:Core/Src/my_math.c ****    return result;
+  79              		.loc 1 159 0
+  80 0036 10BD     		pop	{r4, pc}
+  81              	.LVL12:
+  82              	.L6:
+  83              	.LCFI1:
+  84              		.cfi_def_cfa_offset 0
+  85              		.cfi_restore 4
+  86              		.cfi_restore 14
+ 149:Core/Src/my_math.c **** 
+  87              		.loc 1 149 0
+  88 0038 0020     		movs	r0, #0
+  89              	.LVL13:
+  90 003a 7047     		bx	lr
+  91              		.cfi_endproc
+  92              	.LFE6:
+  94              		.section	.text.my_ltoa,"ax",%progbits
+  95              		.align	1
+  96              		.global	my_ltoa
+  97              		.syntax unified
+  98              		.thumb
+  99              		.thumb_func
+ 100              		.fpu softvfp
+ 102              	my_ltoa:
+ 103              	.LFB1:
+  10:Core/Src/my_math.c ****    char *start = buf;
+ 104              		.loc 1 10 0
+ 105              		.cfi_startproc
+ 106              		@ args = 0, pretend = 0, frame = 0
+ 107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108              		@ link register save eliminated.
+ 109              	.LVL14:
+ 110 0000 30B4     		push	{r4, r5}
+ 111              	.LCFI2:
+ 112              		.cfi_def_cfa_offset 8
+ 113              		.cfi_offset 4, -8
+ 114              		.cfi_offset 5, -4
+ 115 0002 0346     		mov	r3, r0
+ 116              	.LVL15:
+  15:Core/Src/my_math.c ****    {
+ 117              		.loc 1 15 0
+ 118 0004 0029     		cmp	r1, #0
+ 119 0006 03DB     		blt	.L22
+  23:Core/Src/my_math.c ****    {
+ 120              		.loc 1 23 0
+ 121 0008 49B1     		cbz	r1, .L23
+  11:Core/Src/my_math.c ****    char temp;
+ 122              		.loc 1 11 0
+ARM GAS  /tmp/cc32fGUr.s 			page 6
+
+
+ 123 000a 1C46     		mov	r4, r3
+  13:Core/Src/my_math.c **** 
+ 124              		.loc 1 13 0
+ 125 000c 0020     		movs	r0, #0
+ 126              	.LVL16:
+ 127 000e 15E0     		b	.L14
+ 128              	.LVL17:
+ 129              	.L22:
+  17:Core/Src/my_math.c ****       buf++;
+ 130              		.loc 1 17 0
+ 131 0010 2D20     		movs	r0, #45
+ 132              	.LVL18:
+ 133 0012 03F8010B 		strb	r0, [r3], #1
+ 134              	.LVL19:
+  21:Core/Src/my_math.c ****    }
+ 135              		.loc 1 21 0
+ 136 0016 4942     		negs	r1, r1
+ 137              	.LVL20:
+  19:Core/Src/my_math.c ****       len++;
+ 138              		.loc 1 19 0
+ 139 0018 1C46     		mov	r4, r3
+  20:Core/Src/my_math.c ****       val = -val;
+ 140              		.loc 1 20 0
+ 141 001a 0120     		movs	r0, #1
+ 142 001c 0EE0     		b	.L14
+ 143              	.LVL21:
+ 144              	.L23:
+  25:Core/Src/my_math.c ****       *(buf + 1) = 0;
+ 145              		.loc 1 25 0
+ 146 001e 3022     		movs	r2, #48
+ 147              	.LVL22:
+ 148 0020 0270     		strb	r2, [r0]
+  26:Core/Src/my_math.c ****       return 1;
+ 149              		.loc 1 26 0
+ 150 0022 0022     		movs	r2, #0
+ 151 0024 4270     		strb	r2, [r0, #1]
+  27:Core/Src/my_math.c ****    }
+ 152              		.loc 1 27 0
+ 153 0026 0120     		movs	r0, #1
+ 154              	.LVL23:
+ 155 0028 16E0     		b	.L12
+ 156              	.LVL24:
+ 157              	.L17:
+  32:Core/Src/my_math.c ****    }
+ 158              		.loc 1 32 0 discriminator 2
+ 159 002a 91FBF2F5 		sdiv	r5, r1, r2
+ 160 002e 02FB1511 		mls	r1, r2, r5, r1
+ 161              	.LVL25:
+ 162 0032 3031     		adds	r1, r1, #48
+ 163 0034 03F8011B 		strb	r1, [r3], #1
+ 164              	.LVL26:
+  30:Core/Src/my_math.c ****    {
+ 165              		.loc 1 30 0 discriminator 2
+ 166 0038 2946     		mov	r1, r5
+ 167              	.LVL27:
+ 168 003a 0130     		adds	r0, r0, #1
+ 169              	.LVL28:
+ARM GAS  /tmp/cc32fGUr.s 			page 7
+
+
+ 170              	.L14:
+  30:Core/Src/my_math.c ****    {
+ 171              		.loc 1 30 0 is_stmt 0 discriminator 1
+ 172 003c 0029     		cmp	r1, #0
+ 173 003e F4DC     		bgt	.L17
+  34:Core/Src/my_math.c ****    buf--;
+ 174              		.loc 1 34 0 is_stmt 1
+ 175 0040 0022     		movs	r2, #0
+ 176              	.LVL29:
+ 177 0042 03F80129 		strb	r2, [r3], #-1
+ 178              	.LVL30:
+  36:Core/Src/my_math.c ****    {
+ 179              		.loc 1 36 0
+ 180 0046 05E0     		b	.L18
+ 181              	.LVL31:
+ 182              	.L19:
+  38:Core/Src/my_math.c ****       *start = *buf;
+ 183              		.loc 1 38 0 discriminator 2
+ 184 0048 2278     		ldrb	r2, [r4]	@ zero_extendqisi2
+ 185              	.LVL32:
+  39:Core/Src/my_math.c ****       *buf = temp;
+ 186              		.loc 1 39 0 discriminator 2
+ 187 004a 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 188 004c 04F8011B 		strb	r1, [r4], #1
+ 189              	.LVL33:
+  40:Core/Src/my_math.c ****    }
+ 190              		.loc 1 40 0 discriminator 2
+ 191 0050 03F80129 		strb	r2, [r3], #-1
+ 192              	.LVL34:
+ 193              	.L18:
+  36:Core/Src/my_math.c ****    {
+ 194              		.loc 1 36 0 discriminator 1
+ 195 0054 A342     		cmp	r3, r4
+ 196 0056 F7D8     		bhi	.L19
+ 197              	.LVL35:
+ 198              	.L12:
+  43:Core/Src/my_math.c **** 
+ 199              		.loc 1 43 0
+ 200 0058 30BC     		pop	{r4, r5}
+ 201              	.LCFI3:
+ 202              		.cfi_restore 5
+ 203              		.cfi_restore 4
+ 204              		.cfi_def_cfa_offset 0
+ 205 005a 7047     		bx	lr
+ 206              		.cfi_endproc
+ 207              	.LFE1:
+ 209              		.section	.text.fp_itoa,"ax",%progbits
+ 210              		.align	1
+ 211              		.global	fp_itoa
+ 212              		.syntax unified
+ 213              		.thumb
+ 214              		.thumb_func
+ 215              		.fpu softvfp
+ 217              	fp_itoa:
+ 218              	.LFB2:
+  46:Core/Src/my_math.c ****    int sign = a < 0?-1:1;
+ 219              		.loc 1 46 0
+ARM GAS  /tmp/cc32fGUr.s 			page 8
+
+
+ 220              		.cfi_startproc
+ 221              		@ args = 0, pretend = 0, frame = 0
+ 222              		@ frame_needed = 0, uses_anonymous_args = 0
+ 223              	.LVL36:
+ 224 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 225              	.LCFI4:
+ 226              		.cfi_def_cfa_offset 24
+ 227              		.cfi_offset 3, -24
+ 228              		.cfi_offset 4, -20
+ 229              		.cfi_offset 5, -16
+ 230              		.cfi_offset 6, -12
+ 231              		.cfi_offset 7, -8
+ 232              		.cfi_offset 14, -4
+ 233 0002 0546     		mov	r5, r0
+  47:Core/Src/my_math.c ****    int32_t nat = (sign * a) >> FRAC_DIGITS;
+ 234              		.loc 1 47 0
+ 235 0004 0029     		cmp	r1, #0
+ 236 0006 1EDB     		blt	.L33
+ 237 0008 0122     		movs	r2, #1
+ 238              	.L25:
+ 239              	.LVL37:
+  48:Core/Src/my_math.c ****    uint32_t frac = ((UTOA_FRACDEC * ((sign * a) & FRAC_MASK))) >> FRAC_DIGITS;
+ 240              		.loc 1 48 0 discriminator 4
+ 241 000a 01FB02F4 		mul	r4, r1, r2
+ 242 000e 6111     		asrs	r1, r4, #5
+ 243              	.LVL38:
+  49:Core/Src/my_math.c ****    char *p = buf;
+ 244              		.loc 1 49 0 discriminator 4
+ 245 0010 04F01F04 		and	r4, r4, #31
+ 246 0014 6423     		movs	r3, #100
+ 247 0016 03FB04F4 		mul	r4, r3, r4
+ 248 001a 6411     		asrs	r4, r4, #5
+ 249 001c 2746     		mov	r7, r4
+ 250              	.LVL39:
+  51:Core/Src/my_math.c ****    {
+ 251              		.loc 1 51 0 discriminator 4
+ 252 001e 002A     		cmp	r2, #0
+ 253 0020 14DB     		blt	.L34
+  50:Core/Src/my_math.c ****    if (sign < 0)
+ 254              		.loc 1 50 0
+ 255 0022 2E46     		mov	r6, r5
+ 256              	.LVL40:
+ 257              	.L26:
+  56:Core/Src/my_math.c ****    *p = '.';
+ 258              		.loc 1 56 0
+ 259 0024 0A22     		movs	r2, #10
+ 260              	.LVL41:
+ 261 0026 3046     		mov	r0, r6
+ 262              	.LVL42:
+ 263 0028 FFF7FEFF 		bl	my_ltoa
+ 264              	.LVL43:
+ 265 002c 3318     		adds	r3, r6, r0
+ 266              	.LVL44:
+  57:Core/Src/my_math.c ****    p++;
+ 267              		.loc 1 57 0
+ 268 002e 2E22     		movs	r2, #46
+ 269 0030 3254     		strb	r2, [r6, r0]
+ARM GAS  /tmp/cc32fGUr.s 			page 9
+
+
+  58:Core/Src/my_math.c ****    for (uint32_t dec = UTOA_FRACDEC / 10; dec > 1; dec /= 10)
+ 270              		.loc 1 58 0
+ 271 0032 581C     		adds	r0, r3, #1
+ 272              	.LVL45:
+ 273              	.LBB2:
+  59:Core/Src/my_math.c ****    {
+ 274              		.loc 1 59 0
+ 275 0034 0A23     		movs	r3, #10
+ 276              	.LVL46:
+ 277              	.L27:
+  59:Core/Src/my_math.c ****    {
+ 278              		.loc 1 59 0 is_stmt 0 discriminator 1
+ 279 0036 012B     		cmp	r3, #1
+ 280 0038 0DD8     		bhi	.L29
+ 281              	.LBE2:
+  67:Core/Src/my_math.c ****    return buf;
+ 282              		.loc 1 67 0 is_stmt 1
+ 283 003a 0A22     		movs	r2, #10
+ 284 003c 2146     		mov	r1, r4
+ 285 003e FFF7FEFF 		bl	my_ltoa
+ 286              	.LVL47:
+  69:Core/Src/my_math.c **** 
+ 287              		.loc 1 69 0
+ 288 0042 2846     		mov	r0, r5
+ 289 0044 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 290              	.LVL48:
+ 291              	.L33:
+  47:Core/Src/my_math.c ****    int32_t nat = (sign * a) >> FRAC_DIGITS;
+ 292              		.loc 1 47 0
+ 293 0046 4FF0FF32 		mov	r2, #-1
+ 294 004a DEE7     		b	.L25
+ 295              	.LVL49:
+ 296              	.L34:
+  53:Core/Src/my_math.c ****       p++;
+ 297              		.loc 1 53 0
+ 298 004c 2E46     		mov	r6, r5
+ 299 004e 2D23     		movs	r3, #45
+ 300 0050 06F8013B 		strb	r3, [r6], #1
+ 301              	.LVL50:
+ 302 0054 E6E7     		b	.L26
+ 303              	.LVL51:
+ 304              	.L29:
+ 305              	.LBB3:
+  61:Core/Src/my_math.c ****       {
+ 306              		.loc 1 61 0
+ 307 0056 B7FBF3F2 		udiv	r2, r7, r3
+ 308 005a 12B9     		cbnz	r2, .L28
+  63:Core/Src/my_math.c ****          p++;
+ 309              		.loc 1 63 0
+ 310 005c 3022     		movs	r2, #48
+ 311 005e 00F8012B 		strb	r2, [r0], #1
+ 312              	.LVL52:
+ 313              	.L28:
+  59:Core/Src/my_math.c ****    {
+ 314              		.loc 1 59 0 discriminator 2
+ 315 0062 024A     		ldr	r2, .L35
+ 316 0064 A2FB0323 		umull	r2, r3, r2, r3
+ARM GAS  /tmp/cc32fGUr.s 			page 10
+
+
+ 317              	.LVL53:
+ 318 0068 DB08     		lsrs	r3, r3, #3
+ 319              	.LVL54:
+ 320 006a E4E7     		b	.L27
+ 321              	.L36:
+ 322              		.align	2
+ 323              	.L35:
+ 324 006c CDCCCCCC 		.word	-858993459
+ 325              	.LBE3:
+ 326              		.cfi_endproc
+ 327              	.LFE2:
+ 329              		.section	.text.fp_atoi,"ax",%progbits
+ 330              		.align	1
+ 331              		.global	fp_atoi
+ 332              		.syntax unified
+ 333              		.thumb
+ 334              		.thumb_func
+ 335              		.fpu softvfp
+ 337              	fp_atoi:
+ 338              	.LFB3:
+  72:Core/Src/my_math.c ****    int nat = 0;
+ 339              		.loc 1 72 0
+ 340              		.cfi_startproc
+ 341              		@ args = 0, pretend = 0, frame = 0
+ 342              		@ frame_needed = 0, uses_anonymous_args = 0
+ 343              		@ link register save eliminated.
+ 344              	.LVL55:
+ 345 0000 F0B4     		push	{r4, r5, r6, r7}
+ 346              	.LCFI5:
+ 347              		.cfi_def_cfa_offset 16
+ 348              		.cfi_offset 4, -16
+ 349              		.cfi_offset 5, -12
+ 350              		.cfi_offset 6, -8
+ 351              		.cfi_offset 7, -4
+ 352              	.LVL56:
+  77:Core/Src/my_math.c ****    {
+ 353              		.loc 1 77 0
+ 354 0002 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 355 0004 2D2B     		cmp	r3, #45
+ 356 0006 02D0     		beq	.L47
+  76:Core/Src/my_math.c ****    if ('-' == *str)
+ 357              		.loc 1 76 0
+ 358 0008 0125     		movs	r5, #1
+ 359              	.LVL57:
+ 360              	.L38:
+  76:Core/Src/my_math.c ****    if ('-' == *str)
+ 361              		.loc 1 76 0 is_stmt 0 discriminator 1
+ 362 000a 0022     		movs	r2, #0
+ 363 000c 09E0     		b	.L39
+ 364              	.LVL58:
+ 365              	.L47:
+  80:Core/Src/my_math.c ****    }
+ 366              		.loc 1 80 0 is_stmt 1
+ 367 000e 0130     		adds	r0, r0, #1
+ 368              	.LVL59:
+  79:Core/Src/my_math.c ****       str++;
+ 369              		.loc 1 79 0
+ARM GAS  /tmp/cc32fGUr.s 			page 11
+
+
+ 370 0010 4FF0FF35 		mov	r5, #-1
+ 371 0014 F9E7     		b	.L38
+ 372              	.LVL60:
+ 373              	.L40:
+  84:Core/Src/my_math.c ****       nat += *str - '0';
+ 374              		.loc 1 84 0 discriminator 2
+ 375 0016 02EB8202 		add	r2, r2, r2, lsl #2
+ 376              	.LVL61:
+ 377 001a 5400     		lsls	r4, r2, #1
+ 378              	.LVL62:
+  85:Core/Src/my_math.c ****    }
+ 379              		.loc 1 85 0 discriminator 2
+ 380 001c 303B     		subs	r3, r3, #48
+ 381 001e E218     		adds	r2, r4, r3
+ 382              	.LVL63:
+  82:Core/Src/my_math.c ****    {
+ 383              		.loc 1 82 0 discriminator 2
+ 384 0020 0130     		adds	r0, r0, #1
+ 385              	.LVL64:
+ 386              	.L39:
+  82:Core/Src/my_math.c ****    {
+ 387              		.loc 1 82 0 is_stmt 0 discriminator 1
+ 388 0022 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 389 0024 A3F13004 		sub	r4, r3, #48
+ 390 0028 E4B2     		uxtb	r4, r4
+ 391 002a 092C     		cmp	r4, #9
+ 392 002c F3D9     		bls	.L40
+  87:Core/Src/my_math.c ****    {
+ 393              		.loc 1 87 0 is_stmt 1
+ 394 002e DBB1     		cbz	r3, .L45
+  89:Core/Src/my_math.c ****       {
+ 395              		.loc 1 89 0
+ 396 0030 0130     		adds	r0, r0, #1
+ 397              	.LVL65:
+  75:Core/Src/my_math.c ****    int sign = 1;
+ 398              		.loc 1 75 0
+ 399 0032 0A24     		movs	r4, #10
+  74:Core/Src/my_math.c ****    int div = 10;
+ 400              		.loc 1 74 0
+ 401 0034 0027     		movs	r7, #0
+  89:Core/Src/my_math.c ****       {
+ 402              		.loc 1 89 0
+ 403 0036 0AE0     		b	.L42
+ 404              	.LVL66:
+ 405              	.L43:
+  91:Core/Src/my_math.c ****          div *= 10;
+ 406              		.loc 1 91 0 discriminator 3
+ 407 0038 303B     		subs	r3, r3, #48
+ 408 003a 8B40     		lsls	r3, r3, r1
+ 409 003c 03EB6403 		add	r3, r3, r4, asr #1
+ 410 0040 93FBF4F3 		sdiv	r3, r3, r4
+ 411 0044 1F44     		add	r7, r7, r3
+ 412              	.LVL67:
+  92:Core/Src/my_math.c ****       }
+ 413              		.loc 1 92 0 discriminator 3
+ 414 0046 04EB8403 		add	r3, r4, r4, lsl #2
+ 415 004a 5C00     		lsls	r4, r3, #1
+ARM GAS  /tmp/cc32fGUr.s 			page 12
+
+
+ 416              	.LVL68:
+  89:Core/Src/my_math.c ****       {
+ 417              		.loc 1 89 0 discriminator 3
+ 418 004c 0130     		adds	r0, r0, #1
+ 419              	.LVL69:
+ 420              	.L42:
+  89:Core/Src/my_math.c ****       {
+ 421              		.loc 1 89 0 is_stmt 0 discriminator 1
+ 422 004e 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 423 0050 A3F13006 		sub	r6, r3, #48
+ 424 0054 F6B2     		uxtb	r6, r6
+ 425 0056 092E     		cmp	r6, #9
+ 426 0058 EED9     		bls	.L43
+ 427              	.LVL70:
+ 428              	.L41:
+  96:Core/Src/my_math.c **** }
+ 429              		.loc 1 96 0 is_stmt 1
+ 430 005a 02FA01F1 		lsl	r1, r2, r1
+ 431              	.LVL71:
+ 432 005e 3944     		add	r1, r1, r7
+  97:Core/Src/my_math.c **** 
+ 433              		.loc 1 97 0
+ 434 0060 01FB05F0 		mul	r0, r1, r5
+ 435              	.LVL72:
+ 436 0064 F0BC     		pop	{r4, r5, r6, r7}
+ 437              	.LCFI6:
+ 438              		.cfi_remember_state
+ 439              		.cfi_restore 7
+ 440              		.cfi_restore 6
+ 441              		.cfi_restore 5
+ 442              		.cfi_restore 4
+ 443              		.cfi_def_cfa_offset 0
+ 444              	.LVL73:
+ 445 0066 7047     		bx	lr
+ 446              	.LVL74:
+ 447              	.L45:
+ 448              	.LCFI7:
+ 449              		.cfi_restore_state
+  74:Core/Src/my_math.c ****    int div = 10;
+ 450              		.loc 1 74 0
+ 451 0068 0027     		movs	r7, #0
+ 452 006a F6E7     		b	.L41
+ 453              		.cfi_endproc
+ 454              	.LFE3:
+ 456              		.section	.text.fp_sqrt,"ax",%progbits
+ 457              		.align	1
+ 458              		.global	fp_sqrt
+ 459              		.syntax unified
+ 460              		.thumb
+ 461              		.thumb_func
+ 462              		.fpu softvfp
+ 464              	fp_sqrt:
+ 465              	.LFB4:
+ 100:Core/Src/my_math.c ****    u32fp sqrt = rad >> (rad<1000?4:8); //Starting value for newton iteration
+ 466              		.loc 1 100 0
+ 467              		.cfi_startproc
+ 468              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/cc32fGUr.s 			page 13
+
+
+ 469              		@ frame_needed = 0, uses_anonymous_args = 0
+ 470              		@ link register save eliminated.
+ 471              	.LVL75:
+ 101:Core/Src/my_math.c ****    u32fp sqrtl;
+ 472              		.loc 1 101 0
+ 473 0000 B0F57A7F 		cmp	r0, #1000
+ 474 0004 10D2     		bcs	.L51
+ 475 0006 0422     		movs	r2, #4
+ 476              	.L49:
+ 101:Core/Src/my_math.c ****    u32fp sqrtl;
+ 477              		.loc 1 101 0 is_stmt 0 discriminator 4
+ 478 0008 20FA02F2 		lsr	r2, r0, r2
+ 479              	.LVL76:
+ 103:Core/Src/my_math.c **** 
+ 480              		.loc 1 103 0 is_stmt 1 discriminator 4
+ 481 000c 202A     		cmp	r2, #32
+ 482 000e 38BF     		it	cc
+ 483 0010 2022     		movcc	r2, #32
+ 484              	.LVL77:
+ 485              	.L50:
+ 107:Core/Src/my_math.c ****    } while ((sqrtl - sqrt) > 1);
+ 486              		.loc 1 107 0 discriminator 1
+ 487 0012 4301     		lsls	r3, r0, #5
+ 488 0014 B3FBF2F3 		udiv	r3, r3, r2
+ 489 0018 1344     		add	r3, r3, r2
+ 490 001a 5B08     		lsrs	r3, r3, #1
+ 491              	.LVL78:
+ 108:Core/Src/my_math.c **** 
+ 492              		.loc 1 108 0 discriminator 1
+ 493 001c D11A     		subs	r1, r2, r3
+ 107:Core/Src/my_math.c ****    } while ((sqrtl - sqrt) > 1);
+ 494              		.loc 1 107 0 discriminator 1
+ 495 001e 1A46     		mov	r2, r3
+ 496              	.LVL79:
+ 108:Core/Src/my_math.c **** 
+ 497              		.loc 1 108 0 discriminator 1
+ 498 0020 0129     		cmp	r1, #1
+ 499 0022 F6D8     		bhi	.L50
+ 111:Core/Src/my_math.c **** 
+ 500              		.loc 1 111 0
+ 501 0024 1846     		mov	r0, r3
+ 502              	.LVL80:
+ 503 0026 7047     		bx	lr
+ 504              	.LVL81:
+ 505              	.L51:
+ 101:Core/Src/my_math.c ****    u32fp sqrtl;
+ 506              		.loc 1 101 0
+ 507 0028 0822     		movs	r2, #8
+ 508 002a EDE7     		b	.L49
+ 509              		.cfi_endproc
+ 510              	.LFE4:
+ 512              		.section	.text.fp_ln,"ax",%progbits
+ 513              		.align	1
+ 514              		.global	fp_ln
+ 515              		.syntax unified
+ 516              		.thumb
+ 517              		.thumb_func
+ARM GAS  /tmp/cc32fGUr.s 			page 14
+
+
+ 518              		.fpu softvfp
+ 520              	fp_ln:
+ 521              	.LFB5:
+ 114:Core/Src/my_math.c ****    int n = 0;
+ 522              		.loc 1 114 0
+ 523              		.cfi_startproc
+ 524              		@ args = 0, pretend = 0, frame = 0
+ 525              		@ frame_needed = 0, uses_anonymous_args = 0
+ 526              	.LVL82:
+ 118:Core/Src/my_math.c ****    {
+ 527              		.loc 1 118 0
+ 528 0000 F0B1     		cbz	r0, .L57
+ 114:Core/Src/my_math.c ****    int n = 0;
+ 529              		.loc 1 114 0
+ 530 0002 38B5     		push	{r3, r4, r5, lr}
+ 531              	.LCFI8:
+ 532              		.cfi_def_cfa_offset 16
+ 533              		.cfi_offset 3, -16
+ 534              		.cfi_offset 4, -12
+ 535              		.cfi_offset 5, -8
+ 536              		.cfi_offset 14, -4
+ 537 0004 0446     		mov	r4, r0
+ 538 0006 1023     		movs	r3, #16
+ 539 0008 4FF0FF32 		mov	r2, #-1
+ 540 000c 0021     		movs	r1, #0
+ 541 000e 02E0     		b	.L54
+ 542              	.LVL83:
+ 543              	.L55:
+ 544              	.LBB4:
+ 545              	.LBB5:
+ 125:Core/Src/my_math.c ****       {
+ 546              		.loc 1 125 0 discriminator 2
+ 547 0010 03EBD373 		add	r3, r3, r3, lsr #31
+ 548              	.LVL84:
+ 549 0014 5B10     		asrs	r3, r3, #1
+ 550              	.LVL85:
+ 551              	.L54:
+ 125:Core/Src/my_math.c ****       {
+ 552              		.loc 1 125 0 is_stmt 0 discriminator 1
+ 553 0016 002B     		cmp	r3, #0
+ 554 0018 05DD     		ble	.L62
+ 127:Core/Src/my_math.c ****          if ((x & mask) == 0)
+ 555              		.loc 1 127 0 is_stmt 1
+ 556 001a 9A40     		lsls	r2, r2, r3
+ 557              	.LVL86:
+ 128:Core/Src/my_math.c ****          {
+ 558              		.loc 1 128 0
+ 559 001c 1442     		tst	r4, r2
+ 560 001e F7D1     		bne	.L55
+ 130:Core/Src/my_math.c ****             x <<= i;
+ 561              		.loc 1 130 0
+ 562 0020 1944     		add	r1, r1, r3
+ 563              	.LVL87:
+ 131:Core/Src/my_math.c ****          }
+ 564              		.loc 1 131 0
+ 565 0022 9C40     		lsls	r4, r4, r3
+ 566              	.LVL88:
+ARM GAS  /tmp/cc32fGUr.s 			page 15
+
+
+ 567 0024 F4E7     		b	.L55
+ 568              	.L62:
+ 569              	.LBE5:
+ 570              	.LBE4:
+ 136:Core/Src/my_math.c ****    x >>= 32 - FRAC_DIGITS - 1; //will result in fixed point number in [1,2)
+ 571              		.loc 1 136 0
+ 572 0026 C1F11F01 		rsb	r1, r1, #31
+ 573              	.LVL89:
+ 574 002a 4D01     		lsls	r5, r1, #5
+ 575              	.LVL90:
+ 138:Core/Src/my_math.c ****    ln = FP_MUL(ln2, ln);
+ 576              		.loc 1 138 0
+ 577 002c 0521     		movs	r1, #5
+ 578 002e A00E     		lsrs	r0, r4, #26
+ 579              	.LVL91:
+ 580 0030 FFF7FEFF 		bl	log2_approx
+ 581              	.LVL92:
+ 582 0034 2844     		add	r0, r0, r5
+ 583              	.LVL93:
+ 139:Core/Src/my_math.c ****    return ln;
+ 584              		.loc 1 139 0
+ 585 0036 1625     		movs	r5, #22
+ 586 0038 05FB00F0 		mul	r0, r5, r0
+ 587              	.LVL94:
+ 588 003c 4011     		asrs	r0, r0, #5
+ 589              	.LVL95:
+ 140:Core/Src/my_math.c **** }
+ 590              		.loc 1 140 0
+ 591 003e 38BD     		pop	{r3, r4, r5, pc}
+ 592              	.LVL96:
+ 593              	.L57:
+ 594              	.LCFI9:
+ 595              		.cfi_def_cfa_offset 0
+ 596              		.cfi_restore 3
+ 597              		.cfi_restore 4
+ 598              		.cfi_restore 5
+ 599              		.cfi_restore 14
+ 120:Core/Src/my_math.c ****    }
+ 600              		.loc 1 120 0
+ 601 0040 4FF0FF30 		mov	r0, #-1
+ 602              	.LVL97:
+ 603 0044 7047     		bx	lr
+ 604              		.cfi_endproc
+ 605              	.LFE5:
+ 607              		.text
+ 608              	.Letext0:
+ 609              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 610              		.file 3 "/usr/include/newlib/sys/lock.h"
+ 611              		.file 4 "/usr/include/newlib/sys/_types.h"
+ 612              		.file 5 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
+ 613              		.file 6 "/usr/include/newlib/sys/reent.h"
+ 614              		.file 7 "/usr/include/newlib/sys/_stdint.h"
+ 615              		.file 8 "Core/Inc/my_math.h"
+ARM GAS  /tmp/cc32fGUr.s 			page 16
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 my_math.c
+     /tmp/cc32fGUr.s:16     .text.log2_approx:0000000000000000 $t
+     /tmp/cc32fGUr.s:22     .text.log2_approx:0000000000000000 log2_approx
+     /tmp/cc32fGUr.s:95     .text.my_ltoa:0000000000000000 $t
+     /tmp/cc32fGUr.s:102    .text.my_ltoa:0000000000000000 my_ltoa
+     /tmp/cc32fGUr.s:210    .text.fp_itoa:0000000000000000 $t
+     /tmp/cc32fGUr.s:217    .text.fp_itoa:0000000000000000 fp_itoa
+     /tmp/cc32fGUr.s:324    .text.fp_itoa:000000000000006c $d
+     /tmp/cc32fGUr.s:330    .text.fp_atoi:0000000000000000 $t
+     /tmp/cc32fGUr.s:337    .text.fp_atoi:0000000000000000 fp_atoi
+     /tmp/cc32fGUr.s:457    .text.fp_sqrt:0000000000000000 $t
+     /tmp/cc32fGUr.s:464    .text.fp_sqrt:0000000000000000 fp_sqrt
+     /tmp/cc32fGUr.s:513    .text.fp_ln:0000000000000000 $t
+     /tmp/cc32fGUr.s:520    .text.fp_ln:0000000000000000 fp_ln
+                     .debug_frame:0000000000000010 $d
+
+NO UNDEFINED SYMBOLS

@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cck7BACi.s 			page 1
+ARM GAS  /tmp/cc2JrCRi.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cck7BACi.s 			page 1
   48 0016 08BD     		pop	{r3, pc}
   49              	.L4:
   50              		.align	2
-ARM GAS  /tmp/cck7BACi.s 			page 2
+ARM GAS  /tmp/cc2JrCRi.s 			page 2
 
 
   51              	.L3:
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cck7BACi.s 			page 1
   97              	.L7:
   98 001c 00000000 		.word	txMsg
   99 0020 00000000 		.word	canTx
-ARM GAS  /tmp/cck7BACi.s 			page 3
+ARM GAS  /tmp/cc2JrCRi.s 			page 3
 
 
  100              		.cfi_endproc
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cck7BACi.s 			page 1
  148              		.section	.text.dcdc_DATA,"ax",%progbits
  149              		.align	1
  150              		.global	dcdc_DATA
-ARM GAS  /tmp/cck7BACi.s 			page 4
+ARM GAS  /tmp/cc2JrCRi.s 			page 4
 
 
  151              		.syntax unified
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cck7BACi.s 			page 1
  194              	.L17:
  195 002a 00BF     		.align	2
  196              	.L16:
-ARM GAS  /tmp/cck7BACi.s 			page 5
+ARM GAS  /tmp/cc2JrCRi.s 			page 5
 
 
  197 002c 00000000 		.word	DCDC
@@ -272,7 +272,7 @@ ARM GAS  /tmp/cck7BACi.s 			page 1
  223 0002 38B1     		cbz	r0, .L20
  224 0004 0028     		cmp	r0, #0
  225 0006 03DB     		blt	.L18
- 226 0008 0628     		cmp	r0, #6
+ 226 0008 0728     		cmp	r0, #7
  227 000a 02DC     		bgt	.L26
   44:Core/Src/dcdc.c ****     {
   45:Core/Src/dcdc.c ****     case off:
@@ -298,15 +298,16 @@ ARM GAS  /tmp/cck7BACi.s 			page 1
   65:Core/Src/dcdc.c **** 
   66:Core/Src/dcdc.c ****     case on:
   67:Core/Src/dcdc.c ****     case run:
-ARM GAS  /tmp/cck7BACi.s 			page 6
+ARM GAS  /tmp/cc2JrCRi.s 			page 6
 
 
   68:Core/Src/dcdc.c ****     case charge_keyOn:
   69:Core/Src/dcdc.c ****     case charge_keyOff:
   70:Core/Src/dcdc.c ****     case idle:
   71:Core/Src/dcdc.c ****     case launchMode:
-  72:Core/Src/dcdc.c ****         dcdc_ON();
- 228              		.loc 1 72 0
+  72:Core/Src/dcdc.c ****     case burnout:
+  73:Core/Src/dcdc.c ****         dcdc_ON();
+ 228              		.loc 1 73 0
  229 000c FFF7FEFF 		bl	dcdc_ON
  230              	.LVL8:
  231              	.L18:
@@ -357,10 +358,10 @@ ARM GAS  /tmp/cck7BACi.s 			page 1
  270              	.L28:
   53:Core/Src/dcdc.c ****             if ((HAL_GetTick() - time_now) > period)
  271              		.loc 1 53 0
+ARM GAS  /tmp/cc2JrCRi.s 			page 7
+
+
  272 0042 FFF7FEFF 		bl	dcdc_ON
-ARM GAS  /tmp/cck7BACi.s 			page 7
-
-
  273              	.LVL14:
   54:Core/Src/dcdc.c ****             {
  274              		.loc 1 54 0
@@ -414,13 +415,13 @@ ARM GAS  /tmp/cck7BACi.s 			page 1
  322              		.comm	sf,40,4
  323              		.comm	hcan2,40,4
  324              		.comm	hcan1,40,4
- 325              		.comm	setPrevState,1,1
+ 325              		.comm	LIDAR,8,4
  326              		.comm	te,12,4
  327              		.comm	BMS,20,4
- 328              		.comm	charger,2,4
-ARM GAS  /tmp/cck7BACi.s 			page 8
+ARM GAS  /tmp/cc2JrCRi.s 			page 8
 
 
+ 328              		.comm	charger,3,4
  329              		.comm	vcu,7,4
  330              		.comm	iboost,2,4
  331              		.comm	ldu,18,4
@@ -442,34 +443,35 @@ ARM GAS  /tmp/cck7BACi.s 			page 1
  347              		.file 13 "/usr/include/newlib/sys/reent.h"
  348              		.file 14 "Core/Inc/vcu.h"
  349              		.file 15 "Core/Inc/encoder.h"
- 350              		.file 16 "Core/Inc/can_setup.h"
- 351              		.file 17 "Core/Inc/dcdc.h"
-ARM GAS  /tmp/cck7BACi.s 			page 9
+ 350              		.file 16 "Core/Inc/lidar.h"
+ 351              		.file 17 "Core/Inc/can_setup.h"
+ 352              		.file 18 "Core/Inc/dcdc.h"
+ARM GAS  /tmp/cc2JrCRi.s 			page 9
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 dcdc.c
-     /tmp/cck7BACi.s:16     .text.dcdcInit:0000000000000000 $t
-     /tmp/cck7BACi.s:23     .text.dcdcInit:0000000000000000 dcdcInit
-     /tmp/cck7BACi.s:52     .text.dcdcInit:0000000000000018 $d
+     /tmp/cc2JrCRi.s:16     .text.dcdcInit:0000000000000000 $t
+     /tmp/cc2JrCRi.s:23     .text.dcdcInit:0000000000000000 dcdcInit
+     /tmp/cc2JrCRi.s:52     .text.dcdcInit:0000000000000018 $d
                             *COM*:0000000000000004 time_now
                             *COM*:0000000000000004 period
                             *COM*:0000000000000001 tenderActive
-     /tmp/cck7BACi.s:60     .text.dcdc_OFF:0000000000000000 $t
-     /tmp/cck7BACi.s:67     .text.dcdc_OFF:0000000000000000 dcdc_OFF
-     /tmp/cck7BACi.s:98     .text.dcdc_OFF:000000000000001c $d
+     /tmp/cc2JrCRi.s:60     .text.dcdc_OFF:0000000000000000 $t
+     /tmp/cc2JrCRi.s:67     .text.dcdc_OFF:0000000000000000 dcdc_OFF
+     /tmp/cc2JrCRi.s:98     .text.dcdc_OFF:000000000000001c $d
                             *COM*:0000000000000018 txMsg
                             *COM*:0000000000000008 canTx
-     /tmp/cck7BACi.s:104    .text.dcdc_ON:0000000000000000 $t
-     /tmp/cck7BACi.s:111    .text.dcdc_ON:0000000000000000 dcdc_ON
-     /tmp/cck7BACi.s:143    .text.dcdc_ON:0000000000000020 $d
-     /tmp/cck7BACi.s:149    .text.dcdc_DATA:0000000000000000 $t
-     /tmp/cck7BACi.s:156    .text.dcdc_DATA:0000000000000000 dcdc_DATA
-     /tmp/cck7BACi.s:197    .text.dcdc_DATA:000000000000002c $d
+     /tmp/cc2JrCRi.s:104    .text.dcdc_ON:0000000000000000 $t
+     /tmp/cc2JrCRi.s:111    .text.dcdc_ON:0000000000000000 dcdc_ON
+     /tmp/cc2JrCRi.s:143    .text.dcdc_ON:0000000000000020 $d
+     /tmp/cc2JrCRi.s:149    .text.dcdc_DATA:0000000000000000 $t
+     /tmp/cc2JrCRi.s:156    .text.dcdc_DATA:0000000000000000 dcdc_DATA
+     /tmp/cc2JrCRi.s:197    .text.dcdc_DATA:000000000000002c $d
                             *COM*:0000000000000004 DCDC
-     /tmp/cck7BACi.s:203    .text.dcdcHandler:0000000000000000 $t
-     /tmp/cck7BACi.s:210    .text.dcdcHandler:0000000000000000 dcdcHandler
-     /tmp/cck7BACi.s:292    .text.dcdcHandler:0000000000000060 $d
+     /tmp/cc2JrCRi.s:203    .text.dcdcHandler:0000000000000000 $t
+     /tmp/cc2JrCRi.s:210    .text.dcdcHandler:0000000000000000 dcdcHandler
+     /tmp/cc2JrCRi.s:292    .text.dcdcHandler:0000000000000060 $d
                             *COM*:000000000000000c ADC_data
                             *COM*:0000000000000004 canDebug
                             *COM*:0000000000000004 txCycle2
@@ -491,10 +493,10 @@ DEFINED SYMBOLS
                             *COM*:0000000000000028 sf
                             *COM*:0000000000000028 hcan2
                             *COM*:0000000000000028 hcan1
-                            *COM*:0000000000000001 setPrevState
+                            *COM*:0000000000000008 LIDAR
                             *COM*:000000000000000c te
                             *COM*:0000000000000014 BMS
-                            *COM*:0000000000000002 charger
+                            *COM*:0000000000000003 charger
                             *COM*:0000000000000007 vcu
                             *COM*:0000000000000002 iboost
                             *COM*:0000000000000012 ldu
@@ -504,6 +506,6 @@ DEFINED SYMBOLS
 UNDEFINED SYMBOLS
 HAL_GetTick
 c1tx
-ARM GAS  /tmp/cck7BACi.s 			page 10
+ARM GAS  /tmp/cc2JrCRi.s 			page 10
 
 
