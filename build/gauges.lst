@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccyGmcRX.s 			page 1
+ARM GAS  /tmp/ccT695aJ.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccyGmcRX.s 			page 1
   46 0012 0133     		adds	r3, r3, #1
   47              	.LVL2:
   48              	.L2:
-ARM GAS  /tmp/ccyGmcRX.s 			page 2
+ARM GAS  /tmp/ccT695aJ.s 			page 2
 
 
    6:Core/Src/gauges.c ****     {
@@ -96,421 +96,408 @@ ARM GAS  /tmp/ccyGmcRX.s 			page 1
   77              		@ link register save eliminated.
   78              	.LVL3:
   79 0000 82B0     		sub	sp, sp, #8
-  80              	.LCFI0:
-  81              		.cfi_def_cfa_offset 8
-  82 0002 ADF80600 		strh	r0, [sp, #6]	@ movhi
-  83              	.LVL4:
+  80              		.cfi_def_cfa_offset 8
+  81 0002 ADF80600 		strh	r0, [sp, #6]	@ movhi
+  82              	.LVL4:
   15:Core/Src/gauges.c ****     int freq = 0;
   16:Core/Src/gauges.c ****     if (amps > 50)
-  84              		.loc 1 16 0
-  85 0006 BDF80630 		ldrh	r3, [sp, #6]
-  86 000a 9BB2     		uxth	r3, r3
-  87 000c 322B     		cmp	r3, #50
-  88 000e 1BD9     		bls	.L8
+  83              		.loc 1 16 0
+  84 0006 BDF80630 		ldrh	r3, [sp, #6]
+  85 000a 9BB2     		uxth	r3, r3
+  86 000c 322B     		cmp	r3, #50
+  87 000e 1BD9     		bls	.L8
   17:Core/Src/gauges.c ****     {
   18:Core/Src/gauges.c ****         freq = (amps * 100) / 315;
-  89              		.loc 1 18 0
-  90 0010 BDF80630 		ldrh	r3, [sp, #6]
-  91 0014 9AB2     		uxth	r2, r3
-  92 0016 6423     		movs	r3, #100
-  93 0018 03FB02F3 		mul	r3, r3, r2
-  94 001c 0B4A     		ldr	r2, .L10
-  95 001e 82FB0312 		smull	r1, r2, r2, r3
-  96 0022 1A44     		add	r2, r2, r3
-  97 0024 DB17     		asrs	r3, r3, #31
-ARM GAS  /tmp/ccyGmcRX.s 			page 3
+  88              		.loc 1 18 0
+  89 0010 BDF80630 		ldrh	r3, [sp, #6]
+  90 0014 9AB2     		uxth	r2, r3
+  91 0016 6423     		movs	r3, #100
+  92 0018 03FB02F3 		mul	r3, r3, r2
+  93 001c 0B4A     		ldr	r2, .L10
+  94 001e 82FB0312 		smull	r1, r2, r2, r3
+  95 0022 1A44     		add	r2, r2, r3
+  96 0024 DB17     		asrs	r3, r3, #31
+  97 0026 C3EB2223 		rsb	r3, r3, r2, asr #8
+ARM GAS  /tmp/ccT695aJ.s 			page 3
 
 
-  98 0026 C3EB2223 		rsb	r3, r3, r2, asr #8
-  99              	.LVL5:
- 100              	.L7:
+  98              	.LVL5:
+  99              	.L7:
   19:Core/Src/gauges.c ****     }
   20:Core/Src/gauges.c **** 
   21:Core/Src/gauges.c ****     TIM1->CNT = 0;
- 101              		.loc 1 21 0
- 102 002a 094A     		ldr	r2, .L10+4
- 103 002c 0021     		movs	r1, #0
- 104 002e 5162     		str	r1, [r2, #36]
+ 100              		.loc 1 21 0
+ 101 002a 094A     		ldr	r2, .L10+4
+ 102 002c 0021     		movs	r1, #0
+ 103 002e 5162     		str	r1, [r2, #36]
   22:Core/Src/gauges.c ****     TIM1->ARR = CPU / freq / TIM1->PSC; 
- 105              		.loc 1 22 0
- 106 0030 0849     		ldr	r1, .L10+8
- 107 0032 91FBF3F3 		sdiv	r3, r1, r3
- 108              	.LVL6:
- 109 0036 916A     		ldr	r1, [r2, #40]
- 110 0038 B3FBF1F3 		udiv	r3, r3, r1
- 111 003c D362     		str	r3, [r2, #44]
+ 104              		.loc 1 22 0
+ 105 0030 0849     		ldr	r1, .L10+8
+ 106 0032 91FBF3F3 		sdiv	r3, r1, r3
+ 107              	.LVL6:
+ 108 0036 916A     		ldr	r1, [r2, #40]
+ 109 0038 B3FBF1F3 		udiv	r3, r3, r1
+ 110 003c D362     		str	r3, [r2, #44]
   23:Core/Src/gauges.c ****     TIM1->CCR1 = TIM1->ARR / 2;         //50% duty variable frequency
- 112              		.loc 1 23 0
- 113 003e D36A     		ldr	r3, [r2, #44]
- 114 0040 5B08     		lsrs	r3, r3, #1
- 115 0042 5363     		str	r3, [r2, #52]
+ 111              		.loc 1 23 0
+ 112 003e D36A     		ldr	r3, [r2, #44]
+ 113 0040 5B08     		lsrs	r3, r3, #1
+ 114 0042 5363     		str	r3, [r2, #52]
   24:Core/Src/gauges.c **** }
- 116              		.loc 1 24 0
- 117 0044 02B0     		add	sp, sp, #8
- 118              	.LCFI1:
- 119              		.cfi_remember_state
- 120              		.cfi_def_cfa_offset 0
- 121              		@ sp needed
- 122 0046 7047     		bx	lr
- 123              	.LVL7:
- 124              	.L8:
- 125              	.LCFI2:
- 126              		.cfi_restore_state
+ 115              		.loc 1 24 0
+ 116 0044 02B0     		add	sp, sp, #8
+ 117              		.cfi_remember_state
+ 118              		.cfi_def_cfa_offset 0
+ 119              		@ sp needed
+ 120 0046 7047     		bx	lr
+ 121              	.LVL7:
+ 122              	.L8:
+ 123              		.cfi_restore_state
   15:Core/Src/gauges.c ****     if (amps > 50)
- 127              		.loc 1 15 0
- 128 0048 0023     		movs	r3, #0
- 129 004a EEE7     		b	.L7
- 130              	.L11:
- 131              		.align	2
- 132              	.L10:
- 133 004c D1000DD0 		.word	-804454191
- 134 0050 002C0140 		.word	1073818624
- 135 0054 00A24A04 		.word	72000000
- 136              		.cfi_endproc
- 137              	.LFE67:
- 139              		.section	.text.updateSpeed,"ax",%progbits
- 140              		.align	1
- 141              		.global	updateSpeed
- 142              		.syntax unified
- 143              		.thumb
- 144              		.thumb_func
- 145              		.fpu softvfp
- 147              	updateSpeed:
- 148              	.LFB68:
+ 124              		.loc 1 15 0
+ 125 0048 0023     		movs	r3, #0
+ 126 004a EEE7     		b	.L7
+ 127              	.L11:
+ 128              		.align	2
+ 129              	.L10:
+ 130 004c D1000DD0 		.word	-804454191
+ 131 0050 002C0140 		.word	1073818624
+ 132 0054 00A24A04 		.word	72000000
+ 133              		.cfi_endproc
+ 134              	.LFE67:
+ 136              		.section	.text.updateSpeed,"ax",%progbits
+ 137              		.align	1
+ 138              		.global	updateSpeed
+ 139              		.syntax unified
+ 140              		.thumb
+ 141              		.thumb_func
+ 142              		.fpu softvfp
+ 144              	updateSpeed:
+ 145              	.LFB68:
   25:Core/Src/gauges.c **** 
-ARM GAS  /tmp/ccyGmcRX.s 			page 4
-
-
   26:Core/Src/gauges.c **** void updateSpeed(volatile uint16_t motorRPM)
   27:Core/Src/gauges.c **** {
- 149              		.loc 1 27 0
- 150              		.cfi_startproc
- 151              		@ args = 0, pretend = 0, frame = 8
- 152              		@ frame_needed = 0, uses_anonymous_args = 0
- 153              		@ link register save eliminated.
- 154              	.LVL8:
- 155 0000 82B0     		sub	sp, sp, #8
- 156              	.LCFI3:
- 157              		.cfi_def_cfa_offset 8
- 158 0002 ADF80600 		strh	r0, [sp, #6]	@ movhi
- 159              	.LVL9:
+ 146              		.loc 1 27 0
+ARM GAS  /tmp/ccT695aJ.s 			page 4
+
+
+ 147              		.cfi_startproc
+ 148              		@ args = 0, pretend = 0, frame = 8
+ 149              		@ frame_needed = 0, uses_anonymous_args = 0
+ 150              		@ link register save eliminated.
+ 151              	.LVL8:
+ 152 0000 82B0     		sub	sp, sp, #8
+ 153              		.cfi_def_cfa_offset 8
+ 154 0002 ADF80600 		strh	r0, [sp, #6]	@ movhi
+ 155              	.LVL9:
   28:Core/Src/gauges.c ****     int freq = 0;
   29:Core/Src/gauges.c ****     if (motorRPM > 900)
- 160              		.loc 1 29 0
- 161 0006 BDF80630 		ldrh	r3, [sp, #6]
- 162 000a 9BB2     		uxth	r3, r3
- 163 000c B3F5617F 		cmp	r3, #900
- 164 0010 15D9     		bls	.L14
+ 156              		.loc 1 29 0
+ 157 0006 BDF80630 		ldrh	r3, [sp, #6]
+ 158 000a 9BB2     		uxth	r3, r3
+ 159 000c B3F5617F 		cmp	r3, #900
+ 160 0010 15D9     		bls	.L14
   30:Core/Src/gauges.c ****     {
   31:Core/Src/gauges.c ****         freq = motorRPM / 71;
- 165              		.loc 1 31 0
- 166 0012 BDF80620 		ldrh	r2, [sp, #6]
- 167 0016 92B2     		uxth	r2, r2
- 168 0018 0A49     		ldr	r1, .L16
- 169 001a A1FB0232 		umull	r3, r2, r1, r2
- 170 001e 9109     		lsrs	r1, r2, #6
- 171              	.LVL10:
- 172              	.L13:
+ 161              		.loc 1 31 0
+ 162 0012 BDF80620 		ldrh	r2, [sp, #6]
+ 163 0016 92B2     		uxth	r2, r2
+ 164 0018 0A49     		ldr	r1, .L16
+ 165 001a A1FB0232 		umull	r3, r2, r1, r2
+ 166 001e 9109     		lsrs	r1, r2, #6
+ 167              	.LVL10:
+ 168              	.L13:
   32:Core/Src/gauges.c ****     }
   33:Core/Src/gauges.c **** 
   34:Core/Src/gauges.c ****     TIM3->CNT = 0;
- 173              		.loc 1 34 0
- 174 0020 094B     		ldr	r3, .L16+4
- 175 0022 0022     		movs	r2, #0
- 176 0024 5A62     		str	r2, [r3, #36]
+ 169              		.loc 1 34 0
+ 170 0020 094B     		ldr	r3, .L16+4
+ 171 0022 0022     		movs	r2, #0
+ 172 0024 5A62     		str	r2, [r3, #36]
   35:Core/Src/gauges.c ****     TIM3->ARR = CPU / freq / TIM3->PSC; 
- 177              		.loc 1 35 0
- 178 0026 094A     		ldr	r2, .L16+8
- 179 0028 92FBF1F2 		sdiv	r2, r2, r1
- 180 002c 996A     		ldr	r1, [r3, #40]
- 181              	.LVL11:
- 182 002e B2FBF1F2 		udiv	r2, r2, r1
- 183 0032 DA62     		str	r2, [r3, #44]
+ 173              		.loc 1 35 0
+ 174 0026 094A     		ldr	r2, .L16+8
+ 175 0028 92FBF1F2 		sdiv	r2, r2, r1
+ 176 002c 996A     		ldr	r1, [r3, #40]
+ 177              	.LVL11:
+ 178 002e B2FBF1F2 		udiv	r2, r2, r1
+ 179 0032 DA62     		str	r2, [r3, #44]
   36:Core/Src/gauges.c ****     TIM3->CCR3 = TIM3->ARR / 2;           //50% duty variable frequency
- 184              		.loc 1 36 0
- 185 0034 DA6A     		ldr	r2, [r3, #44]
- 186 0036 5208     		lsrs	r2, r2, #1
- 187 0038 DA63     		str	r2, [r3, #60]
+ 180              		.loc 1 36 0
+ 181 0034 DA6A     		ldr	r2, [r3, #44]
+ 182 0036 5208     		lsrs	r2, r2, #1
+ 183 0038 DA63     		str	r2, [r3, #60]
   37:Core/Src/gauges.c **** }
- 188              		.loc 1 37 0
- 189 003a 02B0     		add	sp, sp, #8
- 190              	.LCFI4:
- 191              		.cfi_remember_state
- 192              		.cfi_def_cfa_offset 0
- 193              		@ sp needed
-ARM GAS  /tmp/ccyGmcRX.s 			page 5
-
-
- 194 003c 7047     		bx	lr
- 195              	.LVL12:
- 196              	.L14:
- 197              	.LCFI5:
- 198              		.cfi_restore_state
+ 184              		.loc 1 37 0
+ 185 003a 02B0     		add	sp, sp, #8
+ 186              		.cfi_remember_state
+ 187              		.cfi_def_cfa_offset 0
+ 188              		@ sp needed
+ 189 003c 7047     		bx	lr
+ 190              	.LVL12:
+ 191              	.L14:
+ 192              		.cfi_restore_state
   28:Core/Src/gauges.c ****     if (motorRPM > 900)
- 199              		.loc 1 28 0
- 200 003e 0021     		movs	r1, #0
- 201 0040 EEE7     		b	.L13
- 202              	.L17:
- 203 0042 00BF     		.align	2
- 204              	.L16:
- 205 0044 49B4C2E6 		.word	-423447479
- 206 0048 00040040 		.word	1073742848
- 207 004c 00A24A04 		.word	72000000
- 208              		.cfi_endproc
- 209              	.LFE68:
- 211              		.section	.text.updateTemp,"ax",%progbits
- 212              		.align	1
- 213              		.global	updateTemp
- 214              		.syntax unified
- 215              		.thumb
- 216              		.thumb_func
- 217              		.fpu softvfp
- 219              	updateTemp:
- 220              	.LFB69:
+ARM GAS  /tmp/ccT695aJ.s 			page 5
+
+
+ 193              		.loc 1 28 0
+ 194 003e 0021     		movs	r1, #0
+ 195 0040 EEE7     		b	.L13
+ 196              	.L17:
+ 197 0042 00BF     		.align	2
+ 198              	.L16:
+ 199 0044 49B4C2E6 		.word	-423447479
+ 200 0048 00040040 		.word	1073742848
+ 201 004c 00A24A04 		.word	72000000
+ 202              		.cfi_endproc
+ 203              	.LFE68:
+ 205              		.section	.text.updateTemp,"ax",%progbits
+ 206              		.align	1
+ 207              		.global	updateTemp
+ 208              		.syntax unified
+ 209              		.thumb
+ 210              		.thumb_func
+ 211              		.fpu softvfp
+ 213              	updateTemp:
+ 214              	.LFB69:
   38:Core/Src/gauges.c **** 
   39:Core/Src/gauges.c **** void updateTemp(volatile uint16_t temp)
   40:Core/Src/gauges.c **** {
- 221              		.loc 1 40 0
- 222              		.cfi_startproc
- 223              		@ args = 0, pretend = 0, frame = 8
- 224              		@ frame_needed = 0, uses_anonymous_args = 0
- 225              		@ link register save eliminated.
- 226              	.LVL13:
- 227 0000 82B0     		sub	sp, sp, #8
- 228              	.LCFI6:
- 229              		.cfi_def_cfa_offset 8
- 230 0002 ADF80600 		strh	r0, [sp, #6]	@ movhi
+ 215              		.loc 1 40 0
+ 216              		.cfi_startproc
+ 217              		@ args = 0, pretend = 0, frame = 8
+ 218              		@ frame_needed = 0, uses_anonymous_args = 0
+ 219              		@ link register save eliminated.
+ 220              	.LVL13:
+ 221 0000 82B0     		sub	sp, sp, #8
+ 222              		.cfi_def_cfa_offset 8
+ 223 0002 ADF80600 		strh	r0, [sp, #6]	@ movhi
   41:Core/Src/gauges.c **** 
   42:Core/Src/gauges.c ****     uint16_t highPulse = MAP(temp, 0, 90, 19, 65); //gauge range calibration  
- 231              		.loc 1 42 0
- 232 0006 BDF80630 		ldrh	r3, [sp, #6]
- 233 000a 9AB2     		uxth	r2, r3
- 234 000c 2E23     		movs	r3, #46
- 235 000e 03FB02F3 		mul	r3, r3, r2
- 236 0012 0F4A     		ldr	r2, .L24
- 237 0014 82FB0312 		smull	r1, r2, r2, r3
- 238 0018 1A44     		add	r2, r2, r3
- 239 001a D917     		asrs	r1, r3, #31
- 240 001c C1EBA211 		rsb	r1, r1, r2, asr #6
- 241 0020 89B2     		uxth	r1, r1
- 242 0022 1331     		adds	r1, r1, #19
- 243 0024 89B2     		uxth	r1, r1
- 244              	.LVL14:
- 245              	.LBB3:
+ 224              		.loc 1 42 0
+ 225 0006 BDF80630 		ldrh	r3, [sp, #6]
+ 226 000a 9AB2     		uxth	r2, r3
+ 227 000c 2E23     		movs	r3, #46
+ 228 000e 03FB02F3 		mul	r3, r3, r2
+ 229 0012 0F4A     		ldr	r2, .L24
+ 230 0014 82FB0312 		smull	r1, r2, r2, r3
+ 231 0018 1A44     		add	r2, r2, r3
+ 232 001a D917     		asrs	r1, r3, #31
+ 233 001c C1EBA211 		rsb	r1, r1, r2, asr #6
+ 234 0020 89B2     		uxth	r1, r1
+ 235 0022 1331     		adds	r1, r1, #19
+ 236 0024 89B2     		uxth	r1, r1
+ 237              	.LVL14:
+ 238              	.LBB3:
   43:Core/Src/gauges.c **** 
-ARM GAS  /tmp/ccyGmcRX.s 			page 6
-
-
   44:Core/Src/gauges.c ****     for (size_t i = 0; i < highPulse; i++)
- 246              		.loc 1 44 0
- 247 0026 0022     		movs	r2, #0
- 248 0028 04E0     		b	.L19
- 249              	.LVL15:
- 250              	.L20:
+ 239              		.loc 1 44 0
+ 240 0026 0022     		movs	r2, #0
+ 241 0028 04E0     		b	.L19
+ 242              	.LVL15:
+ 243              	.L20:
   45:Core/Src/gauges.c ****     {
+ARM GAS  /tmp/ccT695aJ.s 			page 6
+
+
   46:Core/Src/gauges.c ****         tempPWM[i] = (uint32_t)TEMP_Pin;
- 251              		.loc 1 46 0 discriminator 3
- 252 002a 8020     		movs	r0, #128
- 253 002c 094B     		ldr	r3, .L24+4
- 254 002e 43F82200 		str	r0, [r3, r2, lsl #2]
+ 244              		.loc 1 46 0 discriminator 3
+ 245 002a 8020     		movs	r0, #128
+ 246 002c 094B     		ldr	r3, .L24+4
+ 247 002e 43F82200 		str	r0, [r3, r2, lsl #2]
   44:Core/Src/gauges.c ****     {
- 255              		.loc 1 44 0 discriminator 3
- 256 0032 0132     		adds	r2, r2, #1
- 257              	.LVL16:
- 258              	.L19:
+ 248              		.loc 1 44 0 discriminator 3
+ 249 0032 0132     		adds	r2, r2, #1
+ 250              	.LVL16:
+ 251              	.L19:
   44:Core/Src/gauges.c ****     {
- 259              		.loc 1 44 0 is_stmt 0 discriminator 1
- 260 0034 0B46     		mov	r3, r1
- 261 0036 8A42     		cmp	r2, r1
- 262 0038 F7D3     		bcc	.L20
- 263 003a 05E0     		b	.L21
- 264              	.LVL17:
- 265              	.L22:
- 266              	.LBE3:
- 267              	.LBB4:
+ 252              		.loc 1 44 0 is_stmt 0 discriminator 1
+ 253 0034 0B46     		mov	r3, r1
+ 254 0036 8A42     		cmp	r2, r1
+ 255 0038 F7D3     		bcc	.L20
+ 256 003a 05E0     		b	.L21
+ 257              	.LVL17:
+ 258              	.L22:
+ 259              	.LBE3:
+ 260              	.LBB4:
   47:Core/Src/gauges.c ****     }
   48:Core/Src/gauges.c **** 
   49:Core/Src/gauges.c ****     for (size_t i = highPulse; i < 100; i++)
   50:Core/Src/gauges.c ****     {
   51:Core/Src/gauges.c ****         tempPWM[i] = (uint32_t)TEMP_Pin << 16U;
- 268              		.loc 1 51 0 is_stmt 1 discriminator 3
- 269 003c 4FF40001 		mov	r1, #8388608
- 270 0040 044A     		ldr	r2, .L24+4
- 271 0042 42F82310 		str	r1, [r2, r3, lsl #2]
+ 261              		.loc 1 51 0 is_stmt 1 discriminator 3
+ 262 003c 4FF40001 		mov	r1, #8388608
+ 263 0040 044A     		ldr	r2, .L24+4
+ 264 0042 42F82310 		str	r1, [r2, r3, lsl #2]
   49:Core/Src/gauges.c ****     {
- 272              		.loc 1 49 0 discriminator 3
- 273 0046 0133     		adds	r3, r3, #1
- 274              	.LVL18:
- 275              	.L21:
+ 265              		.loc 1 49 0 discriminator 3
+ 266 0046 0133     		adds	r3, r3, #1
+ 267              	.LVL18:
+ 268              	.L21:
   49:Core/Src/gauges.c ****     {
- 276              		.loc 1 49 0 is_stmt 0 discriminator 1
- 277 0048 632B     		cmp	r3, #99
- 278 004a F7D9     		bls	.L22
- 279              	.LBE4:
+ 269              		.loc 1 49 0 is_stmt 0 discriminator 1
+ 270 0048 632B     		cmp	r3, #99
+ 271 004a F7D9     		bls	.L22
+ 272              	.LBE4:
   52:Core/Src/gauges.c ****     }
   53:Core/Src/gauges.c **** }
- 280              		.loc 1 53 0 is_stmt 1
- 281 004c 02B0     		add	sp, sp, #8
- 282              	.LCFI7:
- 283              		.cfi_def_cfa_offset 0
- 284              	.LVL19:
- 285              		@ sp needed
- 286 004e 7047     		bx	lr
- 287              	.L25:
- 288              		.align	2
-ARM GAS  /tmp/ccyGmcRX.s 			page 7
+ 273              		.loc 1 53 0 is_stmt 1
+ 274 004c 02B0     		add	sp, sp, #8
+ 275              		.cfi_def_cfa_offset 0
+ 276              	.LVL19:
+ 277              		@ sp needed
+ 278 004e 7047     		bx	lr
+ 279              	.L25:
+ 280              		.align	2
+ 281              	.L24:
+ 282 0050 B7600BB6 		.word	-1240768329
+ 283 0054 00000000 		.word	tempPWM
+ 284              		.cfi_endproc
+ 285              	.LFE69:
+ 287              		.section	.text.updateSOC,"ax",%progbits
+ 288              		.align	1
+ 289              		.global	updateSOC
+ARM GAS  /tmp/ccT695aJ.s 			page 7
 
 
- 289              	.L24:
- 290 0050 B7600BB6 		.word	-1240768329
- 291 0054 00000000 		.word	tempPWM
- 292              		.cfi_endproc
- 293              	.LFE69:
- 295              		.section	.text.updateSOC,"ax",%progbits
- 296              		.align	1
- 297              		.global	updateSOC
- 298              		.syntax unified
- 299              		.thumb
- 300              		.thumb_func
- 301              		.fpu softvfp
- 303              	updateSOC:
- 304              	.LFB70:
+ 290              		.syntax unified
+ 291              		.thumb
+ 292              		.thumb_func
+ 293              		.fpu softvfp
+ 295              	updateSOC:
+ 296              	.LFB70:
   54:Core/Src/gauges.c **** 
   55:Core/Src/gauges.c **** void updateSOC(volatile uint16_t soc)
   56:Core/Src/gauges.c **** {
- 305              		.loc 1 56 0
- 306              		.cfi_startproc
- 307              		@ args = 0, pretend = 0, frame = 8
- 308              		@ frame_needed = 0, uses_anonymous_args = 0
- 309              		@ link register save eliminated.
- 310              	.LVL20:
- 311 0000 82B0     		sub	sp, sp, #8
- 312              	.LCFI8:
- 313              		.cfi_def_cfa_offset 8
- 314 0002 ADF80600 		strh	r0, [sp, #6]	@ movhi
+ 297              		.loc 1 56 0
+ 298              		.cfi_startproc
+ 299              		@ args = 0, pretend = 0, frame = 8
+ 300              		@ frame_needed = 0, uses_anonymous_args = 0
+ 301              		@ link register save eliminated.
+ 302              	.LVL20:
+ 303 0000 82B0     		sub	sp, sp, #8
+ 304              		.cfi_def_cfa_offset 8
+ 305 0002 ADF80600 		strh	r0, [sp, #6]	@ movhi
   57:Core/Src/gauges.c ****     uint16_t highPulse = MAP(soc, 1, 100, 400, 880); //gauge range calibration
- 315              		.loc 1 57 0
- 316 0006 BDF80620 		ldrh	r2, [sp, #6]
- 317 000a 92B2     		uxth	r2, r2
- 318 000c 013A     		subs	r2, r2, #1
- 319 000e C2EB0212 		rsb	r2, r2, r2, lsl #4
- 320 0012 5301     		lsls	r3, r2, #5
- 321 0014 104A     		ldr	r2, .L32
- 322 0016 82FB0312 		smull	r1, r2, r2, r3
- 323 001a 1A44     		add	r2, r2, r3
- 324 001c D917     		asrs	r1, r3, #31
- 325 001e C1EBA211 		rsb	r1, r1, r2, asr #6
- 326 0022 89B2     		uxth	r1, r1
- 327 0024 01F5C871 		add	r1, r1, #400
- 328 0028 89B2     		uxth	r1, r1
- 329              	.LVL21:
- 330              	.LBB5:
+ 306              		.loc 1 57 0
+ 307 0006 BDF80620 		ldrh	r2, [sp, #6]
+ 308 000a 92B2     		uxth	r2, r2
+ 309 000c 013A     		subs	r2, r2, #1
+ 310 000e C2EB0212 		rsb	r2, r2, r2, lsl #4
+ 311 0012 5301     		lsls	r3, r2, #5
+ 312 0014 104A     		ldr	r2, .L32
+ 313 0016 82FB0312 		smull	r1, r2, r2, r3
+ 314 001a 1A44     		add	r2, r2, r3
+ 315 001c D917     		asrs	r1, r3, #31
+ 316 001e C1EBA211 		rsb	r1, r1, r2, asr #6
+ 317 0022 89B2     		uxth	r1, r1
+ 318 0024 01F5C871 		add	r1, r1, #400
+ 319 0028 89B2     		uxth	r1, r1
+ 320              	.LVL21:
+ 321              	.LBB5:
   58:Core/Src/gauges.c **** 
   59:Core/Src/gauges.c ****     for (size_t i = 0; i < highPulse; i++)
- 331              		.loc 1 59 0
- 332 002a 0022     		movs	r2, #0
- 333 002c 05E0     		b	.L27
- 334              	.LVL22:
- 335              	.L28:
+ 322              		.loc 1 59 0
+ 323 002a 0022     		movs	r2, #0
+ 324 002c 05E0     		b	.L27
+ 325              	.LVL22:
+ 326              	.L28:
   60:Core/Src/gauges.c ****     {
   61:Core/Src/gauges.c ****         socPWM[i] = (uint32_t)SOC_Pin;
- 336              		.loc 1 61 0 discriminator 3
- 337 002e 4FF40070 		mov	r0, #512
- 338 0032 0A4B     		ldr	r3, .L32+4
- 339 0034 43F82200 		str	r0, [r3, r2, lsl #2]
-ARM GAS  /tmp/ccyGmcRX.s 			page 8
+ 327              		.loc 1 61 0 discriminator 3
+ 328 002e 4FF40070 		mov	r0, #512
+ 329 0032 0A4B     		ldr	r3, .L32+4
+ 330 0034 43F82200 		str	r0, [r3, r2, lsl #2]
+  59:Core/Src/gauges.c ****     {
+ 331              		.loc 1 59 0 discriminator 3
+ 332 0038 0132     		adds	r2, r2, #1
+ 333              	.LVL23:
+ 334              	.L27:
+  59:Core/Src/gauges.c ****     {
+ 335              		.loc 1 59 0 is_stmt 0 discriminator 1
+ 336 003a 0B46     		mov	r3, r1
+ 337 003c 8A42     		cmp	r2, r1
+ARM GAS  /tmp/ccT695aJ.s 			page 8
 
 
-  59:Core/Src/gauges.c ****     {
- 340              		.loc 1 59 0 discriminator 3
- 341 0038 0132     		adds	r2, r2, #1
- 342              	.LVL23:
- 343              	.L27:
-  59:Core/Src/gauges.c ****     {
- 344              		.loc 1 59 0 is_stmt 0 discriminator 1
- 345 003a 0B46     		mov	r3, r1
- 346 003c 8A42     		cmp	r2, r1
- 347 003e F6D3     		bcc	.L28
- 348 0040 05E0     		b	.L29
- 349              	.LVL24:
- 350              	.L30:
- 351              	.LBE5:
- 352              	.LBB6:
+ 338 003e F6D3     		bcc	.L28
+ 339 0040 05E0     		b	.L29
+ 340              	.LVL24:
+ 341              	.L30:
+ 342              	.LBE5:
+ 343              	.LBB6:
   62:Core/Src/gauges.c ****     }
   63:Core/Src/gauges.c **** 
   64:Core/Src/gauges.c ****     for (size_t i = highPulse; i < 1000; i++)
   65:Core/Src/gauges.c ****     {
   66:Core/Src/gauges.c ****         socPWM[i] = (uint32_t)SOC_Pin << 16U;
- 353              		.loc 1 66 0 is_stmt 1 discriminator 3
- 354 0042 4FF00071 		mov	r1, #33554432
- 355 0046 054A     		ldr	r2, .L32+4
- 356 0048 42F82310 		str	r1, [r2, r3, lsl #2]
+ 344              		.loc 1 66 0 is_stmt 1 discriminator 3
+ 345 0042 4FF00071 		mov	r1, #33554432
+ 346 0046 054A     		ldr	r2, .L32+4
+ 347 0048 42F82310 		str	r1, [r2, r3, lsl #2]
   64:Core/Src/gauges.c ****     {
- 357              		.loc 1 64 0 discriminator 3
- 358 004c 0133     		adds	r3, r3, #1
- 359              	.LVL25:
- 360              	.L29:
+ 348              		.loc 1 64 0 discriminator 3
+ 349 004c 0133     		adds	r3, r3, #1
+ 350              	.LVL25:
+ 351              	.L29:
   64:Core/Src/gauges.c ****     {
- 361              		.loc 1 64 0 is_stmt 0 discriminator 1
- 362 004e B3F57A7F 		cmp	r3, #1000
- 363 0052 F6D3     		bcc	.L30
- 364              	.LBE6:
+ 352              		.loc 1 64 0 is_stmt 0 discriminator 1
+ 353 004e B3F57A7F 		cmp	r3, #1000
+ 354 0052 F6D3     		bcc	.L30
+ 355              	.LBE6:
   67:Core/Src/gauges.c ****     }
   68:Core/Src/gauges.c **** }...
- 365              		.loc 1 68 0 is_stmt 1
- 366 0054 02B0     		add	sp, sp, #8
- 367              	.LCFI9:
- 368              		.cfi_def_cfa_offset 0
- 369              	.LVL26:
- 370              		@ sp needed
- 371 0056 7047     		bx	lr
- 372              	.L33:
- 373              		.align	2
- 374              	.L32:
- 375 0058 03B57EA5 		.word	-1518422781
- 376 005c 00000000 		.word	socPWM
- 377              		.cfi_endproc
- 378              	.LFE70:
- 380              		.comm	socPWM,4000,4
- 381              		.comm	tempPWM,400,4
- 382              		.text
- 383              	.Letext0:
- 384              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 385              		.file 3 "/usr/include/newlib/sys/_stdint.h"
- 386              		.file 4 "Drivers/CMSIS/Include/core_cm3.h"
-ARM GAS  /tmp/ccyGmcRX.s 			page 9
-
-
- 387              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
- 388              		.file 6 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h"
- 389              		.file 7 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
- 390              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
- 391              		.file 9 "/usr/include/newlib/sys/lock.h"
- 392              		.file 10 "/usr/include/newlib/sys/_types.h"
- 393              		.file 11 "/usr/include/newlib/sys/reent.h"
- 394              		.file 12 "Core/Inc/gauges.h"
-ARM GAS  /tmp/ccyGmcRX.s 			page 10
+ 356              		.loc 1 68 0 is_stmt 1
+ 357 0054 02B0     		add	sp, sp, #8
+ 358              		.cfi_def_cfa_offset 0
+ 359              	.LVL26:
+ 360              		@ sp needed
+ 361 0056 7047     		bx	lr
+ 362              	.L33:
+ 363              		.align	2
+ 364              	.L32:
+ 365 0058 03B57EA5 		.word	-1518422781
+ 366 005c 00000000 		.word	socPWM
+ 367              		.cfi_endproc
+ 368              	.LFE70:
+ 370              		.comm	socPWM,4000,4
+ 371              		.comm	tempPWM,400,4
+ 372              		.text
+ 373              	.Letext0:
+ 374              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 375              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 376              		.file 4 "Drivers/CMSIS/Include/core_cm3.h"
+ 377              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+ 378              		.file 6 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h"
+ 379              		.file 7 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
+ 380              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 381              		.file 9 "/usr/include/newlib/sys/lock.h"
+ 382              		.file 10 "/usr/include/newlib/sys/_types.h"
+ 383              		.file 11 "/usr/include/newlib/sys/reent.h"
+ 384              		.file 12 "Core/Inc/gauges.h"
+ARM GAS  /tmp/ccT695aJ.s 			page 9
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 gauges.c
-     /tmp/ccyGmcRX.s:16     .text.gaugeInit:0000000000000000 $t
-     /tmp/ccyGmcRX.s:23     .text.gaugeInit:0000000000000000 gaugeInit
-     /tmp/ccyGmcRX.s:58     .text.gaugeInit:000000000000001c $d
+     /tmp/ccT695aJ.s:16     .text.gaugeInit:0000000000000000 $t
+     /tmp/ccT695aJ.s:23     .text.gaugeInit:0000000000000000 gaugeInit
+     /tmp/ccT695aJ.s:58     .text.gaugeInit:000000000000001c $d
                             *COM*:0000000000000190 tempPWM
                             *COM*:0000000000000fa0 socPWM
-     /tmp/ccyGmcRX.s:64     .text.updateTach:0000000000000000 $t
-     /tmp/ccyGmcRX.s:71     .text.updateTach:0000000000000000 updateTach
-     /tmp/ccyGmcRX.s:133    .text.updateTach:000000000000004c $d
-     /tmp/ccyGmcRX.s:140    .text.updateSpeed:0000000000000000 $t
-     /tmp/ccyGmcRX.s:147    .text.updateSpeed:0000000000000000 updateSpeed
-     /tmp/ccyGmcRX.s:205    .text.updateSpeed:0000000000000044 $d
-     /tmp/ccyGmcRX.s:212    .text.updateTemp:0000000000000000 $t
-     /tmp/ccyGmcRX.s:219    .text.updateTemp:0000000000000000 updateTemp
-     /tmp/ccyGmcRX.s:290    .text.updateTemp:0000000000000050 $d
-     /tmp/ccyGmcRX.s:296    .text.updateSOC:0000000000000000 $t
-     /tmp/ccyGmcRX.s:303    .text.updateSOC:0000000000000000 updateSOC
-     /tmp/ccyGmcRX.s:375    .text.updateSOC:0000000000000058 $d
+     /tmp/ccT695aJ.s:64     .text.updateTach:0000000000000000 $t
+     /tmp/ccT695aJ.s:71     .text.updateTach:0000000000000000 updateTach
+     /tmp/ccT695aJ.s:130    .text.updateTach:000000000000004c $d
+     /tmp/ccT695aJ.s:137    .text.updateSpeed:0000000000000000 $t
+     /tmp/ccT695aJ.s:144    .text.updateSpeed:0000000000000000 updateSpeed
+     /tmp/ccT695aJ.s:199    .text.updateSpeed:0000000000000044 $d
+     /tmp/ccT695aJ.s:206    .text.updateTemp:0000000000000000 $t
+     /tmp/ccT695aJ.s:213    .text.updateTemp:0000000000000000 updateTemp
+     /tmp/ccT695aJ.s:282    .text.updateTemp:0000000000000050 $d
+     /tmp/ccT695aJ.s:288    .text.updateSOC:0000000000000000 $t
+     /tmp/ccT695aJ.s:295    .text.updateSOC:0000000000000000 updateSOC
+     /tmp/ccT695aJ.s:365    .text.updateSOC:0000000000000058 $d
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

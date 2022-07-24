@@ -4,6 +4,7 @@
 #include "main.h"
 #include "vcu.h"
 #include "my_math.h"
+#include "can_setup.h"
 
 uint32_t waterPWM[100];
 

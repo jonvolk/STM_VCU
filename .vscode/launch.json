@@ -44,6 +44,20 @@
                 "/usr/share/openocd/scripts/interface/stlink-v2.cfg",
                 "target/stm32f1x.cfg"
             ]
+        },
+        {
+            "showDevDebugOutput": "parsed",
+            "cwd": "${workspaceRoot}",
+            "executable": "./build/STM_VCU.elf",
+            "name": "Attach STM32",
+            "request": "attach",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "preLaunchTask": "Build STM",
+            "device": "stm32f105xc.s",
+            "configFiles": [
+                "openocd.cfg"
+            ]
         }
     ]
 }

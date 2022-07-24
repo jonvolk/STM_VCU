@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccNFJQom.s 			page 1
+ARM GAS  /tmp/ccsqevyI.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -45,66 +45,83 @@ ARM GAS  /tmp/ccNFJQom.s 			page 1
   18:Core/Src/water_pump.c ****             {
   19:Core/Src/water_pump.c ****                 wpDuty(throttleDuty);
   20:Core/Src/water_pump.c ****             }
-  21:Core/Src/water_pump.c ****         }
-  22:Core/Src/water_pump.c **** 
-  23:Core/Src/water_pump.c **** 
-  24:Core/Src/water_pump.c ****         
-  25:Core/Src/water_pump.c ****         else
-  26:Core/Src/water_pump.c ****         {
-  27:Core/Src/water_pump.c ****             wpDuty(0);
-  28:Core/Src/water_pump.c ****         }
-  29:Core/Src/water_pump.c **** 
-  30:Core/Src/water_pump.c ****         break;
-  31:Core/Src/water_pump.c **** 
-  32:Core/Src/water_pump.c ****     case charge_keyOff:
-  33:Core/Src/water_pump.c ****     case charge_keyOn:
-ARM GAS  /tmp/ccNFJQom.s 			page 2
+  21:Core/Src/water_pump.c ****             txMsg.StdId = 0x140;
+  22:Core/Src/water_pump.c ****             txMsg.DLC = 1;
+  23:Core/Src/water_pump.c ****             canTx[0] = 100; // fans on
+  24:Core/Src/water_pump.c ****             c1tx(&txMsg, canTx);
+  25:Core/Src/water_pump.c ****         }
+  26:Core/Src/water_pump.c **** 
+  27:Core/Src/water_pump.c ****         else
+  28:Core/Src/water_pump.c ****         {
+  29:Core/Src/water_pump.c ****             wpDuty(0);
+  30:Core/Src/water_pump.c ****             txMsg.StdId = 0x140;
+  31:Core/Src/water_pump.c ****             txMsg.DLC = 1;
+  32:Core/Src/water_pump.c ****             canTx[0] = 0; // fans off
+  33:Core/Src/water_pump.c ****             c1tx(&txMsg, canTx);
+ARM GAS  /tmp/ccsqevyI.s 			page 2
 
 
-  34:Core/Src/water_pump.c ****         wpDuty(100);   
-  35:Core/Src/water_pump.c ****         break;
-  36:Core/Src/water_pump.c **** 
-  37:Core/Src/water_pump.c ****     case off:
-  38:Core/Src/water_pump.c ****         wpDuty(0);
-  39:Core/Src/water_pump.c ****     default:
-  40:Core/Src/water_pump.c ****         break;
-  41:Core/Src/water_pump.c ****     }
-  42:Core/Src/water_pump.c **** }
-  43:Core/Src/water_pump.c **** 
-  44:Core/Src/water_pump.c **** void wpInit(void)
-  45:Core/Src/water_pump.c **** {
-  26              		.loc 1 45 0
+  34:Core/Src/water_pump.c ****         }
+  35:Core/Src/water_pump.c **** 
+  36:Core/Src/water_pump.c ****         break;
+  37:Core/Src/water_pump.c **** 
+  38:Core/Src/water_pump.c ****     case charge_keyOff:
+  39:Core/Src/water_pump.c ****     case charge_keyOn:
+  40:Core/Src/water_pump.c ****         wpDuty(100);
+  41:Core/Src/water_pump.c ****         txMsg.StdId = 0x140;
+  42:Core/Src/water_pump.c ****         txMsg.DLC = 1;
+  43:Core/Src/water_pump.c ****         canTx[0] = 100; // fans on
+  44:Core/Src/water_pump.c ****         c1tx(&txMsg, canTx);
+  45:Core/Src/water_pump.c ****         break;
+  46:Core/Src/water_pump.c **** 
+  47:Core/Src/water_pump.c ****     case off:
+  48:Core/Src/water_pump.c ****         wpDuty(0);
+  49:Core/Src/water_pump.c ****         txMsg.StdId = 0x140;
+  50:Core/Src/water_pump.c ****         txMsg.DLC = 1;
+  51:Core/Src/water_pump.c ****         canTx[0] = 0; // fans off
+  52:Core/Src/water_pump.c ****         c1tx(&txMsg, canTx);
+  53:Core/Src/water_pump.c ****     default:
+  54:Core/Src/water_pump.c ****         break;
+  55:Core/Src/water_pump.c ****     }
+  56:Core/Src/water_pump.c **** }
+  57:Core/Src/water_pump.c **** 
+  58:Core/Src/water_pump.c **** void wpInit(void)
+  59:Core/Src/water_pump.c **** {
+  26              		.loc 1 59 0
   27              		.cfi_startproc
   28              		@ args = 0, pretend = 0, frame = 0
   29              		@ frame_needed = 0, uses_anonymous_args = 0
   30              		@ link register save eliminated.
   31              	.LVL0:
   32              	.LBB2:
-  46:Core/Src/water_pump.c ****     for (size_t i = 0; i < 100; i++)
-  33              		.loc 1 46 0
+  60:Core/Src/water_pump.c ****     for (size_t i = 0; i < 100; i++)
+  33              		.loc 1 60 0
   34 0000 0023     		movs	r3, #0
   35 0002 04E0     		b	.L2
   36              	.LVL1:
   37              	.L3:
-  47:Core/Src/water_pump.c ****     {
-  48:Core/Src/water_pump.c ****         waterPWM[i] = 0;
-  38              		.loc 1 48 0 discriminator 3
+  61:Core/Src/water_pump.c ****     {
+  62:Core/Src/water_pump.c ****         waterPWM[i] = 0;
+  38              		.loc 1 62 0 discriminator 3
   39 0004 0021     		movs	r1, #0
   40 0006 034A     		ldr	r2, .L4
   41 0008 42F82310 		str	r1, [r2, r3, lsl #2]
-  46:Core/Src/water_pump.c ****     for (size_t i = 0; i < 100; i++)
-  42              		.loc 1 46 0 discriminator 3
+  60:Core/Src/water_pump.c ****     for (size_t i = 0; i < 100; i++)
+  42              		.loc 1 60 0 discriminator 3
   43 000c 0133     		adds	r3, r3, #1
   44              	.LVL2:
   45              	.L2:
-  46:Core/Src/water_pump.c ****     for (size_t i = 0; i < 100; i++)
-  46              		.loc 1 46 0 is_stmt 0 discriminator 1
+  60:Core/Src/water_pump.c ****     for (size_t i = 0; i < 100; i++)
+  46              		.loc 1 60 0 is_stmt 0 discriminator 1
   47 000e 632B     		cmp	r3, #99
   48 0010 F8D9     		bls	.L3
   49              	.LBE2:
-  49:Core/Src/water_pump.c ****     }
-  50:Core/Src/water_pump.c **** }
-  50              		.loc 1 50 0 is_stmt 1
+  63:Core/Src/water_pump.c ****     }
+  64:Core/Src/water_pump.c **** }
+ARM GAS  /tmp/ccsqevyI.s 			page 3
+
+
+  50              		.loc 1 64 0 is_stmt 1
   51 0012 7047     		bx	lr
   52              	.L5:
   53              		.align	2
@@ -118,275 +135,350 @@ ARM GAS  /tmp/ccNFJQom.s 			page 1
   62              		.syntax unified
   63              		.thumb
   64              		.thumb_func
-ARM GAS  /tmp/ccNFJQom.s 			page 3
-
-
   65              		.fpu softvfp
   67              	wpDuty:
   68              	.LFB68:
-  51:Core/Src/water_pump.c **** 
-  52:Core/Src/water_pump.c **** void wpDuty(volatile int duty)
-  53:Core/Src/water_pump.c **** {
-  69              		.loc 1 53 0
+  65:Core/Src/water_pump.c **** 
+  66:Core/Src/water_pump.c **** void wpDuty(volatile int duty)
+  67:Core/Src/water_pump.c **** {
+  69              		.loc 1 67 0
   70              		.cfi_startproc
   71              		@ args = 0, pretend = 0, frame = 8
   72              		@ frame_needed = 0, uses_anonymous_args = 0
   73              		@ link register save eliminated.
   74              	.LVL3:
   75 0000 82B0     		sub	sp, sp, #8
-  76              	.LCFI0:
-  77              		.cfi_def_cfa_offset 8
-  78 0002 0190     		str	r0, [sp, #4]
-  79              	.LVL4:
-  80              	.LBB3:
-  54:Core/Src/water_pump.c ****     for (size_t i = 0; i < duty; i++)
-  81              		.loc 1 54 0
-  82 0004 0023     		movs	r3, #0
-  83 0006 04E0     		b	.L7
-  84              	.LVL5:
-  85              	.L8:
-  55:Core/Src/water_pump.c ****     {
-  56:Core/Src/water_pump.c ****         waterPWM[i] = (uint32_t)WP_Pin;
-  86              		.loc 1 56 0 discriminator 3
-  87 0008 4021     		movs	r1, #64
-  88 000a 094A     		ldr	r2, .L12
-  89 000c 42F82310 		str	r1, [r2, r3, lsl #2]
-  54:Core/Src/water_pump.c ****     for (size_t i = 0; i < duty; i++)
-  90              		.loc 1 54 0 discriminator 3
-  91 0010 0133     		adds	r3, r3, #1
-  92              	.LVL6:
-  93              	.L7:
-  54:Core/Src/water_pump.c ****     for (size_t i = 0; i < duty; i++)
-  94              		.loc 1 54 0 is_stmt 0 discriminator 1
-  95 0012 019A     		ldr	r2, [sp, #4]
-  96 0014 9342     		cmp	r3, r2
-  97 0016 F7D3     		bcc	.L8
-  98              	.LBE3:
-  99              	.LBB4:
-  57:Core/Src/water_pump.c ****     }
-  58:Core/Src/water_pump.c **** 
-  59:Core/Src/water_pump.c ****     for (size_t i = duty; i < 100; i++)
- 100              		.loc 1 59 0 is_stmt 1
- 101 0018 019B     		ldr	r3, [sp, #4]
- 102              	.LVL7:
- 103 001a 05E0     		b	.L9
- 104              	.L10:
-  60:Core/Src/water_pump.c ****     {
-  61:Core/Src/water_pump.c ****         waterPWM[i] = (uint32_t)WP_Pin << 16U;
- 105              		.loc 1 61 0 discriminator 3
- 106 001c 4FF48001 		mov	r1, #4194304
- 107 0020 034A     		ldr	r2, .L12
- 108 0022 42F82310 		str	r1, [r2, r3, lsl #2]
-  59:Core/Src/water_pump.c ****     {
-ARM GAS  /tmp/ccNFJQom.s 			page 4
+  76              		.cfi_def_cfa_offset 8
+  77 0002 0190     		str	r0, [sp, #4]
+  78              	.LVL4:
+  79              	.LBB3:
+  68:Core/Src/water_pump.c ****     for (size_t i = 0; i < duty; i++)
+  80              		.loc 1 68 0
+  81 0004 0023     		movs	r3, #0
+  82 0006 04E0     		b	.L7
+  83              	.LVL5:
+  84              	.L8:
+  69:Core/Src/water_pump.c ****     {
+  70:Core/Src/water_pump.c ****         waterPWM[i] = (uint32_t)WP_Pin;
+  85              		.loc 1 70 0 discriminator 3
+  86 0008 4021     		movs	r1, #64
+  87 000a 094A     		ldr	r2, .L12
+  88 000c 42F82310 		str	r1, [r2, r3, lsl #2]
+  68:Core/Src/water_pump.c ****     for (size_t i = 0; i < duty; i++)
+  89              		.loc 1 68 0 discriminator 3
+  90 0010 0133     		adds	r3, r3, #1
+  91              	.LVL6:
+  92              	.L7:
+  68:Core/Src/water_pump.c ****     for (size_t i = 0; i < duty; i++)
+  93              		.loc 1 68 0 is_stmt 0 discriminator 1
+  94 0012 019A     		ldr	r2, [sp, #4]
+  95 0014 9342     		cmp	r3, r2
+  96 0016 F7D3     		bcc	.L8
+  97              	.LBE3:
+  98              	.LBB4:
+  71:Core/Src/water_pump.c ****     }
+  72:Core/Src/water_pump.c **** 
+ARM GAS  /tmp/ccsqevyI.s 			page 4
 
 
- 109              		.loc 1 59 0 discriminator 3
- 110 0026 0133     		adds	r3, r3, #1
- 111              	.LVL8:
- 112              	.L9:
-  59:Core/Src/water_pump.c ****     {
- 113              		.loc 1 59 0 is_stmt 0 discriminator 1
- 114 0028 632B     		cmp	r3, #99
- 115 002a F7D9     		bls	.L10
- 116              	.LBE4:
-  62:Core/Src/water_pump.c ****     }
-  63:Core/Src/water_pump.c **** }...
- 117              		.loc 1 63 0 is_stmt 1
- 118 002c 02B0     		add	sp, sp, #8
- 119              	.LCFI1:
- 120              		.cfi_def_cfa_offset 0
- 121              		@ sp needed
- 122 002e 7047     		bx	lr
- 123              	.L13:
- 124              		.align	2
- 125              	.L12:
- 126 0030 00000000 		.word	waterPWM
- 127              		.cfi_endproc
- 128              	.LFE68:
- 130              		.section	.text.wpHandler,"ax",%progbits
- 131              		.align	1
- 132              		.global	wpHandler
- 133              		.syntax unified
- 134              		.thumb
- 135              		.thumb_func
- 136              		.fpu softvfp
- 138              	wpHandler:
- 139              	.LFB66:
+  73:Core/Src/water_pump.c ****     for (size_t i = duty; i < 100; i++)
+  99              		.loc 1 73 0 is_stmt 1
+ 100 0018 019B     		ldr	r3, [sp, #4]
+ 101              	.LVL7:
+ 102 001a 05E0     		b	.L9
+ 103              	.L10:
+  74:Core/Src/water_pump.c ****     {
+  75:Core/Src/water_pump.c ****         waterPWM[i] = (uint32_t)WP_Pin << 16U;
+ 104              		.loc 1 75 0 discriminator 3
+ 105 001c 4FF48001 		mov	r1, #4194304
+ 106 0020 034A     		ldr	r2, .L12
+ 107 0022 42F82310 		str	r1, [r2, r3, lsl #2]
+  73:Core/Src/water_pump.c ****     {
+ 108              		.loc 1 73 0 discriminator 3
+ 109 0026 0133     		adds	r3, r3, #1
+ 110              	.LVL8:
+ 111              	.L9:
+  73:Core/Src/water_pump.c ****     {
+ 112              		.loc 1 73 0 is_stmt 0 discriminator 1
+ 113 0028 632B     		cmp	r3, #99
+ 114 002a F7D9     		bls	.L10
+ 115              	.LBE4:
+  76:Core/Src/water_pump.c ****     }
+  77:Core/Src/water_pump.c **** }...
+ 116              		.loc 1 77 0 is_stmt 1
+ 117 002c 02B0     		add	sp, sp, #8
+ 118              		.cfi_def_cfa_offset 0
+ 119              		@ sp needed
+ 120 002e 7047     		bx	lr
+ 121              	.L13:
+ 122              		.align	2
+ 123              	.L12:
+ 124 0030 00000000 		.word	waterPWM
+ 125              		.cfi_endproc
+ 126              	.LFE68:
+ 128              		.section	.text.wpHandler,"ax",%progbits
+ 129              		.align	1
+ 130              		.global	wpHandler
+ 131              		.syntax unified
+ 132              		.thumb
+ 133              		.thumb_func
+ 134              		.fpu softvfp
+ 136              	wpHandler:
+ 137              	.LFB66:
    4:Core/Src/water_pump.c **** {
- 140              		.loc 1 4 0
- 141              		.cfi_startproc
- 142              		@ args = 0, pretend = 0, frame = 0
- 143              		@ frame_needed = 0, uses_anonymous_args = 0
- 144 0000 08B5     		push	{r3, lr}
- 145              	.LCFI2:
- 146              		.cfi_def_cfa_offset 8
- 147              		.cfi_offset 3, -8
- 148              		.cfi_offset 14, -4
+ 138              		.loc 1 4 0
+ 139              		.cfi_startproc
+ 140              		@ args = 0, pretend = 0, frame = 0
+ 141              		@ frame_needed = 0, uses_anonymous_args = 0
+ 142 0000 08B5     		push	{r3, lr}
+ 143              		.cfi_def_cfa_offset 8
+ 144              		.cfi_offset 3, -8
+ 145              		.cfi_offset 14, -4
    5:Core/Src/water_pump.c ****     switch (vcu.state)
- 149              		.loc 1 5 0
- 150 0002 134B     		ldr	r3, .L23
- 151 0004 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
- 152 0006 DBB2     		uxtb	r3, r3
- 153 0008 052B     		cmp	r3, #5
- 154 000a 20D8     		bhi	.L14
- 155 000c DFE803F0 		tbb	[pc, r3]
- 156              	.L17:
- 157 0010 1C       		.byte	(.L16-.L17)/2
- 158 0011 1F       		.byte	(.L14-.L17)/2
- 159 0012 18       		.byte	(.L18-.L17)/2
- 160 0013 18       		.byte	(.L18-.L17)/2
- 161 0014 1F       		.byte	(.L14-.L17)/2
- 162 0015 03       		.byte	(.L19-.L17)/2
-ARM GAS  /tmp/ccNFJQom.s 			page 5
+ 146              		.loc 1 5 0
+ 147 0002 294B     		ldr	r3, .L23
+ 148 0004 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
+ARM GAS  /tmp/ccsqevyI.s 			page 5
 
 
- 163              		.p2align 1
- 164              	.L19:
+ 149 0006 DBB2     		uxtb	r3, r3
+ 150 0008 052B     		cmp	r3, #5
+ 151 000a 4CD8     		bhi	.L14
+ 152 000c DFE803F0 		tbb	[pc, r3]
+ 153              	.L17:
+ 154 0010 3D       		.byte	(.L16-.L17)/2
+ 155 0011 4B       		.byte	(.L14-.L17)/2
+ 156 0012 2E       		.byte	(.L18-.L17)/2
+ 157 0013 2E       		.byte	(.L18-.L17)/2
+ 158 0014 4B       		.byte	(.L14-.L17)/2
+ 159 0015 03       		.byte	(.L19-.L17)/2
+ 160              		.p2align 1
+ 161              	.L19:
    8:Core/Src/water_pump.c ****         if (ldu.dir == FWD || ldu.dir == REV)
- 165              		.loc 1 8 0
- 166 0016 0F4B     		ldr	r3, .L23+4
- 167 0018 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
- 168 001a DBB2     		uxtb	r3, r3
- 169 001c FF2B     		cmp	r3, #255
- 170 001e 08D0     		beq	.L20
+ 162              		.loc 1 8 0
+ 163 0016 254B     		ldr	r3, .L23+4
+ 164 0018 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
+ 165 001a DBB2     		uxtb	r3, r3
+ 166 001c FF2B     		cmp	r3, #255
+ 167 001e 13D0     		beq	.L20
    8:Core/Src/water_pump.c ****         if (ldu.dir == FWD || ldu.dir == REV)
- 171              		.loc 1 8 0 is_stmt 0 discriminator 1
- 172 0020 0C4B     		ldr	r3, .L23+4
- 173 0022 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
- 174 0024 DBB2     		uxtb	r3, r3
- 175 0026 032B     		cmp	r3, #3
- 176 0028 03D0     		beq	.L20
-  27:Core/Src/water_pump.c ****             wpDuty(0);
- 177              		.loc 1 27 0 is_stmt 1
- 178 002a 0020     		movs	r0, #0
- 179 002c FFF7FEFF 		bl	wpDuty
- 180              	.LVL9:
- 181 0030 08BD     		pop	{r3, pc}
- 182              	.L20:
- 183              	.LBB5:
+ 168              		.loc 1 8 0 is_stmt 0 discriminator 1
+ 169 0020 224B     		ldr	r3, .L23+4
+ 170 0022 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
+ 171 0024 DBB2     		uxtb	r3, r3
+ 172 0026 032B     		cmp	r3, #3
+ 173 0028 0ED0     		beq	.L20
+  29:Core/Src/water_pump.c ****             wpDuty(0);
+ 174              		.loc 1 29 0 is_stmt 1
+ 175 002a 0020     		movs	r0, #0
+ 176 002c FFF7FEFF 		bl	wpDuty
+ 177              	.LVL9:
+  30:Core/Src/water_pump.c ****             txMsg.StdId = 0x140;
+ 178              		.loc 1 30 0
+ 179 0030 1F48     		ldr	r0, .L23+8
+ 180 0032 4FF4A073 		mov	r3, #320
+ 181 0036 0360     		str	r3, [r0]
+  31:Core/Src/water_pump.c ****             txMsg.DLC = 1;
+ 182              		.loc 1 31 0
+ 183 0038 0123     		movs	r3, #1
+ 184 003a 0361     		str	r3, [r0, #16]
+  32:Core/Src/water_pump.c ****             canTx[0] = 0; // fans off
+ 185              		.loc 1 32 0
+ 186 003c 1D49     		ldr	r1, .L23+12
+ 187 003e 0023     		movs	r3, #0
+ 188 0040 0B70     		strb	r3, [r1]
+  33:Core/Src/water_pump.c ****             c1tx(&txMsg, canTx);
+ 189              		.loc 1 33 0
+ 190 0042 FFF7FEFF 		bl	c1tx
+ 191              	.LVL10:
+ 192 0046 08BD     		pop	{r3, pc}
+ 193              	.L20:
+ 194              	.LBB5:
   10:Core/Src/water_pump.c ****             int throttleDuty = MAP(ldu.pot, 870, 4095, 100, 100);
- 184              		.loc 1 10 0
- 185 0032 084B     		ldr	r3, .L23+4
- 186 0034 DA89     		ldrh	r2, [r3, #14]
- 187              	.LVL10:
+ 195              		.loc 1 10 0
+ 196 0048 184B     		ldr	r3, .L23+4
+ 197 004a DA89     		ldrh	r2, [r3, #14]
+ARM GAS  /tmp/ccsqevyI.s 			page 6
+
+
+ 198              	.LVL11:
   11:Core/Src/water_pump.c ****             int tempDuty = MAP(ldu.hsTemp, 0, 85, 100, 100);
- 188              		.loc 1 11 0
- 189 0036 9B88     		ldrh	r3, [r3, #4]
- 190              	.LVL11:
+ 199              		.loc 1 11 0
+ 200 004c 9B88     		ldrh	r3, [r3, #4]
+ 201              	.LVL12:
   19:Core/Src/water_pump.c ****                 wpDuty(throttleDuty);
- 191              		.loc 1 19 0
- 192 0038 6420     		movs	r0, #100
- 193 003a FFF7FEFF 		bl	wpDuty
- 194              	.LVL12:
- 195 003e 08BD     		pop	{r3, pc}
- 196              	.LVL13:
- 197              	.L18:
- 198              	.LBE5:
-  34:Core/Src/water_pump.c ****         wpDuty(100);   
- 199              		.loc 1 34 0
- 200 0040 6420     		movs	r0, #100
- 201 0042 FFF7FEFF 		bl	wpDuty
- 202              	.LVL14:
-  35:Core/Src/water_pump.c ****         break;
- 203              		.loc 1 35 0
- 204 0046 08BD     		pop	{r3, pc}
- 205              	.L16:
-  38:Core/Src/water_pump.c ****         wpDuty(0);
- 206              		.loc 1 38 0
- 207 0048 0020     		movs	r0, #0
- 208 004a FFF7FEFF 		bl	wpDuty
- 209              	.LVL15:
- 210              	.L14:
-ARM GAS  /tmp/ccNFJQom.s 			page 6
+ 202              		.loc 1 19 0
+ 203 004e 6420     		movs	r0, #100
+ 204 0050 FFF7FEFF 		bl	wpDuty
+ 205              	.LVL13:
+  21:Core/Src/water_pump.c ****             txMsg.StdId = 0x140;
+ 206              		.loc 1 21 0
+ 207 0054 1648     		ldr	r0, .L23+8
+ 208 0056 4FF4A073 		mov	r3, #320
+ 209 005a 0360     		str	r3, [r0]
+  22:Core/Src/water_pump.c ****             txMsg.DLC = 1;
+ 210              		.loc 1 22 0
+ 211 005c 0123     		movs	r3, #1
+ 212 005e 0361     		str	r3, [r0, #16]
+  23:Core/Src/water_pump.c ****             canTx[0] = 100; // fans on
+ 213              		.loc 1 23 0
+ 214 0060 1449     		ldr	r1, .L23+12
+ 215 0062 6423     		movs	r3, #100
+ 216 0064 0B70     		strb	r3, [r1]
+  24:Core/Src/water_pump.c ****             c1tx(&txMsg, canTx);
+ 217              		.loc 1 24 0
+ 218 0066 FFF7FEFF 		bl	c1tx
+ 219              	.LVL14:
+ 220              	.LBE5:
+   9:Core/Src/water_pump.c ****         {
+ 221              		.loc 1 9 0
+ 222 006a 08BD     		pop	{r3, pc}
+ 223              	.LVL15:
+ 224              	.L18:
+  40:Core/Src/water_pump.c ****         wpDuty(100);
+ 225              		.loc 1 40 0
+ 226 006c 6420     		movs	r0, #100
+ 227 006e FFF7FEFF 		bl	wpDuty
+ 228              	.LVL16:
+  41:Core/Src/water_pump.c ****         txMsg.StdId = 0x140;
+ 229              		.loc 1 41 0
+ 230 0072 0F48     		ldr	r0, .L23+8
+ 231 0074 4FF4A073 		mov	r3, #320
+ 232 0078 0360     		str	r3, [r0]
+  42:Core/Src/water_pump.c ****         txMsg.DLC = 1;
+ 233              		.loc 1 42 0
+ 234 007a 0123     		movs	r3, #1
+ 235 007c 0361     		str	r3, [r0, #16]
+  43:Core/Src/water_pump.c ****         canTx[0] = 100; // fans on
+ 236              		.loc 1 43 0
+ 237 007e 0D49     		ldr	r1, .L23+12
+ 238 0080 6423     		movs	r3, #100
+ 239 0082 0B70     		strb	r3, [r1]
+  44:Core/Src/water_pump.c ****         c1tx(&txMsg, canTx);
+ 240              		.loc 1 44 0
+ 241 0084 FFF7FEFF 		bl	c1tx
+ 242              	.LVL17:
+ARM GAS  /tmp/ccsqevyI.s 			page 7
 
 
- 211 004e 08BD     		pop	{r3, pc}
- 212              	.L24:
- 213              		.align	2
- 214              	.L23:
- 215 0050 00000000 		.word	vcu
- 216 0054 00000000 		.word	ldu
- 217              		.cfi_endproc
- 218              	.LFE66:
- 220              		.comm	waterPWM,400,4
- 221              		.comm	BMS,20,4
- 222              		.comm	charger,3,4
- 223              		.comm	vcu,7,4
- 224              		.comm	iboost,2,4
- 225              		.comm	ldu,18,4
- 226              		.comm	tempdata,4,4
- 227              		.comm	ADC_data,12,4
- 228              		.comm	canDebug,4,4
- 229              		.comm	txCycle2,4,4
- 230              		.comm	txCycle,4,4
- 231              		.comm	canTx2,8,4
- 232              		.comm	canTx,8,4
- 233              		.comm	canMailbox2,4,4
- 234              		.comm	canMailbox,4,4
- 235              		.comm	canRx2,8,4
- 236              		.comm	canRx,8,4
- 237              		.comm	txMsgExt2,24,4
- 238              		.comm	txMsg2,24,4
- 239              		.comm	rxMsg2,28,4
- 240              		.comm	txMsgExt,24,4
- 241              		.comm	txMsg,24,4
- 242              		.comm	rxMsg,28,4
- 243              		.comm	sf5,40,4
- 244              		.comm	sf4,40,4
- 245              		.comm	sf3,40,4
- 246              		.comm	sf2,40,4
- 247              		.comm	sf,40,4
- 248              		.comm	hcan2,40,4
- 249              		.comm	hcan1,40,4
- 250              		.comm	LIDAR,8,4
- 251              		.comm	tenderActive,1,1
- 252              		.comm	time_now,4,4
- 253              		.comm	period,4,4
- 254              		.comm	DCDC,4,4
- 255              		.comm	te,12,4
- 256              		.text
- 257              	.Letext0:
- 258              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 259              		.file 3 "/usr/include/newlib/sys/_stdint.h"
- 260              		.file 4 "Drivers/CMSIS/Include/core_cm3.h"
- 261              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
- 262              		.file 6 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h"
- 263              		.file 7 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
- 264              		.file 8 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
- 265              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can.h"
- 266              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
- 267              		.file 11 "/usr/include/newlib/sys/lock.h"
- 268              		.file 12 "/usr/include/newlib/sys/_types.h"
-ARM GAS  /tmp/ccNFJQom.s 			page 7
+  45:Core/Src/water_pump.c ****         break;
+ 243              		.loc 1 45 0
+ 244 0088 08BD     		pop	{r3, pc}
+ 245              	.L16:
+  48:Core/Src/water_pump.c ****         wpDuty(0);
+ 246              		.loc 1 48 0
+ 247 008a 0020     		movs	r0, #0
+ 248 008c FFF7FEFF 		bl	wpDuty
+ 249              	.LVL18:
+  49:Core/Src/water_pump.c ****         txMsg.StdId = 0x140;
+ 250              		.loc 1 49 0
+ 251 0090 0748     		ldr	r0, .L23+8
+ 252 0092 4FF4A073 		mov	r3, #320
+ 253 0096 0360     		str	r3, [r0]
+  50:Core/Src/water_pump.c ****         txMsg.DLC = 1;
+ 254              		.loc 1 50 0
+ 255 0098 0123     		movs	r3, #1
+ 256 009a 0361     		str	r3, [r0, #16]
+  51:Core/Src/water_pump.c ****         canTx[0] = 0; // fans off
+ 257              		.loc 1 51 0
+ 258 009c 0549     		ldr	r1, .L23+12
+ 259 009e 0023     		movs	r3, #0
+ 260 00a0 0B70     		strb	r3, [r1]
+  52:Core/Src/water_pump.c ****         c1tx(&txMsg, canTx);
+ 261              		.loc 1 52 0
+ 262 00a2 FFF7FEFF 		bl	c1tx
+ 263              	.LVL19:
+ 264              	.L14:
+ 265 00a6 08BD     		pop	{r3, pc}
+ 266              	.L24:
+ 267              		.align	2
+ 268              	.L23:
+ 269 00a8 00000000 		.word	vcu
+ 270 00ac 00000000 		.word	ldu
+ 271 00b0 00000000 		.word	txMsg
+ 272 00b4 00000000 		.word	canTx
+ 273              		.cfi_endproc
+ 274              	.LFE66:
+ 276              		.comm	waterPWM,400,4
+ 277              		.comm	BMS,20,4
+ 278              		.comm	charger,3,4
+ 279              		.comm	vcu,7,4
+ 280              		.comm	iboost,2,4
+ 281              		.comm	ldu,18,4
+ 282              		.comm	tempdata,4,4
+ 283              		.comm	ADC_data,12,4
+ 284              		.comm	canDebug,4,4
+ 285              		.comm	txCycle2,4,4
+ 286              		.comm	txCycle,4,4
+ 287              		.comm	canTx2,8,4
+ 288              		.comm	canTx,8,4
+ 289              		.comm	canMailbox2,4,4
+ 290              		.comm	canMailbox,4,4
+ 291              		.comm	canRx2,8,4
+ 292              		.comm	canRx,8,4
+ 293              		.comm	txMsgExt2,24,4
+ 294              		.comm	txMsg2,24,4
+ARM GAS  /tmp/ccsqevyI.s 			page 8
 
 
- 269              		.file 13 "/usr/include/newlib/sys/reent.h"
- 270              		.file 14 "Core/Inc/encoder.h"
- 271              		.file 15 "Core/Inc/dcdc.h"
- 272              		.file 16 "Core/Inc/lidar.h"
- 273              		.file 17 "Core/Inc/can_setup.h"
- 274              		.file 18 "Core/Inc/vcu.h"
- 275              		.file 19 "Core/Inc/water_pump.h"
-ARM GAS  /tmp/ccNFJQom.s 			page 8
+ 295              		.comm	rxMsg2,28,4
+ 296              		.comm	txMsgExt,24,4
+ 297              		.comm	txMsg,24,4
+ 298              		.comm	rxMsg,28,4
+ 299              		.comm	sf5,40,4
+ 300              		.comm	sf4,40,4
+ 301              		.comm	sf3,40,4
+ 302              		.comm	sf2,40,4
+ 303              		.comm	sf,40,4
+ 304              		.comm	hcan2,40,4
+ 305              		.comm	hcan1,40,4
+ 306              		.comm	LIDAR,8,4
+ 307              		.comm	tenderActive,1,1
+ 308              		.comm	time_now,4,4
+ 309              		.comm	period,4,4
+ 310              		.comm	DCDC,4,4
+ 311              		.comm	te,12,4
+ 312              		.text
+ 313              	.Letext0:
+ 314              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 315              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 316              		.file 4 "Drivers/CMSIS/Include/core_cm3.h"
+ 317              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+ 318              		.file 6 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h"
+ 319              		.file 7 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
+ 320              		.file 8 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
+ 321              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can.h"
+ 322              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 323              		.file 11 "/usr/include/newlib/sys/lock.h"
+ 324              		.file 12 "/usr/include/newlib/sys/_types.h"
+ 325              		.file 13 "/usr/include/newlib/sys/reent.h"
+ 326              		.file 14 "Core/Inc/encoder.h"
+ 327              		.file 15 "Core/Inc/dcdc.h"
+ 328              		.file 16 "Core/Inc/lidar.h"
+ 329              		.file 17 "Core/Inc/can_setup.h"
+ 330              		.file 18 "Core/Inc/vcu.h"
+ 331              		.file 19 "Core/Inc/water_pump.h"
+ARM GAS  /tmp/ccsqevyI.s 			page 9
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 water_pump.c
-     /tmp/ccNFJQom.s:16     .text.wpInit:0000000000000000 $t
-     /tmp/ccNFJQom.s:23     .text.wpInit:0000000000000000 wpInit
-     /tmp/ccNFJQom.s:55     .text.wpInit:0000000000000014 $d
+     /tmp/ccsqevyI.s:16     .text.wpInit:0000000000000000 $t
+     /tmp/ccsqevyI.s:23     .text.wpInit:0000000000000000 wpInit
+     /tmp/ccsqevyI.s:55     .text.wpInit:0000000000000014 $d
                             *COM*:0000000000000190 waterPWM
-     /tmp/ccNFJQom.s:60     .text.wpDuty:0000000000000000 $t
-     /tmp/ccNFJQom.s:67     .text.wpDuty:0000000000000000 wpDuty
-     /tmp/ccNFJQom.s:126    .text.wpDuty:0000000000000030 $d
-     /tmp/ccNFJQom.s:131    .text.wpHandler:0000000000000000 $t
-     /tmp/ccNFJQom.s:138    .text.wpHandler:0000000000000000 wpHandler
-     /tmp/ccNFJQom.s:157    .text.wpHandler:0000000000000010 $d
-     /tmp/ccNFJQom.s:163    .text.wpHandler:0000000000000016 $t
-     /tmp/ccNFJQom.s:215    .text.wpHandler:0000000000000050 $d
+     /tmp/ccsqevyI.s:60     .text.wpDuty:0000000000000000 $t
+     /tmp/ccsqevyI.s:67     .text.wpDuty:0000000000000000 wpDuty
+     /tmp/ccsqevyI.s:124    .text.wpDuty:0000000000000030 $d
+     /tmp/ccsqevyI.s:129    .text.wpHandler:0000000000000000 $t
+     /tmp/ccsqevyI.s:136    .text.wpHandler:0000000000000000 wpHandler
+     /tmp/ccsqevyI.s:154    .text.wpHandler:0000000000000010 $d
+     /tmp/ccsqevyI.s:160    .text.wpHandler:0000000000000016 $t
+     /tmp/ccsqevyI.s:269    .text.wpHandler:00000000000000a8 $d
                             *COM*:0000000000000007 vcu
                             *COM*:0000000000000012 ldu
+                            *COM*:0000000000000018 txMsg
+                            *COM*:0000000000000008 canTx
                             *COM*:0000000000000014 BMS
                             *COM*:0000000000000003 charger
                             *COM*:0000000000000002 iboost
@@ -396,7 +488,6 @@ DEFINED SYMBOLS
                             *COM*:0000000000000004 txCycle2
                             *COM*:0000000000000004 txCycle
                             *COM*:0000000000000008 canTx2
-                            *COM*:0000000000000008 canTx
                             *COM*:0000000000000004 canMailbox2
                             *COM*:0000000000000004 canMailbox
                             *COM*:0000000000000008 canRx2
@@ -405,7 +496,6 @@ DEFINED SYMBOLS
                             *COM*:0000000000000018 txMsg2
                             *COM*:000000000000001c rxMsg2
                             *COM*:0000000000000018 txMsgExt
-                            *COM*:0000000000000018 txMsg
                             *COM*:000000000000001c rxMsg
                             *COM*:0000000000000028 sf5
                             *COM*:0000000000000028 sf4
@@ -422,4 +512,5 @@ DEFINED SYMBOLS
                             *COM*:000000000000000c te
                      .debug_frame:0000000000000010 $d
 
-NO UNDEFINED SYMBOLS
+UNDEFINED SYMBOLS
+c1tx

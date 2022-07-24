@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc8inkaW.s 			page 1
+ARM GAS  /tmp/ccNoAVGI.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc8inkaW.s 			page 1
   31:Core/Src/stm32f1xx_it.c **** /* USER CODE END TD */
   32:Core/Src/stm32f1xx_it.c **** 
   33:Core/Src/stm32f1xx_it.c **** /* Private define ------------------------------------------------------------*/
-ARM GAS  /tmp/cc8inkaW.s 			page 2
+ARM GAS  /tmp/ccNoAVGI.s 			page 2
 
 
   34:Core/Src/stm32f1xx_it.c **** /* USER CODE BEGIN PD */
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc8inkaW.s 			page 1
   35              	.LFE65:
   37              		.section	.text.HardFault_Handler,"ax",%progbits
   38              		.align	1
-ARM GAS  /tmp/cc8inkaW.s 			page 3
+ARM GAS  /tmp/ccNoAVGI.s 			page 3
 
 
   39              		.global	HardFault_Handler
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc8inkaW.s 			page 1
  107:Core/Src/stm32f1xx_it.c **** void MemManage_Handler(void)
  108:Core/Src/stm32f1xx_it.c **** {
   68              		.loc 1 108 0
-ARM GAS  /tmp/cc8inkaW.s 			page 4
+ARM GAS  /tmp/ccNoAVGI.s 			page 4
 
 
   69              		.cfi_startproc
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc8inkaW.s 			page 1
  126:Core/Src/stm32f1xx_it.c ****   /* USER CODE END BusFault_IRQn 0 */
  127:Core/Src/stm32f1xx_it.c ****   while (1)
  128:Core/Src/stm32f1xx_it.c ****   {
-ARM GAS  /tmp/cc8inkaW.s 			page 5
+ARM GAS  /tmp/ccNoAVGI.s 			page 5
 
 
  129:Core/Src/stm32f1xx_it.c ****     /* USER CODE BEGIN W1_BusFault_IRQn 0 */
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc8inkaW.s 			page 1
  142              		.global	DMA1_Channel1_IRQHandler
  143              		.syntax unified
  144              		.thumb
-ARM GAS  /tmp/cc8inkaW.s 			page 6
+ARM GAS  /tmp/ccNoAVGI.s 			page 6
 
 
  145              		.thumb_func
@@ -331,37 +331,36 @@ ARM GAS  /tmp/cc8inkaW.s 			page 1
  153              		@ frame_needed = 0, uses_anonymous_args = 0
  154              		.loc 1 173 0
  155 0000 08B5     		push	{r3, lr}
- 156              	.LCFI0:
- 157              		.cfi_def_cfa_offset 8
- 158              		.cfi_offset 3, -8
- 159              		.cfi_offset 14, -4
+ 156              		.cfi_def_cfa_offset 8
+ 157              		.cfi_offset 3, -8
+ 158              		.cfi_offset 14, -4
  174:Core/Src/stm32f1xx_it.c ****   /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
  175:Core/Src/stm32f1xx_it.c **** 
  176:Core/Src/stm32f1xx_it.c ****   /* USER CODE END DMA1_Channel1_IRQn 0 */
  177:Core/Src/stm32f1xx_it.c ****   HAL_DMA_IRQHandler(&hdma_adc1);
- 160              		.loc 1 177 0
- 161 0002 0248     		ldr	r0, .L14
- 162 0004 FFF7FEFF 		bl	HAL_DMA_IRQHandler
- 163              	.LVL0:
- 164 0008 08BD     		pop	{r3, pc}
- 165              	.L15:
- 166 000a 00BF     		.align	2
- 167              	.L14:
- 168 000c 00000000 		.word	hdma_adc1
- 169              		.cfi_endproc
- 170              	.LFE71:
- 172              		.section	.text.DMA1_Channel5_IRQHandler,"ax",%progbits
- 173              		.align	1
- 174              		.global	DMA1_Channel5_IRQHandler
- 175              		.syntax unified
- 176              		.thumb
- 177              		.thumb_func
- 178              		.fpu softvfp
- 180              	DMA1_Channel5_IRQHandler:
-ARM GAS  /tmp/cc8inkaW.s 			page 7
+ 159              		.loc 1 177 0
+ 160 0002 0248     		ldr	r0, .L14
+ 161 0004 FFF7FEFF 		bl	HAL_DMA_IRQHandler
+ 162              	.LVL0:
+ 163 0008 08BD     		pop	{r3, pc}
+ 164              	.L15:
+ 165 000a 00BF     		.align	2
+ 166              	.L14:
+ 167 000c 00000000 		.word	hdma_adc1
+ 168              		.cfi_endproc
+ 169              	.LFE71:
+ 171              		.section	.text.DMA1_Channel5_IRQHandler,"ax",%progbits
+ 172              		.align	1
+ 173              		.global	DMA1_Channel5_IRQHandler
+ 174              		.syntax unified
+ 175              		.thumb
+ 176              		.thumb_func
+ 177              		.fpu softvfp
+ 179              	DMA1_Channel5_IRQHandler:
+ 180              	.LFB72:
+ARM GAS  /tmp/ccNoAVGI.s 			page 7
 
 
- 181              	.LFB72:
  178:Core/Src/stm32f1xx_it.c ****   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
  179:Core/Src/stm32f1xx_it.c **** 
  180:Core/Src/stm32f1xx_it.c ****   /* USER CODE END DMA1_Channel1_IRQn 1 */
@@ -372,39 +371,38 @@ ARM GAS  /tmp/cc8inkaW.s 			page 1
  185:Core/Src/stm32f1xx_it.c ****   */
  186:Core/Src/stm32f1xx_it.c **** void DMA1_Channel5_IRQHandler(void)
  187:Core/Src/stm32f1xx_it.c **** {
- 182              		.loc 1 187 0
- 183              		.cfi_startproc
- 184              		@ args = 0, pretend = 0, frame = 0
- 185              		@ frame_needed = 0, uses_anonymous_args = 0
- 186 0000 08B5     		push	{r3, lr}
- 187              	.LCFI1:
- 188              		.cfi_def_cfa_offset 8
- 189              		.cfi_offset 3, -8
- 190              		.cfi_offset 14, -4
+ 181              		.loc 1 187 0
+ 182              		.cfi_startproc
+ 183              		@ args = 0, pretend = 0, frame = 0
+ 184              		@ frame_needed = 0, uses_anonymous_args = 0
+ 185 0000 08B5     		push	{r3, lr}
+ 186              		.cfi_def_cfa_offset 8
+ 187              		.cfi_offset 3, -8
+ 188              		.cfi_offset 14, -4
  188:Core/Src/stm32f1xx_it.c ****   /* USER CODE BEGIN DMA1_Channel5_IRQn 0 */
  189:Core/Src/stm32f1xx_it.c **** 
  190:Core/Src/stm32f1xx_it.c ****   /* USER CODE END DMA1_Channel5_IRQn 0 */
  191:Core/Src/stm32f1xx_it.c ****   HAL_DMA_IRQHandler(&hdma_tim2_ch1);
- 191              		.loc 1 191 0
- 192 0002 0248     		ldr	r0, .L18
- 193 0004 FFF7FEFF 		bl	HAL_DMA_IRQHandler
- 194              	.LVL1:
- 195 0008 08BD     		pop	{r3, pc}
- 196              	.L19:
- 197 000a 00BF     		.align	2
- 198              	.L18:
- 199 000c 00000000 		.word	hdma_tim2_ch1
- 200              		.cfi_endproc
- 201              	.LFE72:
- 203              		.section	.text.CAN1_RX0_IRQHandler,"ax",%progbits
- 204              		.align	1
- 205              		.global	CAN1_RX0_IRQHandler
- 206              		.syntax unified
- 207              		.thumb
- 208              		.thumb_func
- 209              		.fpu softvfp
- 211              	CAN1_RX0_IRQHandler:
- 212              	.LFB73:
+ 189              		.loc 1 191 0
+ 190 0002 0248     		ldr	r0, .L18
+ 191 0004 FFF7FEFF 		bl	HAL_DMA_IRQHandler
+ 192              	.LVL1:
+ 193 0008 08BD     		pop	{r3, pc}
+ 194              	.L19:
+ 195 000a 00BF     		.align	2
+ 196              	.L18:
+ 197 000c 00000000 		.word	hdma_tim2_ch1
+ 198              		.cfi_endproc
+ 199              	.LFE72:
+ 201              		.section	.text.CAN1_RX0_IRQHandler,"ax",%progbits
+ 202              		.align	1
+ 203              		.global	CAN1_RX0_IRQHandler
+ 204              		.syntax unified
+ 205              		.thumb
+ 206              		.thumb_func
+ 207              		.fpu softvfp
+ 209              	CAN1_RX0_IRQHandler:
+ 210              	.LFB73:
  192:Core/Src/stm32f1xx_it.c ****   /* USER CODE BEGIN DMA1_Channel5_IRQn 1 */
  193:Core/Src/stm32f1xx_it.c **** 
  194:Core/Src/stm32f1xx_it.c ****   /* USER CODE END DMA1_Channel5_IRQn 1 */
@@ -415,42 +413,41 @@ ARM GAS  /tmp/cc8inkaW.s 			page 1
  199:Core/Src/stm32f1xx_it.c ****   */
  200:Core/Src/stm32f1xx_it.c **** void CAN1_RX0_IRQHandler(void)
  201:Core/Src/stm32f1xx_it.c **** {
- 213              		.loc 1 201 0
- 214              		.cfi_startproc
- 215              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/cc8inkaW.s 			page 8
+ 211              		.loc 1 201 0
+ 212              		.cfi_startproc
+ 213              		@ args = 0, pretend = 0, frame = 0
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215 0000 08B5     		push	{r3, lr}
+ARM GAS  /tmp/ccNoAVGI.s 			page 8
 
 
- 216              		@ frame_needed = 0, uses_anonymous_args = 0
- 217 0000 08B5     		push	{r3, lr}
- 218              	.LCFI2:
- 219              		.cfi_def_cfa_offset 8
- 220              		.cfi_offset 3, -8
- 221              		.cfi_offset 14, -4
+ 216              		.cfi_def_cfa_offset 8
+ 217              		.cfi_offset 3, -8
+ 218              		.cfi_offset 14, -4
  202:Core/Src/stm32f1xx_it.c ****   /* USER CODE BEGIN CAN1_RX0_IRQn 0 */
  203:Core/Src/stm32f1xx_it.c **** 
  204:Core/Src/stm32f1xx_it.c ****   /* USER CODE END CAN1_RX0_IRQn 0 */
  205:Core/Src/stm32f1xx_it.c ****   HAL_CAN_IRQHandler(&hcan1);
- 222              		.loc 1 205 0
- 223 0002 0248     		ldr	r0, .L22
- 224 0004 FFF7FEFF 		bl	HAL_CAN_IRQHandler
- 225              	.LVL2:
- 226 0008 08BD     		pop	{r3, pc}
- 227              	.L23:
- 228 000a 00BF     		.align	2
- 229              	.L22:
- 230 000c 00000000 		.word	hcan1
- 231              		.cfi_endproc
- 232              	.LFE73:
- 234              		.section	.text.TIM7_IRQHandler,"ax",%progbits
- 235              		.align	1
- 236              		.global	TIM7_IRQHandler
- 237              		.syntax unified
- 238              		.thumb
- 239              		.thumb_func
- 240              		.fpu softvfp
- 242              	TIM7_IRQHandler:
- 243              	.LFB74:
+ 219              		.loc 1 205 0
+ 220 0002 0248     		ldr	r0, .L22
+ 221 0004 FFF7FEFF 		bl	HAL_CAN_IRQHandler
+ 222              	.LVL2:
+ 223 0008 08BD     		pop	{r3, pc}
+ 224              	.L23:
+ 225 000a 00BF     		.align	2
+ 226              	.L22:
+ 227 000c 00000000 		.word	hcan1
+ 228              		.cfi_endproc
+ 229              	.LFE73:
+ 231              		.section	.text.TIM7_IRQHandler,"ax",%progbits
+ 232              		.align	1
+ 233              		.global	TIM7_IRQHandler
+ 234              		.syntax unified
+ 235              		.thumb
+ 236              		.thumb_func
+ 237              		.fpu softvfp
+ 239              	TIM7_IRQHandler:
+ 240              	.LFB74:
  206:Core/Src/stm32f1xx_it.c ****   /* USER CODE BEGIN CAN1_RX0_IRQn 1 */
  207:Core/Src/stm32f1xx_it.c **** 
  208:Core/Src/stm32f1xx_it.c ****   /* USER CODE END CAN1_RX0_IRQn 1 */
@@ -461,42 +458,41 @@ ARM GAS  /tmp/cc8inkaW.s 			page 1
  213:Core/Src/stm32f1xx_it.c ****   */
  214:Core/Src/stm32f1xx_it.c **** void TIM7_IRQHandler(void)
  215:Core/Src/stm32f1xx_it.c **** {
- 244              		.loc 1 215 0
- 245              		.cfi_startproc
- 246              		@ args = 0, pretend = 0, frame = 0
- 247              		@ frame_needed = 0, uses_anonymous_args = 0
- 248 0000 08B5     		push	{r3, lr}
- 249              	.LCFI3:
- 250              		.cfi_def_cfa_offset 8
- 251              		.cfi_offset 3, -8
- 252              		.cfi_offset 14, -4
+ 241              		.loc 1 215 0
+ 242              		.cfi_startproc
+ 243              		@ args = 0, pretend = 0, frame = 0
+ 244              		@ frame_needed = 0, uses_anonymous_args = 0
+ 245 0000 08B5     		push	{r3, lr}
+ 246              		.cfi_def_cfa_offset 8
+ 247              		.cfi_offset 3, -8
+ 248              		.cfi_offset 14, -4
  216:Core/Src/stm32f1xx_it.c ****   /* USER CODE BEGIN TIM7_IRQn 0 */
  217:Core/Src/stm32f1xx_it.c **** 
  218:Core/Src/stm32f1xx_it.c ****   /* USER CODE END TIM7_IRQn 0 */
  219:Core/Src/stm32f1xx_it.c ****   HAL_TIM_IRQHandler(&htim7);
- 253              		.loc 1 219 0
- 254 0002 0248     		ldr	r0, .L26
- 255 0004 FFF7FEFF 		bl	HAL_TIM_IRQHandler
- 256              	.LVL3:
-ARM GAS  /tmp/cc8inkaW.s 			page 9
+ 249              		.loc 1 219 0
+ 250 0002 0248     		ldr	r0, .L26
+ 251 0004 FFF7FEFF 		bl	HAL_TIM_IRQHandler
+ 252              	.LVL3:
+ 253 0008 08BD     		pop	{r3, pc}
+ 254              	.L27:
+ 255 000a 00BF     		.align	2
+ 256              	.L26:
+ARM GAS  /tmp/ccNoAVGI.s 			page 9
 
 
- 257 0008 08BD     		pop	{r3, pc}
- 258              	.L27:
- 259 000a 00BF     		.align	2
- 260              	.L26:
- 261 000c 00000000 		.word	htim7
- 262              		.cfi_endproc
- 263              	.LFE74:
- 265              		.section	.text.DMA2_Channel4_IRQHandler,"ax",%progbits
- 266              		.align	1
- 267              		.global	DMA2_Channel4_IRQHandler
- 268              		.syntax unified
- 269              		.thumb
- 270              		.thumb_func
- 271              		.fpu softvfp
- 273              	DMA2_Channel4_IRQHandler:
- 274              	.LFB75:
+ 257 000c 00000000 		.word	htim7
+ 258              		.cfi_endproc
+ 259              	.LFE74:
+ 261              		.section	.text.DMA2_Channel4_IRQHandler,"ax",%progbits
+ 262              		.align	1
+ 263              		.global	DMA2_Channel4_IRQHandler
+ 264              		.syntax unified
+ 265              		.thumb
+ 266              		.thumb_func
+ 267              		.fpu softvfp
+ 269              	DMA2_Channel4_IRQHandler:
+ 270              	.LFB75:
  220:Core/Src/stm32f1xx_it.c ****   /* USER CODE BEGIN TIM7_IRQn 1 */
  221:Core/Src/stm32f1xx_it.c **** 
  222:Core/Src/stm32f1xx_it.c ****   /* USER CODE END TIM7_IRQn 1 */
@@ -507,45 +503,44 @@ ARM GAS  /tmp/cc8inkaW.s 			page 1
  227:Core/Src/stm32f1xx_it.c ****   */
  228:Core/Src/stm32f1xx_it.c **** void DMA2_Channel4_IRQHandler(void)
  229:Core/Src/stm32f1xx_it.c **** {
- 275              		.loc 1 229 0
- 276              		.cfi_startproc
- 277              		@ args = 0, pretend = 0, frame = 0
- 278              		@ frame_needed = 0, uses_anonymous_args = 0
- 279 0000 08B5     		push	{r3, lr}
- 280              	.LCFI4:
- 281              		.cfi_def_cfa_offset 8
- 282              		.cfi_offset 3, -8
- 283              		.cfi_offset 14, -4
+ 271              		.loc 1 229 0
+ 272              		.cfi_startproc
+ 273              		@ args = 0, pretend = 0, frame = 0
+ 274              		@ frame_needed = 0, uses_anonymous_args = 0
+ 275 0000 08B5     		push	{r3, lr}
+ 276              		.cfi_def_cfa_offset 8
+ 277              		.cfi_offset 3, -8
+ 278              		.cfi_offset 14, -4
  230:Core/Src/stm32f1xx_it.c ****   /* USER CODE BEGIN DMA2_Channel4_IRQn 0 */
  231:Core/Src/stm32f1xx_it.c **** 
  232:Core/Src/stm32f1xx_it.c ****   /* USER CODE END DMA2_Channel4_IRQn 0 */
  233:Core/Src/stm32f1xx_it.c ****   HAL_DMA_IRQHandler(&hdma_tim5_ch2);
- 284              		.loc 1 233 0
- 285 0002 0248     		ldr	r0, .L30
- 286 0004 FFF7FEFF 		bl	HAL_DMA_IRQHandler
- 287              	.LVL4:
- 288 0008 08BD     		pop	{r3, pc}
- 289              	.L31:
- 290 000a 00BF     		.align	2
- 291              	.L30:
- 292 000c 00000000 		.word	hdma_tim5_ch2
- 293              		.cfi_endproc
- 294              	.LFE75:
- 296              		.section	.text.DMA2_Channel5_IRQHandler,"ax",%progbits
- 297              		.align	1
- 298              		.global	DMA2_Channel5_IRQHandler
- 299              		.syntax unified
- 300              		.thumb
- 301              		.thumb_func
- 302              		.fpu softvfp
-ARM GAS  /tmp/cc8inkaW.s 			page 10
-
-
- 304              	DMA2_Channel5_IRQHandler:
- 305              	.LFB76:
+ 279              		.loc 1 233 0
+ 280 0002 0248     		ldr	r0, .L30
+ 281 0004 FFF7FEFF 		bl	HAL_DMA_IRQHandler
+ 282              	.LVL4:
+ 283 0008 08BD     		pop	{r3, pc}
+ 284              	.L31:
+ 285 000a 00BF     		.align	2
+ 286              	.L30:
+ 287 000c 00000000 		.word	hdma_tim5_ch2
+ 288              		.cfi_endproc
+ 289              	.LFE75:
+ 291              		.section	.text.DMA2_Channel5_IRQHandler,"ax",%progbits
+ 292              		.align	1
+ 293              		.global	DMA2_Channel5_IRQHandler
+ 294              		.syntax unified
+ 295              		.thumb
+ 296              		.thumb_func
+ 297              		.fpu softvfp
+ 299              	DMA2_Channel5_IRQHandler:
+ 300              	.LFB76:
  234:Core/Src/stm32f1xx_it.c ****   /* USER CODE BEGIN DMA2_Channel4_IRQn 1 */
  235:Core/Src/stm32f1xx_it.c **** 
  236:Core/Src/stm32f1xx_it.c ****   /* USER CODE END DMA2_Channel4_IRQn 1 */
+ARM GAS  /tmp/ccNoAVGI.s 			page 10
+
+
  237:Core/Src/stm32f1xx_it.c **** }
  238:Core/Src/stm32f1xx_it.c **** 
  239:Core/Src/stm32f1xx_it.c **** /**
@@ -553,39 +548,38 @@ ARM GAS  /tmp/cc8inkaW.s 			page 1
  241:Core/Src/stm32f1xx_it.c ****   */
  242:Core/Src/stm32f1xx_it.c **** void DMA2_Channel5_IRQHandler(void)
  243:Core/Src/stm32f1xx_it.c **** {
- 306              		.loc 1 243 0
- 307              		.cfi_startproc
- 308              		@ args = 0, pretend = 0, frame = 0
- 309              		@ frame_needed = 0, uses_anonymous_args = 0
- 310 0000 08B5     		push	{r3, lr}
- 311              	.LCFI5:
- 312              		.cfi_def_cfa_offset 8
- 313              		.cfi_offset 3, -8
- 314              		.cfi_offset 14, -4
+ 301              		.loc 1 243 0
+ 302              		.cfi_startproc
+ 303              		@ args = 0, pretend = 0, frame = 0
+ 304              		@ frame_needed = 0, uses_anonymous_args = 0
+ 305 0000 08B5     		push	{r3, lr}
+ 306              		.cfi_def_cfa_offset 8
+ 307              		.cfi_offset 3, -8
+ 308              		.cfi_offset 14, -4
  244:Core/Src/stm32f1xx_it.c ****   /* USER CODE BEGIN DMA2_Channel5_IRQn 0 */
  245:Core/Src/stm32f1xx_it.c **** 
  246:Core/Src/stm32f1xx_it.c ****   /* USER CODE END DMA2_Channel5_IRQn 0 */
  247:Core/Src/stm32f1xx_it.c ****   HAL_DMA_IRQHandler(&hdma_tim5_ch1);
- 315              		.loc 1 247 0
- 316 0002 0248     		ldr	r0, .L34
- 317 0004 FFF7FEFF 		bl	HAL_DMA_IRQHandler
- 318              	.LVL5:
- 319 0008 08BD     		pop	{r3, pc}
- 320              	.L35:
- 321 000a 00BF     		.align	2
- 322              	.L34:
- 323 000c 00000000 		.word	hdma_tim5_ch1
- 324              		.cfi_endproc
- 325              	.LFE76:
- 327              		.section	.text.CAN2_RX1_IRQHandler,"ax",%progbits
- 328              		.align	1
- 329              		.global	CAN2_RX1_IRQHandler
- 330              		.syntax unified
- 331              		.thumb
- 332              		.thumb_func
- 333              		.fpu softvfp
- 335              	CAN2_RX1_IRQHandler:
- 336              	.LFB77:
+ 309              		.loc 1 247 0
+ 310 0002 0248     		ldr	r0, .L34
+ 311 0004 FFF7FEFF 		bl	HAL_DMA_IRQHandler
+ 312              	.LVL5:
+ 313 0008 08BD     		pop	{r3, pc}
+ 314              	.L35:
+ 315 000a 00BF     		.align	2
+ 316              	.L34:
+ 317 000c 00000000 		.word	hdma_tim5_ch1
+ 318              		.cfi_endproc
+ 319              	.LFE76:
+ 321              		.section	.text.CAN2_RX1_IRQHandler,"ax",%progbits
+ 322              		.align	1
+ 323              		.global	CAN2_RX1_IRQHandler
+ 324              		.syntax unified
+ 325              		.thumb
+ 326              		.thumb_func
+ 327              		.fpu softvfp
+ 329              	CAN2_RX1_IRQHandler:
+ 330              	.LFB77:
  248:Core/Src/stm32f1xx_it.c ****   /* USER CODE BEGIN DMA2_Channel5_IRQn 1 */
  249:Core/Src/stm32f1xx_it.c **** 
  250:Core/Src/stm32f1xx_it.c ****   /* USER CODE END DMA2_Channel5_IRQn 1 */
@@ -596,84 +590,83 @@ ARM GAS  /tmp/cc8inkaW.s 			page 1
  255:Core/Src/stm32f1xx_it.c ****   */
  256:Core/Src/stm32f1xx_it.c **** void CAN2_RX1_IRQHandler(void)
  257:Core/Src/stm32f1xx_it.c **** {
- 337              		.loc 1 257 0
- 338              		.cfi_startproc
-ARM GAS  /tmp/cc8inkaW.s 			page 11
+ 331              		.loc 1 257 0
+ 332              		.cfi_startproc
+ 333              		@ args = 0, pretend = 0, frame = 0
+ 334              		@ frame_needed = 0, uses_anonymous_args = 0
+ 335 0000 08B5     		push	{r3, lr}
+ 336              		.cfi_def_cfa_offset 8
+ 337              		.cfi_offset 3, -8
+ 338              		.cfi_offset 14, -4
+ARM GAS  /tmp/ccNoAVGI.s 			page 11
 
 
- 339              		@ args = 0, pretend = 0, frame = 0
- 340              		@ frame_needed = 0, uses_anonymous_args = 0
- 341 0000 08B5     		push	{r3, lr}
- 342              	.LCFI6:
- 343              		.cfi_def_cfa_offset 8
- 344              		.cfi_offset 3, -8
- 345              		.cfi_offset 14, -4
  258:Core/Src/stm32f1xx_it.c ****   /* USER CODE BEGIN CAN2_RX1_IRQn 0 */
  259:Core/Src/stm32f1xx_it.c **** 
  260:Core/Src/stm32f1xx_it.c ****   /* USER CODE END CAN2_RX1_IRQn 0 */
  261:Core/Src/stm32f1xx_it.c ****   HAL_CAN_IRQHandler(&hcan2);
- 346              		.loc 1 261 0
- 347 0002 0248     		ldr	r0, .L38
- 348 0004 FFF7FEFF 		bl	HAL_CAN_IRQHandler
- 349              	.LVL6:
- 350 0008 08BD     		pop	{r3, pc}
- 351              	.L39:
- 352 000a 00BF     		.align	2
- 353              	.L38:
- 354 000c 00000000 		.word	hcan2
- 355              		.cfi_endproc
- 356              	.LFE77:
- 358              		.text
- 359              	.Letext0:
- 360              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 361              		.file 3 "/usr/include/newlib/sys/_stdint.h"
- 362              		.file 4 "Drivers/CMSIS/Include/core_cm3.h"
- 363              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
- 364              		.file 6 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h"
- 365              		.file 7 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
- 366              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
- 367              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
- 368              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can.h"
- 369              		.file 11 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h"
- 370              		.file 12 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
-ARM GAS  /tmp/cc8inkaW.s 			page 12
+ 339              		.loc 1 261 0
+ 340 0002 0248     		ldr	r0, .L38
+ 341 0004 FFF7FEFF 		bl	HAL_CAN_IRQHandler
+ 342              	.LVL6:
+ 343 0008 08BD     		pop	{r3, pc}
+ 344              	.L39:
+ 345 000a 00BF     		.align	2
+ 346              	.L38:
+ 347 000c 00000000 		.word	hcan2
+ 348              		.cfi_endproc
+ 349              	.LFE77:
+ 351              		.text
+ 352              	.Letext0:
+ 353              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 354              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 355              		.file 4 "Drivers/CMSIS/Include/core_cm3.h"
+ 356              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+ 357              		.file 6 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h"
+ 358              		.file 7 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
+ 359              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 360              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 361              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can.h"
+ 362              		.file 11 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h"
+ 363              		.file 12 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ARM GAS  /tmp/ccNoAVGI.s 			page 12
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32f1xx_it.c
-     /tmp/cc8inkaW.s:16     .text.NMI_Handler:0000000000000000 $t
-     /tmp/cc8inkaW.s:23     .text.NMI_Handler:0000000000000000 NMI_Handler
-     /tmp/cc8inkaW.s:38     .text.HardFault_Handler:0000000000000000 $t
-     /tmp/cc8inkaW.s:45     .text.HardFault_Handler:0000000000000000 HardFault_Handler
-     /tmp/cc8inkaW.s:59     .text.MemManage_Handler:0000000000000000 $t
-     /tmp/cc8inkaW.s:66     .text.MemManage_Handler:0000000000000000 MemManage_Handler
-     /tmp/cc8inkaW.s:80     .text.BusFault_Handler:0000000000000000 $t
-     /tmp/cc8inkaW.s:87     .text.BusFault_Handler:0000000000000000 BusFault_Handler
-     /tmp/cc8inkaW.s:101    .text.UsageFault_Handler:0000000000000000 $t
-     /tmp/cc8inkaW.s:108    .text.UsageFault_Handler:0000000000000000 UsageFault_Handler
-     /tmp/cc8inkaW.s:122    .text.DebugMon_Handler:0000000000000000 $t
-     /tmp/cc8inkaW.s:129    .text.DebugMon_Handler:0000000000000000 DebugMon_Handler
-     /tmp/cc8inkaW.s:141    .text.DMA1_Channel1_IRQHandler:0000000000000000 $t
-     /tmp/cc8inkaW.s:148    .text.DMA1_Channel1_IRQHandler:0000000000000000 DMA1_Channel1_IRQHandler
-     /tmp/cc8inkaW.s:168    .text.DMA1_Channel1_IRQHandler:000000000000000c $d
-     /tmp/cc8inkaW.s:173    .text.DMA1_Channel5_IRQHandler:0000000000000000 $t
-     /tmp/cc8inkaW.s:180    .text.DMA1_Channel5_IRQHandler:0000000000000000 DMA1_Channel5_IRQHandler
-     /tmp/cc8inkaW.s:199    .text.DMA1_Channel5_IRQHandler:000000000000000c $d
-     /tmp/cc8inkaW.s:204    .text.CAN1_RX0_IRQHandler:0000000000000000 $t
-     /tmp/cc8inkaW.s:211    .text.CAN1_RX0_IRQHandler:0000000000000000 CAN1_RX0_IRQHandler
-     /tmp/cc8inkaW.s:230    .text.CAN1_RX0_IRQHandler:000000000000000c $d
-     /tmp/cc8inkaW.s:235    .text.TIM7_IRQHandler:0000000000000000 $t
-     /tmp/cc8inkaW.s:242    .text.TIM7_IRQHandler:0000000000000000 TIM7_IRQHandler
-     /tmp/cc8inkaW.s:261    .text.TIM7_IRQHandler:000000000000000c $d
-     /tmp/cc8inkaW.s:266    .text.DMA2_Channel4_IRQHandler:0000000000000000 $t
-     /tmp/cc8inkaW.s:273    .text.DMA2_Channel4_IRQHandler:0000000000000000 DMA2_Channel4_IRQHandler
-     /tmp/cc8inkaW.s:292    .text.DMA2_Channel4_IRQHandler:000000000000000c $d
-     /tmp/cc8inkaW.s:297    .text.DMA2_Channel5_IRQHandler:0000000000000000 $t
-     /tmp/cc8inkaW.s:304    .text.DMA2_Channel5_IRQHandler:0000000000000000 DMA2_Channel5_IRQHandler
-     /tmp/cc8inkaW.s:323    .text.DMA2_Channel5_IRQHandler:000000000000000c $d
-     /tmp/cc8inkaW.s:328    .text.CAN2_RX1_IRQHandler:0000000000000000 $t
-     /tmp/cc8inkaW.s:335    .text.CAN2_RX1_IRQHandler:0000000000000000 CAN2_RX1_IRQHandler
-     /tmp/cc8inkaW.s:354    .text.CAN2_RX1_IRQHandler:000000000000000c $d
+     /tmp/ccNoAVGI.s:16     .text.NMI_Handler:0000000000000000 $t
+     /tmp/ccNoAVGI.s:23     .text.NMI_Handler:0000000000000000 NMI_Handler
+     /tmp/ccNoAVGI.s:38     .text.HardFault_Handler:0000000000000000 $t
+     /tmp/ccNoAVGI.s:45     .text.HardFault_Handler:0000000000000000 HardFault_Handler
+     /tmp/ccNoAVGI.s:59     .text.MemManage_Handler:0000000000000000 $t
+     /tmp/ccNoAVGI.s:66     .text.MemManage_Handler:0000000000000000 MemManage_Handler
+     /tmp/ccNoAVGI.s:80     .text.BusFault_Handler:0000000000000000 $t
+     /tmp/ccNoAVGI.s:87     .text.BusFault_Handler:0000000000000000 BusFault_Handler
+     /tmp/ccNoAVGI.s:101    .text.UsageFault_Handler:0000000000000000 $t
+     /tmp/ccNoAVGI.s:108    .text.UsageFault_Handler:0000000000000000 UsageFault_Handler
+     /tmp/ccNoAVGI.s:122    .text.DebugMon_Handler:0000000000000000 $t
+     /tmp/ccNoAVGI.s:129    .text.DebugMon_Handler:0000000000000000 DebugMon_Handler
+     /tmp/ccNoAVGI.s:141    .text.DMA1_Channel1_IRQHandler:0000000000000000 $t
+     /tmp/ccNoAVGI.s:148    .text.DMA1_Channel1_IRQHandler:0000000000000000 DMA1_Channel1_IRQHandler
+     /tmp/ccNoAVGI.s:167    .text.DMA1_Channel1_IRQHandler:000000000000000c $d
+     /tmp/ccNoAVGI.s:172    .text.DMA1_Channel5_IRQHandler:0000000000000000 $t
+     /tmp/ccNoAVGI.s:179    .text.DMA1_Channel5_IRQHandler:0000000000000000 DMA1_Channel5_IRQHandler
+     /tmp/ccNoAVGI.s:197    .text.DMA1_Channel5_IRQHandler:000000000000000c $d
+     /tmp/ccNoAVGI.s:202    .text.CAN1_RX0_IRQHandler:0000000000000000 $t
+     /tmp/ccNoAVGI.s:209    .text.CAN1_RX0_IRQHandler:0000000000000000 CAN1_RX0_IRQHandler
+     /tmp/ccNoAVGI.s:227    .text.CAN1_RX0_IRQHandler:000000000000000c $d
+     /tmp/ccNoAVGI.s:232    .text.TIM7_IRQHandler:0000000000000000 $t
+     /tmp/ccNoAVGI.s:239    .text.TIM7_IRQHandler:0000000000000000 TIM7_IRQHandler
+     /tmp/ccNoAVGI.s:257    .text.TIM7_IRQHandler:000000000000000c $d
+     /tmp/ccNoAVGI.s:262    .text.DMA2_Channel4_IRQHandler:0000000000000000 $t
+     /tmp/ccNoAVGI.s:269    .text.DMA2_Channel4_IRQHandler:0000000000000000 DMA2_Channel4_IRQHandler
+     /tmp/ccNoAVGI.s:287    .text.DMA2_Channel4_IRQHandler:000000000000000c $d
+     /tmp/ccNoAVGI.s:292    .text.DMA2_Channel5_IRQHandler:0000000000000000 $t
+     /tmp/ccNoAVGI.s:299    .text.DMA2_Channel5_IRQHandler:0000000000000000 DMA2_Channel5_IRQHandler
+     /tmp/ccNoAVGI.s:317    .text.DMA2_Channel5_IRQHandler:000000000000000c $d
+     /tmp/ccNoAVGI.s:322    .text.CAN2_RX1_IRQHandler:0000000000000000 $t
+     /tmp/ccNoAVGI.s:329    .text.CAN2_RX1_IRQHandler:0000000000000000 CAN2_RX1_IRQHandler
+     /tmp/ccNoAVGI.s:347    .text.CAN2_RX1_IRQHandler:000000000000000c $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

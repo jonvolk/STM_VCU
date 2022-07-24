@@ -18,24 +18,38 @@ void wpHandler(void)
             {
                 wpDuty(throttleDuty);
             }
+            txMsg.StdId = 0x140;
+            txMsg.DLC = 1;
+            canTx[0] = 100; // fans on
+            c1tx(&txMsg, canTx);
         }
 
-
-        
         else
         {
             wpDuty(0);
+            txMsg.StdId = 0x140;
+            txMsg.DLC = 1;
+            canTx[0] = 0; // fans off
+            c1tx(&txMsg, canTx);
         }
 
         break;
 
     case charge_keyOff:
     case charge_keyOn:
-        wpDuty(100);   
+        wpDuty(100);
+        txMsg.StdId = 0x140;
+        txMsg.DLC = 1;
+        canTx[0] = 100; // fans on
+        c1tx(&txMsg, canTx);
         break;
 
     case off:
         wpDuty(0);
+        txMsg.StdId = 0x140;
+        txMsg.DLC = 1;
+        canTx[0] = 0; // fans off
+        c1tx(&txMsg, canTx);
     default:
         break;
     }
