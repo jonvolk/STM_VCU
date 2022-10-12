@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccSi0cVI.s 			page 1
+ARM GAS  /tmp/ccZtEllO.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -16,13 +16,12 @@ ARM GAS  /tmp/ccSi0cVI.s 			page 1
   13              	.Ltext0:
   14              		.cfi_sections	.debug_frame
   15              	.Letext0:
-  16              		.file 1 "/usr/include/newlib/machine/_default_types.h"
-  17              		.file 2 "/usr/include/newlib/sys/_stdint.h"
-  18              		.file 3 "Core/Inc/FreeRTOSConfig.h"
-  19              		.file 4 "Drivers/CMSIS/Include/core_cm3.h"
-  20              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
-  21              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
-ARM GAS  /tmp/ccSi0cVI.s 			page 2
+  16              		.file 1 "/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h"
+  17              		.file 2 "Core/Inc/FreeRTOSConfig.h"
+  18              		.file 3 "Drivers/CMSIS/Include/core_cm3.h"
+  19              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+  20              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ARM GAS  /tmp/ccZtEllO.s 			page 2
 
 
 DEFINED SYMBOLS

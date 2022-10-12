@@ -13,7 +13,7 @@ Bit 1: motor
 Bit 2: dir engagaed
 Bit 3: in motion
 Bit 4: tender
-Bit 5: 
+Bit 5:
 Bit 6:
 Bit 7:
 */
@@ -27,10 +27,10 @@ Bit 4: reverse
 Bit 5: bms
 */
 
-//LDU Parameter Index Defines
+// LDU Parameter Index Defines
 #define BOOST 0
 #define FWEAK 1
-#define FWEAKSTRT 2  
+#define FWEAKSTRT 2
 #define FSLIP_MIN 5
 #define FSLIP_MAX 6
 #define THROTMAX 34
@@ -40,17 +40,17 @@ Bit 5: bms
 #define IDLE_THROT_LIM 63
 #define IDLE_MODE 64
 
-//LDU Direction
+// LDU Direction
 #define FWD 255
 #define NTRL 2
 #define REV 3
 
-//DIO Defines
+// DIO Defines
 #define NUETRAL 0X00
 #define FORWARD 0X10
 #define REVERSE 0X08
 
-//CHARGER ENABLED
+// CHARGER ENABLED
 #define CHRG_ENABLED 5
 
 #define ON 1
@@ -92,13 +92,13 @@ iBooster_t iboost;
 typedef struct vcu_t
 {
     volatile uint8_t dio;
-    //volatile uint8_t gear;
-    //volatile uint8_t mode;
+    // volatile uint8_t gear;
+    // volatile uint8_t mode;
     volatile uint8_t key;
     volatile uint8_t charge;
     volatile uint8_t chargeReq;
-    //volatile uint16_t hp;
-    //volatile uint32_t sprint60;
+    // volatile uint16_t hp;
+    // volatile uint32_t sprint60;
     volatile uint8_t state;
     volatile uint8_t launchFlag;
     volatile uint8_t burnFlag;
@@ -128,6 +128,24 @@ typedef struct bms_t
 } bms_t;
 bms_t BMS[2];
 
+typedef struct tasks_t
+{   
+    uint16_t TaskLoop;
+    uint16_t TaskLoop_max;
+    uint32_t TaskLoop_lastRun;
+    uint16_t Task10ms;
+    uint16_t Task10ms_max;
+    uint32_t Task10ms_lastRun;
+    uint16_t Task100ms;
+    uint16_t Task100ms_max;
+    uint32_t Task100ms_lastRun;
+    uint16_t Task250ms;
+    uint16_t Task250ms_max;
+    uint32_t Task250ms_lastRun;
+
+} tasks_t;
+tasks_t taskTime;
+
 typedef enum ioBits
 {
     cruise,
@@ -142,14 +160,26 @@ typedef enum ioBits
 typedef enum vcuStates
 {
     off,
-    on, //key on, inverter off
+    on, // key on, inverter off
     charge_keyOff,
-    charge_keyOn, //who even does that
-    idle,         //key on, inverter on
-    run,          //key on direction selected
-    launchMode,   //break shit
-    burnout,      //destroy tires
+    charge_keyOn, // who even does that
+    idle,         // key on, inverter on
+    run,          // key on direction selected
+    launchMode,   // break shit
+    burnout,      // destroy tires
 } vcuStates;
+
+typedef enum reset_cause
+{
+    RESET_CAUSE_UNKNOWN = 0,
+    RESET_CAUSE_LOW_POWER_RESET,
+    RESET_CAUSE_WINDOW_WATCHDOG_RESET,
+    RESET_CAUSE_INDEPENDENT_WATCHDOG_RESET,
+    RESET_CAUSE_SOFTWARE_RESET,
+    RESET_CAUSE_POWER_ON_POWER_DOWN_RESET,
+    RESET_CAUSE_EXTERNAL_RESET_PIN_RESET,
+    RESET_CAUSE_BROWNOUT_RESET,
+} reset_cause_t;
 
 void vcuInit(void);
 void decodeCAN(CAN_RxHeaderTypeDef *rxMsg, uint8_t *canRx);
@@ -162,5 +192,7 @@ void regenHandler(void);
 void throttleHandler(void);
 void canSet(uint8_t index, uint32_t value, uint8_t gain);
 void vehicleComms(void);
+uint8_t getResetCause(void);
+void taskCheck(void);
 
 #endif // __VCU_H_

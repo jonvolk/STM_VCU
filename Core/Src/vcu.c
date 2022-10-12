@@ -44,6 +44,7 @@ void decodeCAN(CAN_RxHeaderTypeDef *rxMsg, uint8_t *canRx)
 
     case 0x136:
         ldu.mode = (canRx[0]);
+        ldu.pot = ((canRx[5] << 8) + canRx[4]);
         break;
 
     case 0x109:
@@ -54,12 +55,12 @@ void decodeCAN(CAN_RxHeaderTypeDef *rxMsg, uint8_t *canRx)
     case 0x110:
         charger.proximity = (canRx[0]);
         break;
-
-    case 0x113:
-        ldu.pot = ((canRx[1] << 8) + canRx[0]);
-        ldu.pot2 = ((canRx[3] << 8) + canRx[2]);
-        break;
-
+        /*
+            case 0x136:
+                ldu.pot = ((canRx[1] << 8) + canRx[0]);
+                ldu.pot2 = ((canRx[3] << 8) + canRx[2]);
+                break;
+        */
     case 0x12D:
         // restart = ((canRx[1] << 8) + canRx[0]);
         break;
@@ -122,8 +123,27 @@ void canIOsend(void)
 void vehicleComms(void)
 {
     txMsg.StdId = 0x313;
-    txMsg.DLC = 1;
+    txMsg.DLC = 8;
     canTx[0] = vcu.state;
+    canTx[1] = getResetCause();
+    canTx[2] = taskTime.Task10ms & 0xFF;
+    canTx[3] = (taskTime.Task10ms >> 8) & 0xFF;
+    canTx[4] = taskTime.TaskLoop & 0xFF;
+    canTx[5] = (taskTime.TaskLoop >> 8) & 0xFF;
+    canTx[6] = taskTime.Task250ms & 0xFF;
+    canTx[7] = (taskTime.Task250ms >> 8) & 0xFF;
+    c1tx(&txMsg, canTx);
+
+    txMsg.StdId = 0x314;
+    txMsg.DLC = 8;
+    canTx[0] = taskTime.TaskLoop_max & 0xFF;
+    canTx[1] = (taskTime.TaskLoop_max >> 8) & 0xFF;
+    canTx[2] = taskTime.Task10ms_max & 0xFF;
+    canTx[3] = (taskTime.Task10ms_max >> 8) & 0xFF;
+    canTx[4] = taskTime.Task100ms_max & 0xFF;
+    canTx[5] = (taskTime.Task100ms_max >> 8) & 0xFF;
+    canTx[6] = taskTime.Task250ms_max & 0xFF;
+    canTx[7] = (taskTime.Task250ms_max >> 8) & 0xFF;
     c1tx(&txMsg, canTx);
 }
 /////////////////////////////////////////////////////////////////////////
@@ -254,6 +274,14 @@ void vcuInit(void)
     ADC_data[0] = 4095; // LVREAD PIN
     ADC_data[1] = 0;
     ADC_data[2] = 0;
+    taskTime.TaskLoop = 0;
+    taskTime.TaskLoop_max = 0;
+    taskTime.Task10ms = 0;
+    taskTime.Task10ms_max = 0;
+    taskTime.Task100ms = 0;
+    taskTime.Task100ms_max = 0;
+    taskTime.Task250ms = 0;
+    taskTime.Task250ms_max = 0;
 }
 
 void ioHandler(void)
@@ -273,7 +301,7 @@ void ioHandler(void)
             vcu.state = off;
         }
     }
-    
+
     //////////////////  Heater Switching ///////////////////////////////
     int heatRequest = HAL_GPIO_ReadPin(HEAT_REQ_GPIO_Port, HEAT_REQ_Pin);
 
@@ -408,4 +436,63 @@ void brakeHandler(void)
     {
         canIOset(brake, OFF);
     }
+}
+
+uint8_t getResetCause(void)
+{
+    uint8_t reset_cause;
+
+    if (__HAL_RCC_GET_FLAG(RCC_FLAG_LPWRRST))
+    {
+        reset_cause = RESET_CAUSE_LOW_POWER_RESET;
+    }
+    else if (__HAL_RCC_GET_FLAG(RCC_FLAG_WWDGRST))
+    {
+        reset_cause = RESET_CAUSE_WINDOW_WATCHDOG_RESET;
+    }
+    else if (__HAL_RCC_GET_FLAG(RCC_FLAG_IWDGRST))
+    {
+        reset_cause = RESET_CAUSE_INDEPENDENT_WATCHDOG_RESET;
+    }
+    else if (__HAL_RCC_GET_FLAG(RCC_FLAG_SFTRST))
+    {
+        // This reset is induced by calling the ARM CMSIS
+        // `NVIC_SystemReset()` function!
+        reset_cause = RESET_CAUSE_SOFTWARE_RESET;
+    }
+    else if (__HAL_RCC_GET_FLAG(RCC_FLAG_PORRST))
+    {
+        reset_cause = RESET_CAUSE_POWER_ON_POWER_DOWN_RESET;
+    }
+    else if (__HAL_RCC_GET_FLAG(RCC_FLAG_PINRST))
+    {
+        reset_cause = RESET_CAUSE_EXTERNAL_RESET_PIN_RESET;
+    }
+    // Needs to come *after* checking the `RCC_FLAG_PORRST` flag in order to
+    // ensure first that the reset cause is NOT a POR/PDR reset. See note
+    // below.
+    /* else if (__HAL_RCC_GET_FLAG(RCC_FLAG_BORRST))
+     {
+         reset_cause = RESET_CAUSE_BROWNOUT_RESET;
+     }*/
+    else
+    {
+        reset_cause = RESET_CAUSE_UNKNOWN;
+    }
+
+    // Clear all the reset flags or else they will remain set during future
+    // resets until system power is fully removed.
+    //__HAL_RCC_CLEAR_RESET_FLAGS();
+
+    return reset_cause;
+}
+
+void taskCheck(void)
+{
+    uint32_t timeNow = HAL_GetTick();
+    taskTime.TaskLoop_max = timeNow - taskTime.TaskLoop_lastRun;
+    taskTime.Task10ms_max = timeNow - taskTime.Task10ms_lastRun;
+    taskTime.Task100ms_max = timeNow - taskTime.Task100ms_lastRun;
+    taskTime.Task250ms_max = timeNow - taskTime.Task250ms_lastRun;
+
 }

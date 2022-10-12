@@ -13,7 +13,7 @@
 ######################################
 # target
 ######################################
-TARGET = STM_VCU
+TARGET = VCU
 
 
 ######################################
@@ -36,6 +36,7 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
+Core/Src/btld_jump.c \
 Core/Src/can_setup.c \
 Core/Src/dcdc.c \
 Core/Src/dynamics.c \
@@ -175,7 +176,7 @@ endif
 
 # Add additional flags
 CFLAGS += 
-ASFLAGS += -specs=nosys.specs 
+ASFLAGS += 
 CXXFLAGS += 
 
 # Generate dependency information
@@ -264,6 +265,30 @@ clean:
 #######################################
 
 
+
+
+#######################################
+# all
+#######################################
+all: 
+	srec_cat $(BUILD_DIR)/$(TARGET).hex -Intel -crop 0x08008000 0x0801EFFC -fill 0xFF 0x08008000 0x0801EFFC -stm32 0x0801EFFC -o $(BUILD_DIR)/$(TARGET)_CRC.hex -Intel
+      
+
+
+#######################################
+# canflash
+#######################################
+canflash: 
+	python3 ./PYTHON/CAN-FLASH.py
+      
+
+
+#######################################
+# remote
+#######################################
+remote: 
+	python3 ./PYTHON/transfer.py
+      
 	
 #######################################
 # dependencies

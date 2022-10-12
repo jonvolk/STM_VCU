@@ -28,7 +28,7 @@ build/can_setup.o: Core/Src/can_setup.c Core/Inc/can_setup.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h Core/Inc/vcu.h \
  Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h \
  Core/Inc/can_setup.h Core/Inc/dcdc.h Core/Inc/my_math.h \
- Core/Inc/encoder.h Core/Inc/lidar.h
+ Core/Inc/encoder.h Core/Inc/lidar.h Core/Inc/btld_jump.h
 
 Core/Inc/can_setup.h:
 
@@ -105,3 +105,5 @@ Core/Inc/my_math.h:
 Core/Inc/encoder.h:
 
 Core/Inc/lidar.h:
+
+Core/Inc/btld_jump.h:

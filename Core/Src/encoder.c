@@ -186,7 +186,14 @@ void encoderHandler(void)
         setBacklight(95);
         break;
 
+    case charge_keyOn:
+        setWidget(HOME, 0, 0, 0);
+        setBacklight(95);
+        break;
+        
+
     default:
+        setBacklight(95);
         break;
     }
 }

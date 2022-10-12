@@ -14,6 +14,6 @@ void gaugeInit(void);
 void updateTach(volatile uint16_t amps);
 void updateSpeed(volatile uint16_t motorRPM);
 void updateTemp(volatile uint16_t temp);
-void updateSOC(volatile uint16_t soc);
+void updateSOC(volatile uint16_t soc, volatile uint16_t amps);
 
 #endif // __GAUGES_H_

@@ -62,7 +62,7 @@ _Min_Stack_Size = 0x400; /* required amount of stack */
 MEMORY
 {
 RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 64K
-FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 128K
+FLASH (rx)      : ORIGIN = 0x8008000, LENGTH = 96K /*128 less 32k bootloader*/
 }
 
 /* Define output sections */
@@ -76,6 +76,9 @@ SECTIONS
     . = ALIGN(4);
   } >FLASH
 
+  /* BOARD NAME GOES INTO FLASH */
+  .board_info  : {KEEP(*(.board_info))} > FLASH 
+  
   /* The program code and other data goes into FLASH */
   .text :
   {

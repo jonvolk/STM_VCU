@@ -1,4 +1,5 @@
 #include <can_setup.h>
+#include "btld_jump.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -12,10 +13,10 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan1)
     {
         Error_Handler();
     }
-    //do stuff
+    // do stuff
+    jumpToBootloader(&rxMsg,canRx);
     decodeCAN(&rxMsg, canRx);
-    getLidar(&rxMsg,canRx);
-    
+    getLidar(&rxMsg, canRx);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,16 +31,14 @@ void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef *hcan2)
     {
         Error_Handler();
     }
-    //do stuff
+    // do stuff
     getData(&rxMsg2, canRx2);
     getEvent(&rxMsg2, canRx2);
-    
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan)
 {
-  
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void canSettings(void)
@@ -56,10 +55,10 @@ void canSettings(void)
     sf.FilterBank = 0; // CAN1 Filter bank starts at 0
     sf.FilterMode = CAN_FILTERMODE_IDLIST;
     sf.FilterScale = CAN_FILTERSCALE_16BIT;
-    sf.FilterIdLow = 0x1D6 << 5;      //DCDC DATA
-    sf.FilterIdHigh = 0x04F << 5;      //LDU DIR BRAKE
-    sf.FilterMaskIdLow = 0x113 << 5;  //LDU POT1 POT2
-    sf.FilterMaskIdHigh = 0x131 << 5; //LDU DIO
+    sf.FilterIdLow = 0x1D6 << 5;      // DCDC DATA
+    sf.FilterIdHigh = 0x04F << 5;     // LDU DIR BRAKE
+    sf.FilterMaskIdLow = 0x113 << 5;  // LDU POT1 POT2
+    sf.FilterMaskIdHigh = 0x131 << 5; // LDU DIO
     sf.FilterFIFOAssignment = CAN_RX_FIFO0;
     sf.SlaveStartFilterBank = 14;
     sf.FilterActivation = ENABLE;
@@ -68,13 +67,28 @@ void canSettings(void)
         Error_Handler();
     }
 
+    sf3.FilterBank = 4; // CAN2 Filter bank starts at 14
+    sf3.FilterMode = CAN_FILTERMODE_IDLIST;
+    sf3.FilterScale = CAN_FILTERSCALE_32BIT;
+    sf3.FilterIdLow = ((0x0000FF01 << 3) & 0xFFF8) | 4; // BOOTLOADER
+    sf3.FilterIdHigh = (0x0000FF01 >> 13) & 0xFFFF;
+    sf3.FilterMaskIdLow = ((0x0000FF01 << 3) & 0xFFF8) | 4; // BOOTLOADER
+    sf3.FilterMaskIdHigh = (0x0000FF01 >> 13) & 0xFFFF;
+    sf3.FilterFIFOAssignment = CAN_RX_FIFO0;
+    sf3.SlaveStartFilterBank = 14;
+    sf3.FilterActivation = ENABLE;
+    if (HAL_CAN_ConfigFilter(&hcan1, &sf3) != HAL_OK)
+    {
+        Error_Handler();
+    }
+
     sf4.FilterBank = 1; // CAN1 Filter bank starts at 0
     sf4.FilterMode = CAN_FILTERMODE_IDLIST;
     sf4.FilterScale = CAN_FILTERSCALE_16BIT;
-    sf4.FilterIdLow = 0x135 << 5;      //LDU AMPS,RPM,HSTEMP,POTNOM
-    sf4.FilterIdHigh = 0x136 << 5;     //LDU PACK VOLT, RUN
-    sf4.FilterMaskIdLow = 0x138 << 5;  //BMS1
-    sf4.FilterMaskIdHigh = 0x139 << 5; //BMS2
+    sf4.FilterIdLow = 0x135 << 5;      // LDU AMPS,RPM,HSTEMP,POTNOM
+    sf4.FilterIdHigh = 0x136 << 5;     // LDU PACK VOLT, RUN
+    sf4.FilterMaskIdLow = 0x138 << 5;  // BMS1
+    sf4.FilterMaskIdHigh = 0x139 << 5; // BMS2
     sf4.FilterFIFOAssignment = CAN_RX_FIFO0;
     sf4.SlaveStartFilterBank = 14;
     sf4.FilterActivation = ENABLE;
@@ -86,10 +100,10 @@ void canSettings(void)
     sf5.FilterBank = 2; // CAN1 Filter bank starts at 0
     sf5.FilterMode = CAN_FILTERMODE_IDLIST;
     sf5.FilterScale = CAN_FILTERSCALE_16BIT;
-    sf5.FilterIdLow = 0x109 << 5;      //CHARGER STATUS
-    sf5.FilterIdHigh = 0x38E << 5;     //IBOOST
-    sf5.FilterMaskIdLow = 0x581 << 5;  //CANOPEN
-    sf5.FilterMaskIdHigh = 0x601 << 5; //CANOPEN
+    sf5.FilterIdLow = 0x109 << 5;      // CHARGER STATUS
+    sf5.FilterIdHigh = 0x38E << 5;     // IBOOST
+    sf5.FilterMaskIdLow = 0x581 << 5;  // CANOPEN
+    sf5.FilterMaskIdHigh = 0x601 << 5; // CANOPEN
     sf5.FilterFIFOAssignment = CAN_RX_FIFO0;
     sf5.SlaveStartFilterBank = 14;
     sf5.FilterActivation = ENABLE;
@@ -109,7 +123,7 @@ void canSettings(void)
     HAL_NVIC_SetPriority(CAN1_TX_IRQn, 3, 0);
     HAL_NVIC_EnableIRQ(CAN1_TX_IRQn);
 
-    //hcan2
+    // hcan2
     txMsg2.IDE = CAN_ID_STD;
     txMsg2.RTR = CAN_RTR_DATA;
     txMsg2.TransmitGlobalTime = DISABLE;
@@ -121,9 +135,9 @@ void canSettings(void)
     sf2.FilterBank = 14; // CAN2 Filter bank starts at 14
     sf2.FilterMode = CAN_FILTERMODE_IDLIST;
     sf2.FilterScale = CAN_FILTERSCALE_32BIT;
-    sf2.FilterIdLow = ((0x18FF11F2 << 3) & 0xFFF8) | 4; //ENCODER EVENT
+    sf2.FilterIdLow = ((0x18FF11F2 << 3) & 0xFFF8) | 4; // ENCODER EVENT
     sf2.FilterIdHigh = (0x18FF11F2 >> 13) & 0xFFFF;
-    sf2.FilterMaskIdLow = ((0x18FF0FF2 << 3) & 0xFFF8) | 4; //ENCODER DATA
+    sf2.FilterMaskIdLow = ((0x18FF0FF2 << 3) & 0xFFF8) | 4; // ENCODER DATA
     sf2.FilterMaskIdHigh = (0x18FF0FF2 >> 13) & 0xFFFF;
     sf2.FilterFIFOAssignment = CAN_RX_FIFO1;
     sf2.SlaveStartFilterBank = 14;
@@ -197,8 +211,6 @@ void printCAN2(CAN_RxHeaderTypeDef *rxMsg2, uint8_t *canRx2)
         printf(" ,0x%.2X", canRx[i]);
 }
 
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void c1tx(CAN_TxHeaderTypeDef *txMsg, uint8_t *canTx)
 {
@@ -251,10 +263,10 @@ void c2txExt(CAN_TxHeaderTypeDef *txMsg2Ext, uint8_t *canTx2)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /***************** Filter Config ID mask: Allow All *******************
-    sf.FilterBank = 0; // CAN1 Filter bank starts at 0 
+    sf.FilterBank = 0; // CAN1 Filter bank starts at 0
     sf.FilterMode = CAN_FILTERMODE_IDMASK;
     sf.FilterScale = CAN_FILTERSCALE_32BIT;
-    sf.FilterIdLow = 0xffff;  
+    sf.FilterIdLow = 0xffff;
     sf.FilterIdHigh = 0x1fff;
     sf.FilterMaskIdLow = 0x0000;
     sf.FilterMaskIdHigh = 0x0000;
@@ -265,9 +277,9 @@ void c2txExt(CAN_TxHeaderTypeDef *txMsg2Ext, uint8_t *canTx2)
 
 /***************** Filter Config ID list: Allow 4 discreet ID *******************
     sf1.FilterBank = 1;
-    sf1.FilterMode = CAN_FILTERMODE_IDLIST; 
+    sf1.FilterMode = CAN_FILTERMODE_IDLIST;
     sf1.FilterScale = CAN_FILTERSCALE_16BIT;
-    sf1.FilterIdLow = 0xFD3<<5; 
+    sf1.FilterIdLow = 0xFD3<<5;
     sf1.FilterIdHigh = 0X120<<5;
     sf1.FilterMaskIdLow = 0x184<<5;//X120<<5;
     sf1.FilterMaskIdHigh = 0x084<<5;//X120<<5;
@@ -280,10 +292,10 @@ void c2txExt(CAN_TxHeaderTypeDef *txMsg2Ext, uint8_t *canTx2)
     sf.FilterBank = 0;
     sf.FilterMode = CAN_FILTERMODE_IDLIST;
     sf.FilterScale = CAN_FILTERSCALE_32BIT;
-    sf.FilterIdLow = ((0x18FF11F2 << 3) & 0xFFF8) | 4;   
-    sf.FilterIdHigh = (0x18FF11F2 >> 13) & 0xFFFF;         
-    sf.FilterMaskIdLow = ((0x18FF0FF2 << 3) & 0xFFF8) | 4; 
-    sf.FilterMaskIdHigh = (0x18FF0FF2 >> 13) & 0xFFFF;     
+    sf.FilterIdLow = ((0x18FF11F2 << 3) & 0xFFF8) | 4;
+    sf.FilterIdHigh = (0x18FF11F2 >> 13) & 0xFFFF;
+    sf.FilterMaskIdLow = ((0x18FF0FF2 << 3) & 0xFFF8) | 4;
+    sf.FilterMaskIdHigh = (0x18FF0FF2 >> 13) & 0xFFFF;
     sf.FilterFIFOAssignment = CAN_RX_FIFO0;
     sf.SlaveStartFilterBank = 14;
     sf.FilterActivation = ENABLE;

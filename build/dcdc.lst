@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccYP3GbG.s 			page 1
+ARM GAS  /tmp/ccMMo806.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -18,258 +18,306 @@ ARM GAS  /tmp/ccYP3GbG.s 			page 1
   15              		.section	.text.dcdcInit,"ax",%progbits
   16              		.align	1
   17              		.global	dcdcInit
-  18              		.syntax unified
-  19              		.thumb
-  20              		.thumb_func
-  21              		.fpu softvfp
-  23              	dcdcInit:
-  24              	.LFB66:
-  25              		.file 1 "Core/Src/dcdc.c"
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	dcdcInit:
+  25              	.LFB68:
+  26              		.file 1 "Core/Src/dcdc.c"
    1:Core/Src/dcdc.c **** #include "dcdc.h"
    2:Core/Src/dcdc.c **** 
    3:Core/Src/dcdc.c **** 
    4:Core/Src/dcdc.c **** void dcdcInit(void)
    5:Core/Src/dcdc.c **** {
-  26              		.loc 1 5 0
-  27              		.cfi_startproc
-  28              		@ args = 0, pretend = 0, frame = 0
-  29              		@ frame_needed = 0, uses_anonymous_args = 0
-  30 0000 08B5     		push	{r3, lr}
-  31              		.cfi_def_cfa_offset 8
-  32              		.cfi_offset 3, -8
-  33              		.cfi_offset 14, -4
+  27              		.loc 1 5 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 08B5     		push	{r3, lr}
+  32              		.cfi_def_cfa_offset 8
+  33              		.cfi_offset 3, -8
+  34              		.cfi_offset 14, -4
    6:Core/Src/dcdc.c ****     time_now = HAL_GetTick();
-  34              		.loc 1 6 0
-  35 0002 FFF7FEFF 		bl	HAL_GetTick
-  36              	.LVL0:
-  37 0006 044B     		ldr	r3, .L3
-  38 0008 1860     		str	r0, [r3]
+  35              		.loc 1 6 5 view .LVU1
+  36              		.loc 1 6 16 is_stmt 0 view .LVU2
+  37 0002 FFF7FEFF 		bl	HAL_GetTick
+  38              	.LVL0:
+  39              		.loc 1 6 14 view .LVU3
+  40 0006 044B     		ldr	r3, .L3
+  41 0008 1860     		str	r0, [r3]
    7:Core/Src/dcdc.c ****     period = 1200000; // 20 minute recharge period
-  39              		.loc 1 7 0
-  40 000a 044A     		ldr	r2, .L3+4
-  41 000c 044B     		ldr	r3, .L3+8
-  42 000e 1A60     		str	r2, [r3]
+  42              		.loc 1 7 5 is_stmt 1 view .LVU4
+  43              		.loc 1 7 12 is_stmt 0 view .LVU5
+  44 000a 044B     		ldr	r3, .L3+4
+  45 000c 044A     		ldr	r2, .L3+8
+  46 000e 1A60     		str	r2, [r3]
    8:Core/Src/dcdc.c ****     tenderActive = false;
-  43              		.loc 1 8 0
-  44 0010 0022     		movs	r2, #0
-  45 0012 044B     		ldr	r3, .L3+12
-  46 0014 1A70     		strb	r2, [r3]
-  47 0016 08BD     		pop	{r3, pc}
-  48              	.L4:
-  49              		.align	2
-  50              	.L3:
-ARM GAS  /tmp/ccYP3GbG.s 			page 2
+  47              		.loc 1 8 5 is_stmt 1 view .LVU6
+  48              		.loc 1 8 18 is_stmt 0 view .LVU7
+  49 0010 044B     		ldr	r3, .L3+12
+  50 0012 0022     		movs	r2, #0
+ARM GAS  /tmp/ccMMo806.s 			page 2
 
 
-  51 0018 00000000 		.word	time_now
-  52 001c 804F1200 		.word	1200000
-  53 0020 00000000 		.word	period
-  54 0024 00000000 		.word	tenderActive
-  55              		.cfi_endproc
-  56              	.LFE66:
-  58              		.section	.text.dcdc_OFF,"ax",%progbits
-  59              		.align	1
-  60              		.global	dcdc_OFF
-  61              		.syntax unified
-  62              		.thumb
-  63              		.thumb_func
-  64              		.fpu softvfp
-  66              	dcdc_OFF:
-  67              	.LFB67:
+  51 0014 1A70     		strb	r2, [r3]
    9:Core/Src/dcdc.c **** 
   10:Core/Src/dcdc.c **** }
+  52              		.loc 1 10 1 view .LVU8
+  53 0016 08BD     		pop	{r3, pc}
+  54              	.L4:
+  55              		.align	2
+  56              	.L3:
+  57 0018 00000000 		.word	time_now
+  58 001c 00000000 		.word	period
+  59 0020 804F1200 		.word	1200000
+  60 0024 00000000 		.word	tenderActive
+  61              		.cfi_endproc
+  62              	.LFE68:
+  64              		.section	.text.dcdc_OFF,"ax",%progbits
+  65              		.align	1
+  66              		.global	dcdc_OFF
+  67              		.syntax unified
+  68              		.thumb
+  69              		.thumb_func
+  70              		.fpu softvfp
+  72              	dcdc_OFF:
+  73              	.LFB69:
   11:Core/Src/dcdc.c **** 
   12:Core/Src/dcdc.c **** void dcdc_OFF(void)
   13:Core/Src/dcdc.c **** {
-  68              		.loc 1 13 0
-  69              		.cfi_startproc
-  70              		@ args = 0, pretend = 0, frame = 0
-  71              		@ frame_needed = 0, uses_anonymous_args = 0
-  72 0000 08B5     		push	{r3, lr}
-  73              		.cfi_def_cfa_offset 8
-  74              		.cfi_offset 3, -8
-  75              		.cfi_offset 14, -4
+  74              		.loc 1 13 1 is_stmt 1 view -0
+  75              		.cfi_startproc
+  76              		@ args = 0, pretend = 0, frame = 0
+  77              		@ frame_needed = 0, uses_anonymous_args = 0
+  78 0000 08B5     		push	{r3, lr}
+  79              		.cfi_def_cfa_offset 8
+  80              		.cfi_offset 3, -8
+  81              		.cfi_offset 14, -4
   14:Core/Src/dcdc.c ****     txMsg.StdId = 0x1D4;
-  76              		.loc 1 14 0
-  77 0002 0648     		ldr	r0, .L7
-  78 0004 4FF4EA73 		mov	r3, #468
-  79 0008 0360     		str	r3, [r0]
+  82              		.loc 1 14 5 view .LVU10
+  83              		.loc 1 14 17 is_stmt 0 view .LVU11
+  84 0002 0648     		ldr	r0, .L7
+  85 0004 4FF4EA73 		mov	r3, #468
+  86 0008 0360     		str	r3, [r0]
   15:Core/Src/dcdc.c ****     txMsg.DLC = 2;
-  80              		.loc 1 15 0
-  81 000a 0223     		movs	r3, #2
-  82 000c 0361     		str	r3, [r0, #16]
+  87              		.loc 1 15 5 is_stmt 1 view .LVU12
+  88              		.loc 1 15 15 is_stmt 0 view .LVU13
+  89 000a 0223     		movs	r3, #2
+  90 000c 0361     		str	r3, [r0, #16]
   16:Core/Src/dcdc.c ****     canTx[0] = 0x00;
-  83              		.loc 1 16 0
-  84 000e 0449     		ldr	r1, .L7+4
-  85 0010 0023     		movs	r3, #0
-  86 0012 0B70     		strb	r3, [r1]
+  91              		.loc 1 16 5 is_stmt 1 view .LVU14
+  92              		.loc 1 16 14 is_stmt 0 view .LVU15
+  93 000e 0449     		ldr	r1, .L7+4
+  94 0010 0023     		movs	r3, #0
+  95 0012 0B70     		strb	r3, [r1]
   17:Core/Src/dcdc.c ****     canTx[1] = 0x00;
-  87              		.loc 1 17 0
-  88 0014 4B70     		strb	r3, [r1, #1]
+  96              		.loc 1 17 5 is_stmt 1 view .LVU16
+  97              		.loc 1 17 14 is_stmt 0 view .LVU17
+  98 0014 4B70     		strb	r3, [r1, #1]
   18:Core/Src/dcdc.c ****     c1tx(&txMsg, canTx);
-  89              		.loc 1 18 0
-  90 0016 FFF7FEFF 		bl	c1tx
-  91              	.LVL1:
-  92 001a 08BD     		pop	{r3, pc}
-  93              	.L8:
-  94              		.align	2
-  95              	.L7:
-  96 001c 00000000 		.word	txMsg
-  97 0020 00000000 		.word	canTx
-  98              		.cfi_endproc
-  99              	.LFE67:
-ARM GAS  /tmp/ccYP3GbG.s 			page 3
+  99              		.loc 1 18 5 is_stmt 1 view .LVU18
+ARM GAS  /tmp/ccMMo806.s 			page 3
 
 
- 101              		.section	.text.dcdc_ON,"ax",%progbits
- 102              		.align	1
- 103              		.global	dcdc_ON
- 104              		.syntax unified
- 105              		.thumb
- 106              		.thumb_func
- 107              		.fpu softvfp
- 109              	dcdc_ON:
- 110              	.LFB68:
+ 100 0016 FFF7FEFF 		bl	c1tx
+ 101              	.LVL1:
   19:Core/Src/dcdc.c **** }
+ 102              		.loc 1 19 1 is_stmt 0 view .LVU19
+ 103 001a 08BD     		pop	{r3, pc}
+ 104              	.L8:
+ 105              		.align	2
+ 106              	.L7:
+ 107 001c 00000000 		.word	txMsg
+ 108 0020 00000000 		.word	canTx
+ 109              		.cfi_endproc
+ 110              	.LFE69:
+ 112              		.section	.text.dcdc_ON,"ax",%progbits
+ 113              		.align	1
+ 114              		.global	dcdc_ON
+ 115              		.syntax unified
+ 116              		.thumb
+ 117              		.thumb_func
+ 118              		.fpu softvfp
+ 120              	dcdc_ON:
+ 121              	.LFB70:
   20:Core/Src/dcdc.c **** 
   21:Core/Src/dcdc.c **** void dcdc_ON(void)
   22:Core/Src/dcdc.c **** {
- 111              		.loc 1 22 0
- 112              		.cfi_startproc
- 113              		@ args = 0, pretend = 0, frame = 0
- 114              		@ frame_needed = 0, uses_anonymous_args = 0
- 115 0000 08B5     		push	{r3, lr}
- 116              		.cfi_def_cfa_offset 8
- 117              		.cfi_offset 3, -8
- 118              		.cfi_offset 14, -4
+ 122              		.loc 1 22 1 is_stmt 1 view -0
+ 123              		.cfi_startproc
+ 124              		@ args = 0, pretend = 0, frame = 0
+ 125              		@ frame_needed = 0, uses_anonymous_args = 0
+ 126 0000 08B5     		push	{r3, lr}
+ 127              		.cfi_def_cfa_offset 8
+ 128              		.cfi_offset 3, -8
+ 129              		.cfi_offset 14, -4
   23:Core/Src/dcdc.c ****     txMsg.StdId = 0x1D4;
- 119              		.loc 1 23 0
- 120 0002 0748     		ldr	r0, .L11
- 121 0004 4FF4EA73 		mov	r3, #468
- 122 0008 0360     		str	r3, [r0]
+ 130              		.loc 1 23 5 view .LVU21
+ 131              		.loc 1 23 17 is_stmt 0 view .LVU22
+ 132 0002 0748     		ldr	r0, .L11
+ 133 0004 4FF4EA73 		mov	r3, #468
+ 134 0008 0360     		str	r3, [r0]
   24:Core/Src/dcdc.c ****     txMsg.DLC = 2;
- 123              		.loc 1 24 0
- 124 000a 0223     		movs	r3, #2
- 125 000c 0361     		str	r3, [r0, #16]
+ 135              		.loc 1 24 5 is_stmt 1 view .LVU23
+ 136              		.loc 1 24 15 is_stmt 0 view .LVU24
+ 137 000a 0223     		movs	r3, #2
+ 138 000c 0361     		str	r3, [r0, #16]
   25:Core/Src/dcdc.c ****     canTx[0] = 0xA0;
- 126              		.loc 1 25 0
- 127 000e 0549     		ldr	r1, .L11+4
- 128 0010 A023     		movs	r3, #160
- 129 0012 0B70     		strb	r3, [r1]
+ 139              		.loc 1 25 5 is_stmt 1 view .LVU25
+ 140              		.loc 1 25 14 is_stmt 0 view .LVU26
+ 141 000e 0549     		ldr	r1, .L11+4
+ 142 0010 A023     		movs	r3, #160
+ 143 0012 0B70     		strb	r3, [r1]
   26:Core/Src/dcdc.c ****     canTx[1] = 0xBA;
- 130              		.loc 1 26 0
- 131 0014 BA23     		movs	r3, #186
- 132 0016 4B70     		strb	r3, [r1, #1]
+ 144              		.loc 1 26 5 is_stmt 1 view .LVU27
+ 145              		.loc 1 26 14 is_stmt 0 view .LVU28
+ 146 0014 BA23     		movs	r3, #186
+ 147 0016 4B70     		strb	r3, [r1, #1]
   27:Core/Src/dcdc.c ****     c1tx(&txMsg, canTx);
- 133              		.loc 1 27 0
- 134 0018 FFF7FEFF 		bl	c1tx
- 135              	.LVL2:
- 136 001c 08BD     		pop	{r3, pc}
- 137              	.L12:
- 138 001e 00BF     		.align	2
- 139              	.L11:
- 140 0020 00000000 		.word	txMsg
- 141 0024 00000000 		.word	canTx
- 142              		.cfi_endproc
- 143              	.LFE68:
- 145              		.section	.text.dcdc_DATA,"ax",%progbits
- 146              		.align	1
- 147              		.global	dcdc_DATA
- 148              		.syntax unified
- 149              		.thumb
- 150              		.thumb_func
-ARM GAS  /tmp/ccYP3GbG.s 			page 4
+ 148              		.loc 1 27 5 is_stmt 1 view .LVU29
+ 149 0018 FFF7FEFF 		bl	c1tx
+ARM GAS  /tmp/ccMMo806.s 			page 4
 
 
- 151              		.fpu softvfp
- 153              	dcdc_DATA:
- 154              	.LFB69:
+ 150              	.LVL2:
   28:Core/Src/dcdc.c **** }
+ 151              		.loc 1 28 1 is_stmt 0 view .LVU30
+ 152 001c 08BD     		pop	{r3, pc}
+ 153              	.L12:
+ 154 001e 00BF     		.align	2
+ 155              	.L11:
+ 156 0020 00000000 		.word	txMsg
+ 157 0024 00000000 		.word	canTx
+ 158              		.cfi_endproc
+ 159              	.LFE70:
+ 161              		.section	.text.dcdc_DATA,"ax",%progbits
+ 162              		.align	1
+ 163              		.global	dcdc_DATA
+ 164              		.syntax unified
+ 165              		.thumb
+ 166              		.thumb_func
+ 167              		.fpu softvfp
+ 169              	dcdc_DATA:
+ 170              	.LVL3:
+ 171              	.LFB71:
   29:Core/Src/dcdc.c **** 
   30:Core/Src/dcdc.c **** void dcdc_DATA(CAN_RxHeaderTypeDef *rxMsg, uint8_t *canRx)
   31:Core/Src/dcdc.c **** {
- 155              		.loc 1 31 0
- 156              		.cfi_startproc
- 157              		@ args = 0, pretend = 0, frame = 0
- 158              		@ frame_needed = 0, uses_anonymous_args = 0
- 159              		@ link register save eliminated.
- 160              	.LVL3:
+ 172              		.loc 1 31 1 is_stmt 1 view -0
+ 173              		.cfi_startproc
+ 174              		@ args = 0, pretend = 0, frame = 0
+ 175              		@ frame_needed = 0, uses_anonymous_args = 0
+ 176              		@ link register save eliminated.
   32:Core/Src/dcdc.c ****     if (rxMsg->StdId == 0x1D6)
- 161              		.loc 1 32 0
- 162 0000 0368     		ldr	r3, [r0]
- 163 0002 B3F5EB7F 		cmp	r3, #470
- 164 0006 00D0     		beq	.L15
- 165              	.LVL4:
- 166              	.L13:
- 167 0008 7047     		bx	lr
- 168              	.LVL5:
- 169              	.L15:
+ 177              		.loc 1 32 5 view .LVU32
+ 178              		.loc 1 32 14 is_stmt 0 view .LVU33
+ 179 0000 0368     		ldr	r3, [r0]
+ 180              		.loc 1 32 8 view .LVU34
+ 181 0002 B3F5EB7F 		cmp	r3, #470
+ 182 0006 00D0     		beq	.L15
+ 183              	.LVL4:
+ 184              	.L13:
   33:Core/Src/dcdc.c ****     {
   34:Core/Src/dcdc.c ****         DCDC.volts = (canRx[2] / 12); // 12 was 12.7
- 170              		.loc 1 34 0
- 171 000a 8B78     		ldrb	r3, [r1, #2]	@ zero_extendqisi2
- 172 000c 074A     		ldr	r2, .L16
- 173 000e 0848     		ldr	r0, .L16+4
- 174              	.LVL6:
- 175 0010 A0FB0303 		umull	r0, r3, r0, r3
- 176 0014 DB08     		lsrs	r3, r3, #3
- 177 0016 1370     		strb	r3, [r2]
   35:Core/Src/dcdc.c ****         DCDC.temp1 = (((canRx[3] - 40) * 1) + 32); //1 was 1.8 
- 178              		.loc 1 35 0
- 179 0018 CB78     		ldrb	r3, [r1, #3]	@ zero_extendqisi2
- 180 001a 083B     		subs	r3, r3, #8
- 181 001c 5370     		strb	r3, [r2, #1]
   36:Core/Src/dcdc.c ****         DCDC.temp2 = (((canRx[4] - 40) * 1) + 32); //1 was 1.8
- 182              		.loc 1 36 0
- 183 001e 0B79     		ldrb	r3, [r1, #4]	@ zero_extendqisi2
- 184 0020 083B     		subs	r3, r3, #8
- 185 0022 9370     		strb	r3, [r2, #2]
   37:Core/Src/dcdc.c ****         DCDC.current = canRx[5];
- 186              		.loc 1 37 0
- 187 0024 4B79     		ldrb	r3, [r1, #5]	@ zero_extendqisi2
- 188 0026 D370     		strb	r3, [r2, #3]
   38:Core/Src/dcdc.c ****     }
   39:Core/Src/dcdc.c **** }
- 189              		.loc 1 39 0
- 190 0028 EEE7     		b	.L13
- 191              	.L17:
- 192 002a 00BF     		.align	2
- 193              	.L16:
- 194 002c 00000000 		.word	DCDC
- 195 0030 ABAAAAAA 		.word	-1431655765
- 196              		.cfi_endproc
-ARM GAS  /tmp/ccYP3GbG.s 			page 5
+ 185              		.loc 1 39 1 view .LVU35
+ 186 0008 7047     		bx	lr
+ 187              	.LVL5:
+ 188              	.L15:
+  34:Core/Src/dcdc.c ****         DCDC.temp1 = (((canRx[3] - 40) * 1) + 32); //1 was 1.8 
+ 189              		.loc 1 34 9 is_stmt 1 view .LVU36
+  34:Core/Src/dcdc.c ****         DCDC.temp1 = (((canRx[3] - 40) * 1) + 32); //1 was 1.8 
+ 190              		.loc 1 34 28 is_stmt 0 view .LVU37
+ 191 000a 8B78     		ldrb	r3, [r1, #2]	@ zero_extendqisi2
+  34:Core/Src/dcdc.c ****         DCDC.temp1 = (((canRx[3] - 40) * 1) + 32); //1 was 1.8 
+ 192              		.loc 1 34 20 view .LVU38
+ 193 000c 074A     		ldr	r2, .L16
+ARM GAS  /tmp/ccMMo806.s 			page 5
 
 
- 197              	.LFE69:
- 199              		.section	.text.dcdcHandler,"ax",%progbits
- 200              		.align	1
- 201              		.global	dcdcHandler
- 202              		.syntax unified
- 203              		.thumb
- 204              		.thumb_func
- 205              		.fpu softvfp
- 207              	dcdcHandler:
- 208              	.LFB70:
+ 194 000e 0848     		ldr	r0, .L16+4
+ 195              	.LVL6:
+  34:Core/Src/dcdc.c ****         DCDC.temp1 = (((canRx[3] - 40) * 1) + 32); //1 was 1.8 
+ 196              		.loc 1 34 20 view .LVU39
+ 197 0010 A0FB0303 		umull	r0, r3, r0, r3
+ 198 0014 DB08     		lsrs	r3, r3, #3
+ 199 0016 1370     		strb	r3, [r2]
+  35:Core/Src/dcdc.c ****         DCDC.temp2 = (((canRx[4] - 40) * 1) + 32); //1 was 1.8
+ 200              		.loc 1 35 9 is_stmt 1 view .LVU40
+  35:Core/Src/dcdc.c ****         DCDC.temp2 = (((canRx[4] - 40) * 1) + 32); //1 was 1.8
+ 201              		.loc 1 35 30 is_stmt 0 view .LVU41
+ 202 0018 CB78     		ldrb	r3, [r1, #3]	@ zero_extendqisi2
+  35:Core/Src/dcdc.c ****         DCDC.temp2 = (((canRx[4] - 40) * 1) + 32); //1 was 1.8
+ 203              		.loc 1 35 45 view .LVU42
+ 204 001a 083B     		subs	r3, r3, #8
+  35:Core/Src/dcdc.c ****         DCDC.temp2 = (((canRx[4] - 40) * 1) + 32); //1 was 1.8
+ 205              		.loc 1 35 20 view .LVU43
+ 206 001c 5370     		strb	r3, [r2, #1]
+  36:Core/Src/dcdc.c ****         DCDC.current = canRx[5];
+ 207              		.loc 1 36 9 is_stmt 1 view .LVU44
+  36:Core/Src/dcdc.c ****         DCDC.current = canRx[5];
+ 208              		.loc 1 36 30 is_stmt 0 view .LVU45
+ 209 001e 0B79     		ldrb	r3, [r1, #4]	@ zero_extendqisi2
+  36:Core/Src/dcdc.c ****         DCDC.current = canRx[5];
+ 210              		.loc 1 36 45 view .LVU46
+ 211 0020 083B     		subs	r3, r3, #8
+  36:Core/Src/dcdc.c ****         DCDC.current = canRx[5];
+ 212              		.loc 1 36 20 view .LVU47
+ 213 0022 9370     		strb	r3, [r2, #2]
+  37:Core/Src/dcdc.c ****     }
+ 214              		.loc 1 37 9 is_stmt 1 view .LVU48
+  37:Core/Src/dcdc.c ****     }
+ 215              		.loc 1 37 22 is_stmt 0 view .LVU49
+ 216 0024 4B79     		ldrb	r3, [r1, #5]	@ zero_extendqisi2
+ 217 0026 D370     		strb	r3, [r2, #3]
+ 218              		.loc 1 39 1 view .LVU50
+ 219 0028 EEE7     		b	.L13
+ 220              	.L17:
+ 221 002a 00BF     		.align	2
+ 222              	.L16:
+ 223 002c 00000000 		.word	DCDC
+ 224 0030 ABAAAAAA 		.word	-1431655765
+ 225              		.cfi_endproc
+ 226              	.LFE71:
+ 228              		.section	.text.dcdcHandler,"ax",%progbits
+ 229              		.align	1
+ 230              		.global	dcdcHandler
+ 231              		.syntax unified
+ 232              		.thumb
+ 233              		.thumb_func
+ 234              		.fpu softvfp
+ 236              	dcdcHandler:
+ 237              	.LVL7:
+ 238              	.LFB72:
   40:Core/Src/dcdc.c **** 
   41:Core/Src/dcdc.c **** void dcdcHandler(int vehicleState)
   42:Core/Src/dcdc.c **** {
- 209              		.loc 1 42 0
- 210              		.cfi_startproc
- 211              		@ args = 0, pretend = 0, frame = 0
- 212              		@ frame_needed = 0, uses_anonymous_args = 0
- 213              	.LVL7:
- 214 0000 08B5     		push	{r3, lr}
- 215              		.cfi_def_cfa_offset 8
- 216              		.cfi_offset 3, -8
- 217              		.cfi_offset 14, -4
+ARM GAS  /tmp/ccMMo806.s 			page 6
+
+
+ 239              		.loc 1 42 1 is_stmt 1 view -0
+ 240              		.cfi_startproc
+ 241              		@ args = 0, pretend = 0, frame = 0
+ 242              		@ frame_needed = 0, uses_anonymous_args = 0
+ 243              		.loc 1 42 1 is_stmt 0 view .LVU52
+ 244 0000 08B5     		push	{r3, lr}
+ 245              		.cfi_def_cfa_offset 8
+ 246              		.cfi_offset 3, -8
+ 247              		.cfi_offset 14, -4
   43:Core/Src/dcdc.c ****     switch (vehicleState)
- 218              		.loc 1 43 0
- 219 0002 38B1     		cbz	r0, .L20
- 220 0004 0028     		cmp	r0, #0
- 221 0006 03DB     		blt	.L18
- 222 0008 0728     		cmp	r0, #7
- 223 000a 02DC     		bgt	.L26
+ 248              		.loc 1 43 5 is_stmt 1 view .LVU53
+ 249 0002 38B1     		cbz	r0, .L19
+ 250 0004 0028     		cmp	r0, #0
+ 251 0006 04DB     		blt	.L18
+ 252 0008 431E     		subs	r3, r0, #1
+ 253 000a 062B     		cmp	r3, #6
+ 254 000c 01D8     		bhi	.L18
   44:Core/Src/dcdc.c ****     {
   45:Core/Src/dcdc.c ****     case off:
   46:Core/Src/dcdc.c ****         if (ADC_data[lvread] < 3600) //~12.1vdc
@@ -298,176 +346,210 @@ ARM GAS  /tmp/ccYP3GbG.s 			page 1
   69:Core/Src/dcdc.c ****     case charge_keyOff:
   70:Core/Src/dcdc.c ****     case idle:
   71:Core/Src/dcdc.c ****     case launchMode:
-ARM GAS  /tmp/ccYP3GbG.s 			page 6
-
-
   72:Core/Src/dcdc.c ****     case burnout:
   73:Core/Src/dcdc.c ****         dcdc_ON();
- 224              		.loc 1 73 0
- 225 000c FFF7FEFF 		bl	dcdc_ON
- 226              	.LVL8:
- 227              	.L18:
- 228 0010 08BD     		pop	{r3, pc}
- 229              	.LVL9:
- 230              	.L26:
- 231 0012 08BD     		pop	{r3, pc}
- 232              	.L20:
-  46:Core/Src/dcdc.c ****         {
- 233              		.loc 1 46 0
- 234 0014 124B     		ldr	r3, .L29
- 235 0016 1B68     		ldr	r3, [r3]
- 236 0018 B3F5616F 		cmp	r3, #3600
- 237 001c 09D3     		bcc	.L27
- 238              	.LVL10:
- 239              	.L22:
-  51:Core/Src/dcdc.c ****         {
- 240              		.loc 1 51 0
- 241 001e 114B     		ldr	r3, .L29+4
- 242 0020 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 243 0022 73B9     		cbnz	r3, .L28
- 244              	.L23:
-  60:Core/Src/dcdc.c ****         {
- 245              		.loc 1 60 0
- 246 0024 0F4B     		ldr	r3, .L29+4
- 247 0026 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 248 0028 002B     		cmp	r3, #0
- 249 002a F1D1     		bne	.L18
-  62:Core/Src/dcdc.c ****         }
- 250              		.loc 1 62 0
- 251 002c FFF7FEFF 		bl	dcdc_OFF
- 252              	.LVL11:
- 253 0030 08BD     		pop	{r3, pc}
- 254              	.LVL12:
- 255              	.L27:
-  48:Core/Src/dcdc.c ****             time_now = HAL_GetTick();
- 256              		.loc 1 48 0
- 257 0032 0122     		movs	r2, #1
- 258 0034 0B4B     		ldr	r3, .L29+4
- 259 0036 1A70     		strb	r2, [r3]
-  49:Core/Src/dcdc.c ****         }
- 260              		.loc 1 49 0
- 261 0038 FFF7FEFF 		bl	HAL_GetTick
- 262              	.LVL13:
- 263 003c 0A4B     		ldr	r3, .L29+8
- 264 003e 1860     		str	r0, [r3]
- 265 0040 EDE7     		b	.L22
- 266              	.L28:
-  53:Core/Src/dcdc.c ****             if ((HAL_GetTick() - time_now) > period)
- 267              		.loc 1 53 0
- 268 0042 FFF7FEFF 		bl	dcdc_ON
- 269              	.LVL14:
-  54:Core/Src/dcdc.c ****             {
- 270              		.loc 1 54 0
-ARM GAS  /tmp/ccYP3GbG.s 			page 7
+ 255              		.loc 1 73 9 view .LVU54
+ 256 000e FFF7FEFF 		bl	dcdc_ON
+ 257              	.LVL8:
+  74:Core/Src/dcdc.c ****         break; 
+ 258              		.loc 1 74 9 view .LVU55
+ 259              	.L18:
+  75:Core/Src/dcdc.c **** 
+  76:Core/Src/dcdc.c ****     default:
+  77:Core/Src/dcdc.c ****         break;
+  78:Core/Src/dcdc.c ****     }
+ARM GAS  /tmp/ccMMo806.s 			page 7
 
 
- 271 0046 FFF7FEFF 		bl	HAL_GetTick
- 272              	.LVL15:
- 273 004a 074B     		ldr	r3, .L29+8
- 274 004c 1B68     		ldr	r3, [r3]
- 275 004e C01A     		subs	r0, r0, r3
- 276 0050 064B     		ldr	r3, .L29+12
- 277 0052 1B68     		ldr	r3, [r3]
- 278 0054 9842     		cmp	r0, r3
- 279 0056 E5D9     		bls	.L23
-  57:Core/Src/dcdc.c ****             }
- 280              		.loc 1 57 0
- 281 0058 0022     		movs	r2, #0
- 282 005a 024B     		ldr	r3, .L29+4
- 283 005c 1A70     		strb	r2, [r3]
- 284 005e E1E7     		b	.L23
- 285              	.L30:
- 286              		.align	2
- 287              	.L29:
- 288 0060 00000000 		.word	ADC_data
- 289 0064 00000000 		.word	tenderActive
- 290 0068 00000000 		.word	time_now
- 291 006c 00000000 		.word	period
- 292              		.cfi_endproc
- 293              	.LFE70:
- 295              		.comm	tenderActive,1,1
- 296              		.comm	time_now,4,4
- 297              		.comm	period,4,4
- 298              		.comm	DCDC,4,4
- 299              		.comm	canDebug,4,4
- 300              		.comm	txCycle2,4,4
- 301              		.comm	txCycle,4,4
- 302              		.comm	canTx2,8,4
- 303              		.comm	canTx,8,4
- 304              		.comm	canMailbox2,4,4
- 305              		.comm	canMailbox,4,4
- 306              		.comm	canRx2,8,4
- 307              		.comm	canRx,8,4
- 308              		.comm	txMsgExt2,24,4
- 309              		.comm	txMsg2,24,4
- 310              		.comm	rxMsg2,28,4
- 311              		.comm	txMsgExt,24,4
- 312              		.comm	txMsg,24,4
- 313              		.comm	rxMsg,28,4
- 314              		.comm	sf5,40,4
- 315              		.comm	sf4,40,4
- 316              		.comm	sf3,40,4
- 317              		.comm	sf2,40,4
- 318              		.comm	sf,40,4
- 319              		.comm	hcan2,40,4
- 320              		.comm	hcan1,40,4
- 321              		.comm	LIDAR,8,4
- 322              		.comm	te,12,4
- 323              		.comm	BMS,20,4
- 324              		.comm	charger,3,4
- 325              		.comm	vcu,7,4
- 326              		.comm	iboost,2,4
- 327              		.comm	ldu,18,4
-ARM GAS  /tmp/ccYP3GbG.s 			page 8
+  79:Core/Src/dcdc.c **** }...
+ 260              		.loc 1 79 1 is_stmt 0 view .LVU56
+ 261 0012 08BD     		pop	{r3, pc}
+ 262              	.LVL9:
+ 263              	.L19:
+  46:Core/Src/dcdc.c ****         if (ADC_data[lvread] < 3600) //~12.1vdc
+ 264              		.loc 1 46 9 is_stmt 1 view .LVU57
+  46:Core/Src/dcdc.c ****         if (ADC_data[lvread] < 3600) //~12.1vdc
+ 265              		.loc 1 46 21 is_stmt 0 view .LVU58
+ 266 0014 124B     		ldr	r3, .L28
+ 267 0016 1B68     		ldr	r3, [r3]
+  46:Core/Src/dcdc.c ****         if (ADC_data[lvread] < 3600) //~12.1vdc
+ 268              		.loc 1 46 12 view .LVU59
+ 269 0018 B3F5616F 		cmp	r3, #3600
+ 270 001c 09D3     		bcc	.L26
+ 271              	.LVL10:
+ 272              	.L22:
+  51:Core/Src/dcdc.c ****         if(tenderActive)
+ 273              		.loc 1 51 9 is_stmt 1 view .LVU60
+  51:Core/Src/dcdc.c ****         if(tenderActive)
+ 274              		.loc 1 51 12 is_stmt 0 view .LVU61
+ 275 001e 114B     		ldr	r3, .L28+4
+ 276 0020 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  51:Core/Src/dcdc.c ****         if(tenderActive)
+ 277              		.loc 1 51 11 view .LVU62
+ 278 0022 73B9     		cbnz	r3, .L27
+ 279              	.L23:
+  60:Core/Src/dcdc.c ****         if (!tenderActive)
+ 280              		.loc 1 60 9 is_stmt 1 view .LVU63
+  60:Core/Src/dcdc.c ****         if (!tenderActive)
+ 281              		.loc 1 60 13 is_stmt 0 view .LVU64
+ 282 0024 0F4B     		ldr	r3, .L28+4
+ 283 0026 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  60:Core/Src/dcdc.c ****         if (!tenderActive)
+ 284              		.loc 1 60 12 view .LVU65
+ 285 0028 002B     		cmp	r3, #0
+ 286 002a F2D1     		bne	.L18
+  62:Core/Src/dcdc.c ****             dcdc_OFF();
+ 287              		.loc 1 62 13 is_stmt 1 view .LVU66
+ 288 002c FFF7FEFF 		bl	dcdc_OFF
+ 289              	.LVL11:
+ 290 0030 EFE7     		b	.L18
+ 291              	.LVL12:
+ 292              	.L26:
+  48:Core/Src/dcdc.c ****             tenderActive = true;
+ 293              		.loc 1 48 13 view .LVU67
+  48:Core/Src/dcdc.c ****             tenderActive = true;
+ 294              		.loc 1 48 26 is_stmt 0 view .LVU68
+ 295 0032 0C4B     		ldr	r3, .L28+4
+ 296 0034 0122     		movs	r2, #1
+ 297 0036 1A70     		strb	r2, [r3]
+  49:Core/Src/dcdc.c ****             time_now = HAL_GetTick();
+ 298              		.loc 1 49 13 is_stmt 1 view .LVU69
+  49:Core/Src/dcdc.c ****             time_now = HAL_GetTick();
+ 299              		.loc 1 49 24 is_stmt 0 view .LVU70
+ 300 0038 FFF7FEFF 		bl	HAL_GetTick
+ 301              	.LVL13:
+ARM GAS  /tmp/ccMMo806.s 			page 8
 
 
- 328              		.comm	tempdata,4,4
- 329              		.comm	ADC_data,12,4
- 330              		.text
- 331              	.Letext0:
- 332              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 333              		.file 3 "/usr/include/newlib/sys/_stdint.h"
- 334              		.file 4 "Drivers/CMSIS/Include/core_cm3.h"
- 335              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
- 336              		.file 6 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h"
- 337              		.file 7 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
- 338              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can.h"
- 339              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
- 340              		.file 10 "/usr/include/newlib/sys/lock.h"
- 341              		.file 11 "/usr/include/newlib/sys/_types.h"
- 342              		.file 12 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
- 343              		.file 13 "/usr/include/newlib/sys/reent.h"
- 344              		.file 14 "Core/Inc/vcu.h"
- 345              		.file 15 "Core/Inc/encoder.h"
- 346              		.file 16 "Core/Inc/lidar.h"
- 347              		.file 17 "Core/Inc/can_setup.h"
- 348              		.file 18 "Core/Inc/dcdc.h"
-ARM GAS  /tmp/ccYP3GbG.s 			page 9
+  49:Core/Src/dcdc.c ****             time_now = HAL_GetTick();
+ 302              		.loc 1 49 22 view .LVU71
+ 303 003c 0A4B     		ldr	r3, .L28+8
+ 304 003e 1860     		str	r0, [r3]
+ 305 0040 EDE7     		b	.L22
+ 306              	.L27:
+  53:Core/Src/dcdc.c ****             dcdc_ON();
+ 307              		.loc 1 53 13 is_stmt 1 view .LVU72
+ 308 0042 FFF7FEFF 		bl	dcdc_ON
+ 309              	.LVL14:
+  54:Core/Src/dcdc.c ****             if ((HAL_GetTick() - time_now) > period)
+ 310              		.loc 1 54 13 view .LVU73
+  54:Core/Src/dcdc.c ****             if ((HAL_GetTick() - time_now) > period)
+ 311              		.loc 1 54 18 is_stmt 0 view .LVU74
+ 312 0046 FFF7FEFF 		bl	HAL_GetTick
+ 313              	.LVL15:
+  54:Core/Src/dcdc.c ****             if ((HAL_GetTick() - time_now) > period)
+ 314              		.loc 1 54 32 view .LVU75
+ 315 004a 074B     		ldr	r3, .L28+8
+ 316 004c 1B68     		ldr	r3, [r3]
+ 317 004e C01A     		subs	r0, r0, r3
+  54:Core/Src/dcdc.c ****             if ((HAL_GetTick() - time_now) > period)
+ 318              		.loc 1 54 44 view .LVU76
+ 319 0050 064B     		ldr	r3, .L28+12
+ 320 0052 1B68     		ldr	r3, [r3]
+  54:Core/Src/dcdc.c ****             if ((HAL_GetTick() - time_now) > period)
+ 321              		.loc 1 54 16 view .LVU77
+ 322 0054 9842     		cmp	r0, r3
+ 323 0056 E5D9     		bls	.L23
+  57:Core/Src/dcdc.c ****                 tenderActive = false;
+ 324              		.loc 1 57 17 is_stmt 1 view .LVU78
+  57:Core/Src/dcdc.c ****                 tenderActive = false;
+ 325              		.loc 1 57 30 is_stmt 0 view .LVU79
+ 326 0058 024B     		ldr	r3, .L28+4
+ 327 005a 0022     		movs	r2, #0
+ 328 005c 1A70     		strb	r2, [r3]
+ 329 005e E1E7     		b	.L23
+ 330              	.L29:
+ 331              		.align	2
+ 332              	.L28:
+ 333 0060 00000000 		.word	ADC_data
+ 334 0064 00000000 		.word	tenderActive
+ 335 0068 00000000 		.word	time_now
+ 336 006c 00000000 		.word	period
+ 337              		.cfi_endproc
+ 338              	.LFE72:
+ 340              		.comm	tenderActive,1,1
+ 341              		.comm	time_now,4,4
+ 342              		.comm	period,4,4
+ 343              		.comm	DCDC,4,4
+ 344              		.comm	canDebug,4,4
+ 345              		.comm	txCycle2,4,4
+ 346              		.comm	txCycle,4,4
+ 347              		.comm	canTx2,8,4
+ 348              		.comm	canTx,8,4
+ 349              		.comm	canMailbox2,4,4
+ 350              		.comm	canMailbox,4,4
+ARM GAS  /tmp/ccMMo806.s 			page 9
+
+
+ 351              		.comm	canRx2,8,4
+ 352              		.comm	canRx,8,4
+ 353              		.comm	txMsgExt2,24,4
+ 354              		.comm	txMsg2,24,4
+ 355              		.comm	rxMsg2,28,4
+ 356              		.comm	txMsgExt,24,4
+ 357              		.comm	txMsg,24,4
+ 358              		.comm	rxMsg,28,4
+ 359              		.comm	sf5,40,4
+ 360              		.comm	sf4,40,4
+ 361              		.comm	sf3,40,4
+ 362              		.comm	sf2,40,4
+ 363              		.comm	sf,40,4
+ 364              		.comm	hcan2,40,4
+ 365              		.comm	hcan1,40,4
+ 366              		.comm	LIDAR,8,4
+ 367              		.comm	te,12,4
+ 368              		.comm	taskTime,32,4
+ 369              		.comm	BMS,20,4
+ 370              		.comm	charger,3,4
+ 371              		.comm	vcu,7,4
+ 372              		.comm	iboost,2,4
+ 373              		.comm	ldu,18,4
+ 374              		.comm	tempdata,4,4
+ 375              		.comm	ADC_data,12,4
+ 376              		.text
+ 377              	.Letext0:
+ 378              		.file 2 "/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h"
+ 379              		.file 3 "Drivers/CMSIS/Include/core_cm3.h"
+ 380              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+ 381              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h"
+ 382              		.file 6 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
+ 383              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can.h"
+ 384              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 385              		.file 9 "/usr/lib/gcc/arm-none-eabi/9.2.1/include/stddef.h"
+ 386              		.file 10 "/usr/include/newlib/sys/_types.h"
+ 387              		.file 11 "/usr/include/newlib/sys/reent.h"
+ 388              		.file 12 "/usr/include/newlib/sys/lock.h"
+ 389              		.file 13 "Core/Inc/vcu.h"
+ 390              		.file 14 "Core/Inc/encoder.h"
+ 391              		.file 15 "Core/Inc/lidar.h"
+ 392              		.file 16 "Core/Inc/can_setup.h"
+ 393              		.file 17 "Core/Inc/dcdc.h"
+ARM GAS  /tmp/ccMMo806.s 			page 10
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 dcdc.c
-     /tmp/ccYP3GbG.s:16     .text.dcdcInit:0000000000000000 $t
-     /tmp/ccYP3GbG.s:23     .text.dcdcInit:0000000000000000 dcdcInit
-     /tmp/ccYP3GbG.s:51     .text.dcdcInit:0000000000000018 $d
+     /tmp/ccMMo806.s:16     .text.dcdcInit:0000000000000000 $t
+     /tmp/ccMMo806.s:24     .text.dcdcInit:0000000000000000 dcdcInit
+     /tmp/ccMMo806.s:57     .text.dcdcInit:0000000000000018 $d
                             *COM*:0000000000000004 time_now
                             *COM*:0000000000000004 period
                             *COM*:0000000000000001 tenderActive
-     /tmp/ccYP3GbG.s:59     .text.dcdc_OFF:0000000000000000 $t
-     /tmp/ccYP3GbG.s:66     .text.dcdc_OFF:0000000000000000 dcdc_OFF
-     /tmp/ccYP3GbG.s:96     .text.dcdc_OFF:000000000000001c $d
+     /tmp/ccMMo806.s:65     .text.dcdc_OFF:0000000000000000 $t
+     /tmp/ccMMo806.s:72     .text.dcdc_OFF:0000000000000000 dcdc_OFF
+     /tmp/ccMMo806.s:107    .text.dcdc_OFF:000000000000001c $d
                             *COM*:0000000000000018 txMsg
                             *COM*:0000000000000008 canTx
-     /tmp/ccYP3GbG.s:102    .text.dcdc_ON:0000000000000000 $t
-     /tmp/ccYP3GbG.s:109    .text.dcdc_ON:0000000000000000 dcdc_ON
-     /tmp/ccYP3GbG.s:140    .text.dcdc_ON:0000000000000020 $d
-     /tmp/ccYP3GbG.s:146    .text.dcdc_DATA:0000000000000000 $t
-     /tmp/ccYP3GbG.s:153    .text.dcdc_DATA:0000000000000000 dcdc_DATA
-     /tmp/ccYP3GbG.s:194    .text.dcdc_DATA:000000000000002c $d
+     /tmp/ccMMo806.s:113    .text.dcdc_ON:0000000000000000 $t
+     /tmp/ccMMo806.s:120    .text.dcdc_ON:0000000000000000 dcdc_ON
+     /tmp/ccMMo806.s:156    .text.dcdc_ON:0000000000000020 $d
+     /tmp/ccMMo806.s:162    .text.dcdc_DATA:0000000000000000 $t
+     /tmp/ccMMo806.s:169    .text.dcdc_DATA:0000000000000000 dcdc_DATA
+     /tmp/ccMMo806.s:223    .text.dcdc_DATA:000000000000002c $d
                             *COM*:0000000000000004 DCDC
-     /tmp/ccYP3GbG.s:200    .text.dcdcHandler:0000000000000000 $t
-     /tmp/ccYP3GbG.s:207    .text.dcdcHandler:0000000000000000 dcdcHandler
-     /tmp/ccYP3GbG.s:288    .text.dcdcHandler:0000000000000060 $d
+     /tmp/ccMMo806.s:229    .text.dcdcHandler:0000000000000000 $t
+     /tmp/ccMMo806.s:236    .text.dcdcHandler:0000000000000000 dcdcHandler
+     /tmp/ccMMo806.s:333    .text.dcdcHandler:0000000000000060 $d
                             *COM*:000000000000000c ADC_data
                             *COM*:0000000000000004 canDebug
                             *COM*:0000000000000004 txCycle2
@@ -491,17 +573,17 @@ DEFINED SYMBOLS
                             *COM*:0000000000000028 hcan1
                             *COM*:0000000000000008 LIDAR
                             *COM*:000000000000000c te
+                            *COM*:0000000000000020 taskTime
                             *COM*:0000000000000014 BMS
                             *COM*:0000000000000003 charger
                             *COM*:0000000000000007 vcu
                             *COM*:0000000000000002 iboost
                             *COM*:0000000000000012 ldu
                             *COM*:0000000000000004 tempdata
-                     .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
 HAL_GetTick
 c1tx
-ARM GAS  /tmp/ccYP3GbG.s 			page 10
+ARM GAS  /tmp/ccMMo806.s 			page 11
 
 

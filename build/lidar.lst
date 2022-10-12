@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc4mnaeJ.s 			page 1
+ARM GAS  /tmp/ccrEt9Ne.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -18,92 +18,134 @@ ARM GAS  /tmp/cc4mnaeJ.s 			page 1
   15              		.section	.text.getLidar,"ax",%progbits
   16              		.align	1
   17              		.global	getLidar
-  18              		.syntax unified
-  19              		.thumb
-  20              		.thumb_func
-  21              		.fpu softvfp
-  23              	getLidar:
-  24              	.LFB65:
-  25              		.file 1 "Core/Src/lidar.c"
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	getLidar:
+  25              	.LVL0:
+  26              	.LFB65:
+  27              		.file 1 "Core/Src/lidar.c"
    1:Core/Src/lidar.c **** #include "lidar.h"
    2:Core/Src/lidar.c **** 
    3:Core/Src/lidar.c **** void getLidar(CAN_RxHeaderTypeDef *rxMsg, uint8_t *canRx)
    4:Core/Src/lidar.c **** {
-  26              		.loc 1 4 0
-  27              		.cfi_startproc
-  28              		@ args = 0, pretend = 0, frame = 0
-  29              		@ frame_needed = 0, uses_anonymous_args = 0
-  30              		@ link register save eliminated.
-  31              	.LVL0:
+  28              		.loc 1 4 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
    5:Core/Src/lidar.c ****     if (rxMsg->ExtId == 0x00000003)
-  32              		.loc 1 5 0
-  33 0000 4368     		ldr	r3, [r0, #4]
-  34 0002 032B     		cmp	r3, #3
-  35 0004 00D0     		beq	.L3
-  36              	.LVL1:
-  37              	.L1:
-  38 0006 7047     		bx	lr
-  39              	.LVL2:
-  40              	.L3:
+  33              		.loc 1 5 5 view .LVU1
+  34              		.loc 1 5 14 is_stmt 0 view .LVU2
+  35 0000 4368     		ldr	r3, [r0, #4]
+  36              		.loc 1 5 8 view .LVU3
+  37 0002 032B     		cmp	r3, #3
+  38 0004 00D0     		beq	.L3
+  39              	.LVL1:
+  40              	.L1:
    6:Core/Src/lidar.c ****     {
    7:Core/Src/lidar.c ****         LIDAR.distance = (canRx[1] << 8) + canRx[0];
-  41              		.loc 1 7 0
-  42 0008 4A78     		ldrb	r2, [r1, #1]	@ zero_extendqisi2
-  43 000a 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
-  44 000c 03EB0223 		add	r3, r3, r2, lsl #8
-  45 0010 094A     		ldr	r2, .L4
-  46 0012 1380     		strh	r3, [r2]	@ movhi
    8:Core/Src/lidar.c ****         LIDAR.signal = (canRx[3] << 8) + canRx[2];
-  47              		.loc 1 8 0
-  48 0014 C878     		ldrb	r0, [r1, #3]	@ zero_extendqisi2
-  49              	.LVL3:
-  50 0016 8B78     		ldrb	r3, [r1, #2]	@ zero_extendqisi2
-ARM GAS  /tmp/cc4mnaeJ.s 			page 2
-
-
-  51 0018 03EB0023 		add	r3, r3, r0, lsl #8
-  52 001c 5380     		strh	r3, [r2, #2]	@ movhi
    9:Core/Src/lidar.c ****         LIDAR.time = (canRx[7] << 24) + (canRx[6] << 16) + (canRx[5] << 8) + canRx[4];
-  53              		.loc 1 9 0
-  54 001e C879     		ldrb	r0, [r1, #7]	@ zero_extendqisi2
-  55 0020 8B79     		ldrb	r3, [r1, #6]	@ zero_extendqisi2
-  56 0022 1B04     		lsls	r3, r3, #16
-  57 0024 03EB0063 		add	r3, r3, r0, lsl #24
-  58 0028 4879     		ldrb	r0, [r1, #5]	@ zero_extendqisi2
-  59 002a 03EB0023 		add	r3, r3, r0, lsl #8
-  60 002e 0979     		ldrb	r1, [r1, #4]	@ zero_extendqisi2
-  61              	.LVL4:
-  62 0030 0B44     		add	r3, r3, r1
-  63 0032 5360     		str	r3, [r2, #4]
   10:Core/Src/lidar.c ****     }
   11:Core/Src/lidar.c **** }...
-  64              		.loc 1 11 0
-  65 0034 E7E7     		b	.L1
-  66              	.L5:
-  67 0036 00BF     		.align	2
-  68              	.L4:
-  69 0038 00000000 		.word	LIDAR
-  70              		.cfi_endproc
-  71              	.LFE65:
-  73              		.comm	LIDAR,8,4
-  74              		.text
-  75              	.Letext0:
-  76              		.file 2 "/usr/include/newlib/machine/_default_types.h"
-  77              		.file 3 "/usr/include/newlib/sys/_stdint.h"
-  78              		.file 4 "Drivers/CMSIS/Include/core_cm3.h"
-  79              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
-  80              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can.h"
-  81              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
-  82              		.file 8 "Core/Inc/lidar.h"
-ARM GAS  /tmp/cc4mnaeJ.s 			page 3
+  41              		.loc 1 11 1 view .LVU4
+  42 0006 7047     		bx	lr
+  43              	.LVL2:
+  44              	.L3:
+   7:Core/Src/lidar.c ****         LIDAR.distance = (canRx[1] << 8) + canRx[0];
+  45              		.loc 1 7 9 is_stmt 1 view .LVU5
+   7:Core/Src/lidar.c ****         LIDAR.distance = (canRx[1] << 8) + canRx[0];
+ARM GAS  /tmp/ccrEt9Ne.s 			page 2
+
+
+  46              		.loc 1 7 32 is_stmt 0 view .LVU6
+  47 0008 4A78     		ldrb	r2, [r1, #1]	@ zero_extendqisi2
+   7:Core/Src/lidar.c ****         LIDAR.distance = (canRx[1] << 8) + canRx[0];
+  48              		.loc 1 7 49 view .LVU7
+  49 000a 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+   7:Core/Src/lidar.c ****         LIDAR.distance = (canRx[1] << 8) + canRx[0];
+  50              		.loc 1 7 42 view .LVU8
+  51 000c 03EB0223 		add	r3, r3, r2, lsl #8
+   7:Core/Src/lidar.c ****         LIDAR.distance = (canRx[1] << 8) + canRx[0];
+  52              		.loc 1 7 24 view .LVU9
+  53 0010 094A     		ldr	r2, .L4
+  54 0012 1380     		strh	r3, [r2]	@ movhi
+   8:Core/Src/lidar.c ****         LIDAR.signal = (canRx[3] << 8) + canRx[2];
+  55              		.loc 1 8 9 is_stmt 1 view .LVU10
+   8:Core/Src/lidar.c ****         LIDAR.signal = (canRx[3] << 8) + canRx[2];
+  56              		.loc 1 8 30 is_stmt 0 view .LVU11
+  57 0014 C878     		ldrb	r0, [r1, #3]	@ zero_extendqisi2
+  58              	.LVL3:
+   8:Core/Src/lidar.c ****         LIDAR.signal = (canRx[3] << 8) + canRx[2];
+  59              		.loc 1 8 47 view .LVU12
+  60 0016 8B78     		ldrb	r3, [r1, #2]	@ zero_extendqisi2
+   8:Core/Src/lidar.c ****         LIDAR.signal = (canRx[3] << 8) + canRx[2];
+  61              		.loc 1 8 40 view .LVU13
+  62 0018 03EB0023 		add	r3, r3, r0, lsl #8
+   8:Core/Src/lidar.c ****         LIDAR.signal = (canRx[3] << 8) + canRx[2];
+  63              		.loc 1 8 22 view .LVU14
+  64 001c 5380     		strh	r3, [r2, #2]	@ movhi
+   9:Core/Src/lidar.c ****         LIDAR.time = (canRx[7] << 24) + (canRx[6] << 16) + (canRx[5] << 8) + canRx[4];
+  65              		.loc 1 9 9 is_stmt 1 view .LVU15
+   9:Core/Src/lidar.c ****         LIDAR.time = (canRx[7] << 24) + (canRx[6] << 16) + (canRx[5] << 8) + canRx[4];
+  66              		.loc 1 9 28 is_stmt 0 view .LVU16
+  67 001e C879     		ldrb	r0, [r1, #7]	@ zero_extendqisi2
+   9:Core/Src/lidar.c ****         LIDAR.time = (canRx[7] << 24) + (canRx[6] << 16) + (canRx[5] << 8) + canRx[4];
+  68              		.loc 1 9 47 view .LVU17
+  69 0020 8B79     		ldrb	r3, [r1, #6]	@ zero_extendqisi2
+   9:Core/Src/lidar.c ****         LIDAR.time = (canRx[7] << 24) + (canRx[6] << 16) + (canRx[5] << 8) + canRx[4];
+  70              		.loc 1 9 51 view .LVU18
+  71 0022 1B04     		lsls	r3, r3, #16
+   9:Core/Src/lidar.c ****         LIDAR.time = (canRx[7] << 24) + (canRx[6] << 16) + (canRx[5] << 8) + canRx[4];
+  72              		.loc 1 9 39 view .LVU19
+  73 0024 03EB0063 		add	r3, r3, r0, lsl #24
+   9:Core/Src/lidar.c ****         LIDAR.time = (canRx[7] << 24) + (canRx[6] << 16) + (canRx[5] << 8) + canRx[4];
+  74              		.loc 1 9 66 view .LVU20
+  75 0028 4879     		ldrb	r0, [r1, #5]	@ zero_extendqisi2
+   9:Core/Src/lidar.c ****         LIDAR.time = (canRx[7] << 24) + (canRx[6] << 16) + (canRx[5] << 8) + canRx[4];
+  76              		.loc 1 9 58 view .LVU21
+  77 002a 03EB0023 		add	r3, r3, r0, lsl #8
+   9:Core/Src/lidar.c ****         LIDAR.time = (canRx[7] << 24) + (canRx[6] << 16) + (canRx[5] << 8) + canRx[4];
+  78              		.loc 1 9 83 view .LVU22
+  79 002e 0979     		ldrb	r1, [r1, #4]	@ zero_extendqisi2
+  80              	.LVL4:
+   9:Core/Src/lidar.c ****         LIDAR.time = (canRx[7] << 24) + (canRx[6] << 16) + (canRx[5] << 8) + canRx[4];
+  81              		.loc 1 9 76 view .LVU23
+  82 0030 0B44     		add	r3, r3, r1
+   9:Core/Src/lidar.c ****         LIDAR.time = (canRx[7] << 24) + (canRx[6] << 16) + (canRx[5] << 8) + canRx[4];
+  83              		.loc 1 9 20 view .LVU24
+  84 0032 5360     		str	r3, [r2, #4]
+ARM GAS  /tmp/ccrEt9Ne.s 			page 3
+
+
+  85              		.loc 1 11 1 view .LVU25
+  86 0034 E7E7     		b	.L1
+  87              	.L5:
+  88 0036 00BF     		.align	2
+  89              	.L4:
+  90 0038 00000000 		.word	LIDAR
+  91              		.cfi_endproc
+  92              	.LFE65:
+  94              		.comm	LIDAR,8,4
+  95              		.text
+  96              	.Letext0:
+  97              		.file 2 "/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h"
+  98              		.file 3 "Drivers/CMSIS/Include/core_cm3.h"
+  99              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+ 100              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can.h"
+ 101              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 102              		.file 7 "Core/Inc/lidar.h"
+ARM GAS  /tmp/ccrEt9Ne.s 			page 4
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 lidar.c
-     /tmp/cc4mnaeJ.s:16     .text.getLidar:0000000000000000 $t
-     /tmp/cc4mnaeJ.s:23     .text.getLidar:0000000000000000 getLidar
-     /tmp/cc4mnaeJ.s:69     .text.getLidar:0000000000000038 $d
+     /tmp/ccrEt9Ne.s:16     .text.getLidar:0000000000000000 $t
+     /tmp/ccrEt9Ne.s:24     .text.getLidar:0000000000000000 getLidar
+     /tmp/ccrEt9Ne.s:90     .text.getLidar:0000000000000038 $d
                             *COM*:0000000000000008 LIDAR
-                     .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

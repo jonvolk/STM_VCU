@@ -33,6 +33,7 @@
 #include "test.h"
 #include "water_pump.h"
 #include "dcdc.h"
+__attribute__((__section__(".board_info"))) const unsigned char BOARD_NAME[10] = "VCU"; //BOARD_NAME must match build name in Makefile
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -465,8 +466,8 @@ static void MX_IWDG_Init(void)
 
   /* USER CODE END IWDG_Init 1 */
   hiwdg.Instance = IWDG;
-  hiwdg.Init.Prescaler = IWDG_PRESCALER_8;
-  hiwdg.Init.Reload = 1000; //439
+  hiwdg.Init.Prescaler = IWDG_PRESCALER_32;
+  hiwdg.Init.Reload = 4095; // 439 then 1000
   if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
   {
     Error_Handler();
@@ -852,9 +853,22 @@ void StartTaskLoop(void *argument)
   /* Infinite loop */
   for (;;)
   {
+    taskCheck();
+    uint32_t taskStart = HAL_GetTick();
     wpHandler();
     vcuState();
     ioHandler();
+    HAL_IWDG_Refresh(&hiwdg);
+    taskTime.TaskLoop = (HAL_GetTick() - taskStart);
+    taskTime.TaskLoop_lastRun = HAL_GetTick();
+    
+    /*
+    if (taskTime.TaskLoop > taskTime.TaskLoop_max)
+    {
+      taskTime.TaskLoop_max = taskTime.TaskLoop;
+    }
+    */
+    
 
     osDelay(1);
   }
@@ -878,12 +892,22 @@ void StartTask10ms(void *argument)
   for (;;)
   {
     // vTaskDelayUntil(&lastWakeTime, frequency);
+    uint32_t taskStart = HAL_GetTick();
     throttleHandler();
     canIOsend();
     regenHandler();
     brakeHandler();
     dcdcHandler(vcu.state);
-
+    HAL_IWDG_Refresh(&hiwdg);
+    taskTime.Task10ms = (HAL_GetTick() - taskStart);
+    taskTime.Task10ms_lastRun = HAL_GetTick();
+    /*
+    if (taskTime.Task10ms > taskTime.Task10ms_max)
+    {
+      taskTime.Task10ms_max = taskTime.Task10ms;
+    }
+    */
+    
     osDelay(20);
   }
   // Add termination if exit the loop accidentally
@@ -910,11 +934,20 @@ void StartTask100ms(void *argument)
   for (;;)
   {
     // vTaskDelayUntil(&lastWakeTime, frequency);
-
+    uint32_t taskStart = HAL_GetTick();
     updateSpeed(ldu.rpm);
     updateTach(ldu.amps);
     HAL_IWDG_Refresh(&hiwdg);
-    // testVal();
+    taskTime.Task100ms = (HAL_GetTick() - taskStart);
+    taskTime.Task100ms_lastRun = HAL_GetTick();
+    /*
+    if (taskTime.Task100ms > taskTime.Task100ms_max)
+    {
+      taskTime.Task100ms_max = taskTime.Task100ms;
+    }
+    */
+    
+  
 
     osDelay(100);
   }
@@ -942,15 +975,24 @@ void StartTask250ms(void *argument)
 
   {
     // vTaskDelayUntil(&lastWakeTime, frequency);
+    uint32_t taskStart = HAL_GetTick();
     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-
+    HAL_IWDG_Refresh(&hiwdg);
     updateTemp(ldu.hsTemp);
-    updateSOC(BMS[0].chargeState);
+    updateSOC(BMS[0].chargeState, ldu.amps);
     vehicleComms();
     encoderHandler();
+    taskTime.Task250ms = (HAL_GetTick() - taskStart);
+    taskTime.Task250ms_lastRun = HAL_GetTick();
 
+    /*
+    if (taskTime.Task250ms > taskTime.Task250ms_max)
+    {
+      taskTime.Task250ms_max = taskTime.Task250ms;
+    }
+    */
     osDelay(250);
-    // testVal();
+    
   }
   // Add termination if exit the loop accidentally
   osThreadTerminate(NULL);

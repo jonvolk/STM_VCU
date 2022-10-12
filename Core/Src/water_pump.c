@@ -2,35 +2,36 @@
 
 void wpHandler(void)
 {
+    uint8_t fanDuty = 0;
     switch (vcu.state)
     {
     case run:
+    case launchMode:
+    case burnout:
         if (ldu.dir == FWD || ldu.dir == REV)
         {
-            int throttleDuty = MAP(ldu.pot, 870, 4095, 100, 100);
-            int tempDuty = MAP(ldu.hsTemp, 0, 85, 100, 100);
 
-            if (tempDuty > throttleDuty)
+            if (ldu.hsTemp > 40 || BMS[0].temp > 95)
             {
-                wpDuty(tempDuty);
+                fanDuty = 100;
             }
             else
             {
-                wpDuty(throttleDuty);
+                fanDuty = 0;
             }
+
+            wpDuty(100);
+
             txMsg.StdId = 0x140;
-            txMsg.DLC = 1;
-            canTx[0] = 100; // fans on
+            txMsg.DLC = 8;
+            canTx[0] = fanDuty; // run fans at 30%
+            canTx[3] = 95;      // run water pump at 80%
             c1tx(&txMsg, canTx);
         }
 
         else
         {
             wpDuty(0);
-            txMsg.StdId = 0x140;
-            txMsg.DLC = 1;
-            canTx[0] = 0; // fans off
-            c1tx(&txMsg, canTx);
         }
 
         break;
@@ -38,18 +39,21 @@ void wpHandler(void)
     case charge_keyOff:
     case charge_keyOn:
         wpDuty(100);
+
+        if (BMS[0].temp > 95)
+        {
+            fanDuty = 40;
+        }
         txMsg.StdId = 0x140;
-        txMsg.DLC = 1;
-        canTx[0] = 100; // fans on
+        txMsg.DLC = 8;
+        canTx[0] = fanDuty; // run fans at 30%
+        canTx[3] = 95;      // run water pump at 80%
         c1tx(&txMsg, canTx);
         break;
 
+
     case off:
         wpDuty(0);
-        txMsg.StdId = 0x140;
-        txMsg.DLC = 1;
-        canTx[0] = 0; // fans off
-        c1tx(&txMsg, canTx);
     default:
         break;
     }
