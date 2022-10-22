@@ -1305,13 +1305,10 @@ HAL_StatusTypeDef HAL_CAN_AddTxMessage(CAN_HandleTypeDef *hcan, CAN_TxHeaderType
     else
     {
       /* Update error code */
-      
       hcan->ErrorCode |= HAL_CAN_ERROR_PARAM;
 
       return HAL_ERROR;
-      //return HAL_OK;
     }
-
   }
   else
   {

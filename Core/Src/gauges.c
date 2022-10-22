@@ -56,16 +56,20 @@ void updateSOC(volatile uint16_t soc, volatile uint16_t amps)
 {
     if (amps < 150)
     {
-        uint16_t highPulse = MAP(soc, 1, 100, 460, 890); // gauge range calibration
-
-        for (size_t i = 0; i < highPulse; i++)
+        if (soc >= 1 && soc <= 100)
         {
-            socPWM[i] = (uint32_t)SOC_Pin;
-        }
 
-        for (size_t i = highPulse; i < 1000; i++)
-        {
-            socPWM[i] = (uint32_t)SOC_Pin << 16U;
+            uint16_t highPulse = MAP(soc, 1, 100, 460, 890); // gauge range calibration
+
+            for (size_t i = 0; i < highPulse; i++)
+            {
+                socPWM[i] = (uint32_t)SOC_Pin;
+            }
+
+            for (size_t i = highPulse; i < 1000; i++)
+            {
+                socPWM[i] = (uint32_t)SOC_Pin << 16U;
+            }
         }
     }
 }

@@ -19,25 +19,26 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "cmsis_os.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
 #include "print_uart.h"
 #include "can_setup.h"
-#include "FreeRTOS.h"
-#include "task.h" //needed for delayuntil
+//#include "FreeRTOS.h"
+//#include "task.h" //needed for delayuntil
 #include "gauges.h"
 #include "vcu.h"
 #include "test.h"
 #include "water_pump.h"
 #include "dcdc.h"
-__attribute__((__section__(".board_info"))) const unsigned char BOARD_NAME[10] = "VCU"; //BOARD_NAME must match build name in Makefile
+#include "tasks.h"
+__attribute__((__section__(".board_info"))) const unsigned char BOARD_NAME[10] = "VCU"; // BOARD_NAME must match build name in Makefile
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+uint32_t lastRun = 0;
 
 /* USER CODE END PTD */
 
@@ -63,6 +64,7 @@ TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim5;
+TIM_HandleTypeDef htim6;
 DMA_HandleTypeDef hdma_tim2_ch1;
 DMA_HandleTypeDef hdma_tim5_ch1;
 DMA_HandleTypeDef hdma_tim5_ch2;
@@ -70,30 +72,6 @@ DMA_HandleTypeDef hdma_tim5_ch2;
 UART_HandleTypeDef huart4;
 UART_HandleTypeDef huart1;
 
-/* Definitions for TaskLoop */
-osThreadId_t TaskLoopHandle;
-const osThreadAttr_t TaskLoop_attributes = {
-    .name = "TaskLoop",
-    .priority = (osPriority_t)osPriorityNormal,
-    .stack_size = 128 * 4};
-/* Definitions for Task10ms */
-osThreadId_t Task10msHandle;
-const osThreadAttr_t Task10ms_attributes = {
-    .name = "Task10ms",
-    .priority = (osPriority_t)osPriorityNormal,
-    .stack_size = 128 * 4};
-/* Definitions for Task100ms */
-osThreadId_t Task100msHandle;
-const osThreadAttr_t Task100ms_attributes = {
-    .name = "Task100ms",
-    .priority = (osPriority_t)osPriorityNormal,
-    .stack_size = 128 * 4};
-/* Definitions for Task250ms */
-osThreadId_t Task250msHandle;
-const osThreadAttr_t Task250ms_attributes = {
-    .name = "Task250ms",
-    .priority = (osPriority_t)osPriorityNormal,
-    .stack_size = 128 * 4};
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -113,11 +91,7 @@ static void MX_TIM1_Init(void);
 static void MX_TIM5_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_IWDG_Init(void);
-void StartTaskLoop(void *argument);
-void StartTask10ms(void *argument);
-void StartTask100ms(void *argument);
-void StartTask250ms(void *argument);
-
+static void MX_TIM6_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -166,13 +140,16 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM5_Init();
   MX_TIM2_Init();
-  MX_IWDG_Init();
+  //MX_IWDG_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
   canSettings();
   gaugeInit();
   dcdcInit();
   vcuInit();
   wpInit();
+
+  HAL_TIM_Base_Start_IT(&htim6);
 
   HAL_TIM_Base_Start(&htim2);
   HAL_DMA_Start(&hdma_tim2_ch1, (uint32_t) & (waterPWM[0]), GPIOC_BASE + 16, 100); // water pump pwm
@@ -188,57 +165,15 @@ int main(void)
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3); // Speedo pwm start
 
   HAL_ADC_Start_DMA(&hadc1, ADC_data, 3);
+  lastRun = HAL_GetTick();
 
   /* USER CODE END 2 */
 
-  /* Init scheduler */
-  osKernelInitialize();
-
-  /* USER CODE BEGIN RTOS_MUTEX */
-  /* add mutexes, ... */
-  /* USER CODE END RTOS_MUTEX */
-
-  /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
-  /* USER CODE END RTOS_SEMAPHORES */
-
-  /* USER CODE BEGIN RTOS_TIMERS */
-  /* start timers, add new ones, ... */
-  /* USER CODE END RTOS_TIMERS */
-
-  /* USER CODE BEGIN RTOS_QUEUES */
-  /* add queues, ... */
-  /* USER CODE END RTOS_QUEUES */
-
-  /* Create the thread(s) */
-  /* creation of TaskLoop */
-  TaskLoopHandle = osThreadNew(StartTaskLoop, NULL, &TaskLoop_attributes);
-
-  /* creation of Task10ms */
-  Task10msHandle = osThreadNew(StartTask10ms, NULL, &Task10ms_attributes);
-
-  /* creation of Task100ms */
-  Task100msHandle = osThreadNew(StartTask100ms, NULL, &Task100ms_attributes);
-
-  /* creation of Task250ms */
-  Task250msHandle = osThreadNew(StartTask250ms, NULL, &Task250ms_attributes);
-
-  /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
-  /* USER CODE END RTOS_THREADS */
-
-  /* USER CODE BEGIN RTOS_EVENTS */
-  /* add events, ... */
-  /* USER CODE END RTOS_EVENTS */
-
-  /* Start scheduler */
-  osKernelStart();
-
-  /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    taskHandler();
 
     /* USER CODE END WHILE */
 
@@ -380,7 +315,7 @@ static void MX_CAN1_Init(void)
   hcan1.Init.TimeSeg1 = CAN_BS1_2TQ;
   hcan1.Init.TimeSeg2 = CAN_BS2_3TQ;
   hcan1.Init.TimeTriggeredMode = DISABLE;
-  hcan1.Init.AutoBusOff = ENABLE;
+  hcan1.Init.AutoBusOff = DISABLE;
   hcan1.Init.AutoWakeUp = DISABLE;
   hcan1.Init.AutoRetransmission = DISABLE;
   hcan1.Init.ReceiveFifoLocked = DISABLE;
@@ -416,7 +351,7 @@ static void MX_CAN2_Init(void)
   hcan2.Init.TimeSeg1 = CAN_BS1_2TQ;
   hcan2.Init.TimeSeg2 = CAN_BS2_3TQ;
   hcan2.Init.TimeTriggeredMode = DISABLE;
-  hcan2.Init.AutoBusOff = ENABLE;
+  hcan2.Init.AutoBusOff = DISABLE;
   hcan2.Init.AutoWakeUp = DISABLE;
   hcan2.Init.AutoRetransmission = DISABLE;
   hcan2.Init.ReceiveFifoLocked = DISABLE;
@@ -466,8 +401,8 @@ static void MX_IWDG_Init(void)
 
   /* USER CODE END IWDG_Init 1 */
   hiwdg.Instance = IWDG;
-  hiwdg.Init.Prescaler = IWDG_PRESCALER_32;
-  hiwdg.Init.Reload = 4095; // 439 then 1000
+  hiwdg.Init.Prescaler = IWDG_PRESCALER_8;
+  hiwdg.Init.Reload = 439;
   if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
   {
     Error_Handler();
@@ -698,6 +633,43 @@ static void MX_TIM5_Init(void)
 }
 
 /**
+ * @brief TIM6 Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_TIM6_Init(void)
+{
+
+  /* USER CODE BEGIN TIM6_Init 0 */
+
+  /* USER CODE END TIM6_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM6_Init 1 */
+
+  /* USER CODE END TIM6_Init 1 */
+  htim6.Instance = TIM6;
+  htim6.Init.Prescaler = 72 - 1;
+  htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim6.Init.Period = 1000 - 1;
+  htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM6_Init 2 */
+
+  /* USER CODE END TIM6_Init 2 */
+}
+
+/**
  * @brief UART4 Initialization Function
  * @param None
  * @retval None
@@ -773,16 +745,16 @@ static void MX_DMA_Init(void)
 
   /* DMA interrupt init */
   /* DMA1_Channel1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 5, 0);
+  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
   /* DMA1_Channel5_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel5_IRQn, 5, 0);
+  HAL_NVIC_SetPriority(DMA1_Channel5_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel5_IRQn);
   /* DMA2_Channel4_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA2_Channel4_IRQn, 5, 0);
+  HAL_NVIC_SetPriority(DMA2_Channel4_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA2_Channel4_IRQn);
   /* DMA2_Channel5_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA2_Channel5_IRQn, 5, 0);
+  HAL_NVIC_SetPriority(DMA2_Channel5_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA2_Channel5_IRQn);
 }
 
@@ -838,188 +810,8 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 // Callback: timer has rolled over
 
+
 /* USER CODE END 4 */
-
-/* USER CODE BEGIN Header_StartTaskLoop */
-/**
- * @brief  Function implementing the TaskLoop thread.
- * @param  argument: Not used
- * @retval None
- */
-/* USER CODE END Header_StartTaskLoop */
-void StartTaskLoop(void *argument)
-{
-  /* USER CODE BEGIN 5 */
-  /* Infinite loop */
-  for (;;)
-  {
-    taskCheck();
-    uint32_t taskStart = HAL_GetTick();
-    wpHandler();
-    vcuState();
-    ioHandler();
-    HAL_IWDG_Refresh(&hiwdg);
-    taskTime.TaskLoop = (HAL_GetTick() - taskStart);
-    taskTime.TaskLoop_lastRun = HAL_GetTick();
-    
-    /*
-    if (taskTime.TaskLoop > taskTime.TaskLoop_max)
-    {
-      taskTime.TaskLoop_max = taskTime.TaskLoop;
-    }
-    */
-    
-
-    osDelay(1);
-  }
-  /* USER CODE END 5 */
-}
-
-/* USER CODE BEGIN Header_StartTask10ms */
-/**
- * @brief Function implementing the Task10ms thread.
- * @param argument: Not used
- * @retval None
- */
-/* USER CODE END Header_StartTask10ms */
-void StartTask10ms(void *argument)
-{
-  /* USER CODE BEGIN StartTask10ms */
-  // TickType_t lastWakeTime;
-  // const TickType_t frequency = 20;
-  // lastWakeTime = xTaskGetTickCount();
-  /* Infinite loop */
-  for (;;)
-  {
-    // vTaskDelayUntil(&lastWakeTime, frequency);
-    uint32_t taskStart = HAL_GetTick();
-    throttleHandler();
-    canIOsend();
-    regenHandler();
-    brakeHandler();
-    dcdcHandler(vcu.state);
-    HAL_IWDG_Refresh(&hiwdg);
-    taskTime.Task10ms = (HAL_GetTick() - taskStart);
-    taskTime.Task10ms_lastRun = HAL_GetTick();
-    /*
-    if (taskTime.Task10ms > taskTime.Task10ms_max)
-    {
-      taskTime.Task10ms_max = taskTime.Task10ms;
-    }
-    */
-    
-    osDelay(20);
-  }
-  // Add termination if exit the loop accidentally
-  osThreadTerminate(NULL);
-  /* USER CODE END StartTask10ms */
-}
-
-/* USER CODE BEGIN Header_StartTask100ms */
-/**
- * @brief Function implementing the Task100ms thread.
- * @param argument: Not used
- * @retval None
- */
-/* USER CODE END Header_StartTask100ms */
-void StartTask100ms(void *argument)
-{
-  /* USER CODE BEGIN StartTask100ms */
-  // TickType_t lastWakeTime;
-  // const TickType_t frequency = 100;
-  // lastWakeTime = xTaskGetTickCount();
-
-  /* Infinite loop */
-
-  for (;;)
-  {
-    // vTaskDelayUntil(&lastWakeTime, frequency);
-    uint32_t taskStart = HAL_GetTick();
-    updateSpeed(ldu.rpm);
-    updateTach(ldu.amps);
-    HAL_IWDG_Refresh(&hiwdg);
-    taskTime.Task100ms = (HAL_GetTick() - taskStart);
-    taskTime.Task100ms_lastRun = HAL_GetTick();
-    /*
-    if (taskTime.Task100ms > taskTime.Task100ms_max)
-    {
-      taskTime.Task100ms_max = taskTime.Task100ms;
-    }
-    */
-    
-  
-
-    osDelay(100);
-  }
-  // Add termination if exit the loop accidentally
-  osThreadTerminate(NULL);
-  /* USER CODE END StartTask100ms */
-}
-
-/* USER CODE BEGIN Header_StartTask250ms */
-/**
- * @brief Function implementing the Task250ms thread.
- * @param argument: Not used
- * @retval None
- */
-/* USER CODE END Header_StartTask250ms */
-void StartTask250ms(void *argument)
-{
-  /* USER CODE BEGIN StartTask250ms */
-  // TickType_t lastWakeTime;
-  // const TickType_t frequency = 250;
-  // lastWakeTime = xTaskGetTickCount();
-  /* Infinite loop */
-
-  for (;;)
-
-  {
-    // vTaskDelayUntil(&lastWakeTime, frequency);
-    uint32_t taskStart = HAL_GetTick();
-    HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-    HAL_IWDG_Refresh(&hiwdg);
-    updateTemp(ldu.hsTemp);
-    updateSOC(BMS[0].chargeState, ldu.amps);
-    vehicleComms();
-    encoderHandler();
-    taskTime.Task250ms = (HAL_GetTick() - taskStart);
-    taskTime.Task250ms_lastRun = HAL_GetTick();
-
-    /*
-    if (taskTime.Task250ms > taskTime.Task250ms_max)
-    {
-      taskTime.Task250ms_max = taskTime.Task250ms;
-    }
-    */
-    osDelay(250);
-    
-  }
-  // Add termination if exit the loop accidentally
-  osThreadTerminate(NULL);
-  /* USER CODE END StartTask250ms */
-}
-
-/**
- * @brief  Period elapsed callback in non blocking mode
- * @note   This function is called  when TIM7 interrupt took place, inside
- * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
- * a global variable "uwTick" used as application time base.
- * @param  htim : TIM handle
- * @retval None
- */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-  /* USER CODE BEGIN Callback 0 */
-
-  /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM7)
-  {
-    HAL_IncTick();
-  }
-  /* USER CODE BEGIN Callback 1 */
-
-  /* USER CODE END Callback 1 */
-}
 
 /**
  * @brief  This function is executed in case of error occurrence.

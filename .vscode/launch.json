@@ -6,7 +6,7 @@
     "configurations": [
         {
             "cwd": "${workspaceRoot}",
-            "executable": "${workspaceRoot}/build/STM_VCU.elf",
+            "executable": "${workspaceRoot}/build/VCU.elf",
             "name": "JTAG DEBUGGING ",
             "request": "launch",
             "type": "cortex-debug",
@@ -33,7 +33,7 @@
         {
             "showDevDebugOutput": true,
             "cwd": "${workspaceRoot}",
-            "executable": "./build/STM_VCU.elf",
+            "executable": "./build/VCU.elf",
             "name": "Debug STM32",
             "request": "launch",
             "type": "cortex-debug",
@@ -48,7 +48,7 @@
         {
             "showDevDebugOutput": "parsed",
             "cwd": "${workspaceRoot}",
-            "executable": "./build/STM_VCU.elf",
+            "executable": "./build/VCU.elf",
             "name": "Attach STM32",
             "request": "attach",
             "type": "cortex-debug",

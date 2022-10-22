@@ -13,7 +13,8 @@ void jumpToBootloader(CAN_RxHeaderTypeDef *rxMsg, uint8_t *canRx)
     //if ((rxMsg->ExtId == (BOOTLOADER_ID | BTLD_APP_ID)) && canRx[0] == JUMP_COMMAND)
     if (rxMsg->ExtId == 0x0000FF01)
     {
-        btld_JumpToBoot();
+        //btld_JumpToBoot();
+        HAL_NVIC_SystemReset();
     }
 }
 

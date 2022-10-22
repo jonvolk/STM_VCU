@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc6eRkZE.s 			page 1
+ARM GAS  /tmp/ccZ3fMgE.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
   49 000a 4160     		str	r1, [r0, #4]
    8:Core/Src/encoder.c ****     txMsgExt2.DLC = 8;
   50              		.loc 1 8 5 is_stmt 1 view .LVU6
-ARM GAS  /tmp/cc6eRkZE.s 			page 2
+ARM GAS  /tmp/ccZ3fMgE.s 			page 2
 
 
   51              		.loc 1 8 19 is_stmt 0 view .LVU7
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
   94 0030 00000000 		.word	txMsgExt2
   95 0034 21F2EF18 		.word	418378273
   96 0038 00000000 		.word	canTx2
-ARM GAS  /tmp/cc6eRkZE.s 			page 3
+ARM GAS  /tmp/ccZ3fMgE.s 			page 3
 
 
   97              		.cfi_endproc
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
   29:Core/Src/encoder.c ****     canTx2[4] = 0xFF;
  144              		.loc 1 29 5 is_stmt 1 view .LVU42
  145              		.loc 1 29 15 is_stmt 0 view .LVU43
-ARM GAS  /tmp/cc6eRkZE.s 			page 4
+ARM GAS  /tmp/ccZ3fMgE.s 			page 4
 
 
  146 001a 0B71     		strb	r3, [r1, #4]
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
  192              		.loc 1 39 8 view .LVU56
  193 0002 084B     		ldr	r3, .L12
  194 0004 9A42     		cmp	r2, r3
-ARM GAS  /tmp/cc6eRkZE.s 			page 5
+ARM GAS  /tmp/ccZ3fMgE.s 			page 5
 
 
  195 0006 00D0     		beq	.L11
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
  228              	.L13:
  229              		.align	2
  230              	.L12:
-ARM GAS  /tmp/cc6eRkZE.s 			page 6
+ARM GAS  /tmp/ccZ3fMgE.s 			page 6
 
 
  231 0024 F20FFF18 		.word	419368946
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
   56:Core/Src/encoder.c ****         te.currentVal = canRx[3] + (canRx[4] << 8);
  271              		.loc 1 56 9 is_stmt 1 view .LVU79
   56:Core/Src/encoder.c ****         te.currentVal = canRx[3] + (canRx[4] << 8);
-ARM GAS  /tmp/cc6eRkZE.s 			page 7
+ARM GAS  /tmp/ccZ3fMgE.s 			page 7
 
 
  272              		.loc 1 56 20 is_stmt 0 view .LVU80
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
  316              		@ frame_needed = 0, uses_anonymous_args = 0
  317 0000 10B5     		push	{r4, lr}
  318              		.cfi_def_cfa_offset 8
-ARM GAS  /tmp/cc6eRkZE.s 			page 8
+ARM GAS  /tmp/ccZ3fMgE.s 			page 8
 
 
  319              		.cfi_offset 4, -8
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
   87:Core/Src/encoder.c ****             setWidget(HOME, 0, 0, 0);
   88:Core/Src/encoder.c ****         }
   89:Core/Src/encoder.c ****         break;
-ARM GAS  /tmp/cc6eRkZE.s 			page 9
+ARM GAS  /tmp/ccZ3fMgE.s 			page 9
 
 
   90:Core/Src/encoder.c **** 
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
  144:Core/Src/encoder.c ****     switch (vcu.state)
  351              		.loc 1 144 5 view .LVU97
  352              		.loc 1 144 16 is_stmt 0 view .LVU98
-ARM GAS  /tmp/cc6eRkZE.s 			page 10
+ARM GAS  /tmp/ccZ3fMgE.s 			page 10
 
 
  353 0022 624B     		ldr	r3, .L42+4
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
   87:Core/Src/encoder.c ****         }
  399              		.loc 1 87 13 is_stmt 1 view .LVU107
  400 0066 0023     		movs	r3, #0
-ARM GAS  /tmp/cc6eRkZE.s 			page 11
+ARM GAS  /tmp/ccZ3fMgE.s 			page 11
 
 
  401 0068 1A46     		mov	r2, r3
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
  445              		.loc 1 103 12 view .LVU117
  446 00aa 032B     		cmp	r3, #3
  447 00ac B9D1     		bne	.L20
-ARM GAS  /tmp/cc6eRkZE.s 			page 12
+ARM GAS  /tmp/ccZ3fMgE.s 			page 12
 
 
  105:Core/Src/encoder.c ****         }
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
  129:Core/Src/encoder.c ****         break;
  493              		.loc 1 129 22 is_stmt 0 view .LVU127
  494 00f0 2E4B     		ldr	r3, .L42+4
-ARM GAS  /tmp/cc6eRkZE.s 			page 13
+ARM GAS  /tmp/ccZ3fMgE.s 			page 13
 
 
  495 00f2 0122     		movs	r2, #1
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
  180:Core/Src/encoder.c ****         break;
  181:Core/Src/encoder.c **** 
  182:Core/Src/encoder.c ****     case charge_keyOff:
-ARM GAS  /tmp/cc6eRkZE.s 			page 14
+ARM GAS  /tmp/ccZ3fMgE.s 			page 14
 
 
  183:Core/Src/encoder.c ****         setWidget(CHARGE_STATS, CS_TEMP, BMS[0].temp, x1);
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
  543 0130 33B1     		cbz	r3, .L40
  164:Core/Src/encoder.c ****             }
  544              		.loc 1 164 17 is_stmt 1 view .LVU140
-ARM GAS  /tmp/cc6eRkZE.s 			page 15
+ARM GAS  /tmp/ccZ3fMgE.s 			page 15
 
 
  545 0132 0023     		movs	r3, #0
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
  591 0178 0F4A     		ldr	r2, .L42+16
  592 017a 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
  593 017c 0821     		movs	r1, #8
-ARM GAS  /tmp/cc6eRkZE.s 			page 16
+ARM GAS  /tmp/ccZ3fMgE.s 			page 16
 
 
  594 017e 0846     		mov	r0, r1
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
  642              		.comm	canMailbox2,4,4
  643              		.comm	canMailbox,4,4
  644              		.comm	canRx2,8,4
-ARM GAS  /tmp/cc6eRkZE.s 			page 17
+ARM GAS  /tmp/ccZ3fMgE.s 			page 17
 
 
  645              		.comm	canRx,8,4
@@ -1006,32 +1006,32 @@ ARM GAS  /tmp/cc6eRkZE.s 			page 1
  687              		.file 15 "Core/Inc/lidar.h"
  688              		.file 16 "Core/Inc/can_setup.h"
  689              		.file 17 "Core/Inc/encoder.h"
-ARM GAS  /tmp/cc6eRkZE.s 			page 18
+ARM GAS  /tmp/ccZ3fMgE.s 			page 18
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 encoder.c
-     /tmp/cc6eRkZE.s:16     .text.setWidget:0000000000000000 $t
-     /tmp/cc6eRkZE.s:24     .text.setWidget:0000000000000000 setWidget
-     /tmp/cc6eRkZE.s:94     .text.setWidget:0000000000000030 $d
+     /tmp/ccZ3fMgE.s:16     .text.setWidget:0000000000000000 $t
+     /tmp/ccZ3fMgE.s:24     .text.setWidget:0000000000000000 setWidget
+     /tmp/ccZ3fMgE.s:94     .text.setWidget:0000000000000030 $d
                             *COM*:0000000000000018 txMsgExt2
                             *COM*:0000000000000008 canTx2
-     /tmp/cc6eRkZE.s:101    .text.setBacklight:0000000000000000 $t
-     /tmp/cc6eRkZE.s:108    .text.setBacklight:0000000000000000 setBacklight
-     /tmp/cc6eRkZE.s:167    .text.setBacklight:000000000000002c $d
-     /tmp/cc6eRkZE.s:174    .text.getEvent:0000000000000000 $t
-     /tmp/cc6eRkZE.s:181    .text.getEvent:0000000000000000 getEvent
-     /tmp/cc6eRkZE.s:231    .text.getEvent:0000000000000024 $d
+     /tmp/ccZ3fMgE.s:101    .text.setBacklight:0000000000000000 $t
+     /tmp/ccZ3fMgE.s:108    .text.setBacklight:0000000000000000 setBacklight
+     /tmp/ccZ3fMgE.s:167    .text.setBacklight:000000000000002c $d
+     /tmp/ccZ3fMgE.s:174    .text.getEvent:0000000000000000 $t
+     /tmp/ccZ3fMgE.s:181    .text.getEvent:0000000000000000 getEvent
+     /tmp/ccZ3fMgE.s:231    .text.getEvent:0000000000000024 $d
                             *COM*:000000000000000c te
-     /tmp/cc6eRkZE.s:237    .text.getData:0000000000000000 $t
-     /tmp/cc6eRkZE.s:244    .text.getData:0000000000000000 getData
-     /tmp/cc6eRkZE.s:298    .text.getData:0000000000000028 $d
-     /tmp/cc6eRkZE.s:304    .text.encoderHandler:0000000000000000 $t
-     /tmp/cc6eRkZE.s:311    .text.encoderHandler:0000000000000000 encoderHandler
-     /tmp/cc6eRkZE.s:330    .text.encoderHandler:0000000000000010 $d
-     /tmp/cc6eRkZE.s:342    .text.encoderHandler:000000000000001c $t
-     /tmp/cc6eRkZE.s:360    .text.encoderHandler:0000000000000032 $d
-     /tmp/cc6eRkZE.s:628    .text.encoderHandler:00000000000001a8 $d
+     /tmp/ccZ3fMgE.s:237    .text.getData:0000000000000000 $t
+     /tmp/ccZ3fMgE.s:244    .text.getData:0000000000000000 getData
+     /tmp/ccZ3fMgE.s:298    .text.getData:0000000000000028 $d
+     /tmp/ccZ3fMgE.s:304    .text.encoderHandler:0000000000000000 $t
+     /tmp/ccZ3fMgE.s:311    .text.encoderHandler:0000000000000000 encoderHandler
+     /tmp/ccZ3fMgE.s:330    .text.encoderHandler:0000000000000010 $d
+     /tmp/ccZ3fMgE.s:342    .text.encoderHandler:000000000000001c $t
+     /tmp/ccZ3fMgE.s:360    .text.encoderHandler:0000000000000032 $d
+     /tmp/ccZ3fMgE.s:628    .text.encoderHandler:00000000000001a8 $d
                             *COM*:0000000000000007 vcu
                             *COM*:0000000000000012 ldu
                             *COM*:0000000000000014 BMS
@@ -1065,11 +1065,11 @@ DEFINED SYMBOLS
                             *COM*:0000000000000004 time_now
                             *COM*:0000000000000004 period
                             *COM*:0000000000000004 DCDC
-     /tmp/cc6eRkZE.s:367    .text.encoderHandler:0000000000000039 $d
-ARM GAS  /tmp/cc6eRkZE.s 			page 19
+     /tmp/ccZ3fMgE.s:367    .text.encoderHandler:0000000000000039 $d
+ARM GAS  /tmp/ccZ3fMgE.s 			page 19
 
 
-     /tmp/cc6eRkZE.s:367    .text.encoderHandler:000000000000003a $t
+     /tmp/ccZ3fMgE.s:367    .text.encoderHandler:000000000000003a $t
 
 UNDEFINED SYMBOLS
 c2txExt

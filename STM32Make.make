@@ -41,14 +41,13 @@ Core/Src/can_setup.c \
 Core/Src/dcdc.c \
 Core/Src/dynamics.c \
 Core/Src/encoder.c \
-Core/Src/freertos.c \
 Core/Src/gauges.c \
 Core/Src/lidar.c \
 Core/Src/main.c \
 Core/Src/stm32f1xx_hal_msp.c \
-Core/Src/stm32f1xx_hal_timebase_tim.c \
 Core/Src/stm32f1xx_it.c \
 Core/Src/system_stm32f1xx.c \
+Core/Src/tasks.c \
 Core/Src/test.c \
 Core/Src/vcu.c \
 Core/Src/water_pump.c \
@@ -69,17 +68,7 @@ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c \
-Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c \
-Middlewares/Third_Party/FreeRTOS/Source/croutine.c \
-Middlewares/Third_Party/FreeRTOS/Source/event_groups.c \
-Middlewares/Third_Party/FreeRTOS/Source/list.c \
-Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c \
-Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c \
-Middlewares/Third_Party/FreeRTOS/Source/queue.c \
-Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c \
-Middlewares/Third_Party/FreeRTOS/Source/tasks.c \
-Middlewares/Third_Party/FreeRTOS/Source/timers.c
+Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c
 
 
 CPP_SOURCES = \

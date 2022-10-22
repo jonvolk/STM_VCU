@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccdfAn5D.s 			page 1
+ARM GAS  /tmp/ccTBt61c.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccdfAn5D.s 			page 1
   48 000a 41F82320 		str	r2, [r1, r3, lsl #2]
    9:Core/Src/gauges.c ****         socPWM[i] = 0;
   49              		.loc 1 9 9 is_stmt 1 discriminator 3 view .LVU8
-ARM GAS  /tmp/ccdfAn5D.s 			page 2
+ARM GAS  /tmp/ccTBt61c.s 			page 2
 
 
   50              		.loc 1 9 19 is_stmt 0 discriminator 3 view .LVU9
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccdfAn5D.s 			page 1
   95              		.loc 1 16 14 is_stmt 0 view .LVU19
   96 0006 BDF80630 		ldrh	r3, [sp, #6]
   97 000a 9BB2     		uxth	r3, r3
-ARM GAS  /tmp/ccdfAn5D.s 			page 3
+ARM GAS  /tmp/ccTBt61c.s 			page 3
 
 
   98              		.loc 1 16 8 view .LVU20
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccdfAn5D.s 			page 1
  144              	.L9:
  145              		.cfi_restore_state
   15:Core/Src/gauges.c ****     if (amps > 50)
-ARM GAS  /tmp/ccdfAn5D.s 			page 4
+ARM GAS  /tmp/ccTBt61c.s 			page 4
 
 
  146              		.loc 1 15 9 view .LVU36
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccdfAn5D.s 			page 1
  195              	.L14:
   32:Core/Src/gauges.c ****     }
   33:Core/Src/gauges.c **** 
-ARM GAS  /tmp/ccdfAn5D.s 			page 5
+ARM GAS  /tmp/ccTBt61c.s 			page 5
 
 
   34:Core/Src/gauges.c ****     TIM3->CNT = 0;
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccdfAn5D.s 			page 1
  246              		.fpu softvfp
  248              	updateTemp:
  249              	.LVL13:
-ARM GAS  /tmp/ccdfAn5D.s 			page 6
+ARM GAS  /tmp/ccTBt61c.s 			page 6
 
 
  250              	.LFB71:
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccdfAn5D.s 			page 1
  293              		.loc 1 44 40 is_stmt 0 discriminator 3 view .LVU72
  294 0032 0132     		adds	r2, r2, #1
  295              	.LVL16:
-ARM GAS  /tmp/ccdfAn5D.s 			page 7
+ARM GAS  /tmp/ccTBt61c.s 			page 7
 
 
   44:Core/Src/gauges.c ****     {
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccdfAn5D.s 			page 1
  338              		.thumb_func
  339              		.fpu softvfp
  341              	updateSOC:
-ARM GAS  /tmp/ccdfAn5D.s 			page 8
+ARM GAS  /tmp/ccTBt61c.s 			page 8
 
 
  342              	.LVL20:
@@ -443,153 +443,169 @@ ARM GAS  /tmp/ccdfAn5D.s 			page 1
  357 000e 9BB2     		uxth	r3, r3
  358              		.loc 1 57 8 view .LVU87
  359 0010 952B     		cmp	r3, #149
- 360 0012 26D8     		bhi	.L27
- 361              	.LBB5:
+ 360 0012 2FD8     		bhi	.L27
   58:Core/Src/gauges.c ****     {
-  59:Core/Src/gauges.c ****         uint16_t highPulse = MAP(soc, 1, 100, 460, 890); // gauge range calibration
- 362              		.loc 1 59 9 is_stmt 1 view .LVU88
- 363              		.loc 1 59 30 is_stmt 0 view .LVU89
- 364 0014 BDF80630 		ldrh	r3, [sp, #6]
- 365 0018 9BB2     		uxth	r3, r3
- 366 001a 5A1E     		subs	r2, r3, #1
- 367 001c 4FF4D773 		mov	r3, #430
- 368 0020 03FB02F3 		mul	r3, r3, r2
- 369 0024 1049     		ldr	r1, .L34
- 370              	.LVL21:
- 371              		.loc 1 59 30 view .LVU90
- 372 0026 81FB0321 		smull	r2, r1, r1, r3
- 373 002a CA18     		adds	r2, r1, r3
- 374 002c D917     		asrs	r1, r3, #31
- 375 002e C1EBA211 		rsb	r1, r1, r2, asr #6
- 376 0032 89B2     		uxth	r1, r1
- 377              		.loc 1 59 18 view .LVU91
- 378 0034 01F5E671 		add	r1, r1, #460
- 379 0038 89B2     		uxth	r1, r1
- 380              	.LVL22:
-  60:Core/Src/gauges.c **** 
-  61:Core/Src/gauges.c ****         for (size_t i = 0; i < highPulse; i++)
- 381              		.loc 1 61 9 is_stmt 1 view .LVU92
- 382              	.LBB6:
- 383              		.loc 1 61 14 view .LVU93
- 384              		.loc 1 61 21 is_stmt 0 view .LVU94
- 385 003a 0022     		movs	r2, #0
- 386              	.LVL23:
- 387              	.L29:
- 388              		.loc 1 61 28 is_stmt 1 discriminator 1 view .LVU95
- 389              		.loc 1 61 30 is_stmt 0 discriminator 1 view .LVU96
- 390 003c 0B46     		mov	r3, r1
-ARM GAS  /tmp/ccdfAn5D.s 			page 9
+  59:Core/Src/gauges.c ****         if (soc >= 1 && soc <= 100)
+ 361              		.loc 1 59 9 is_stmt 1 view .LVU88
+ 362              		.loc 1 59 17 is_stmt 0 view .LVU89
+ 363 0014 BDF80630 		ldrh	r3, [sp, #6]
+ 364 0018 9BB2     		uxth	r3, r3
+ 365              		.loc 1 59 12 view .LVU90
+ 366 001a 5BB3     		cbz	r3, .L27
+ 367              		.loc 1 59 29 discriminator 1 view .LVU91
+ 368 001c BDF80630 		ldrh	r3, [sp, #6]
+ 369 0020 9BB2     		uxth	r3, r3
+ 370              		.loc 1 59 22 discriminator 1 view .LVU92
+ 371 0022 642B     		cmp	r3, #100
+ 372 0024 26D8     		bhi	.L27
+ 373              	.LBB5:
+  60:Core/Src/gauges.c ****         {
+  61:Core/Src/gauges.c **** 
+  62:Core/Src/gauges.c ****             uint16_t highPulse = MAP(soc, 1, 100, 460, 890); // gauge range calibration
+ 374              		.loc 1 62 13 is_stmt 1 view .LVU93
+ 375              		.loc 1 62 34 is_stmt 0 view .LVU94
+ 376 0026 BDF80630 		ldrh	r3, [sp, #6]
+ 377 002a 9BB2     		uxth	r3, r3
+ 378 002c 5A1E     		subs	r2, r3, #1
+ 379 002e 4FF4D773 		mov	r3, #430
+ 380 0032 03FB02F3 		mul	r3, r3, r2
+ 381 0036 1049     		ldr	r1, .L34
+ 382              	.LVL21:
+ 383              		.loc 1 62 34 view .LVU95
+ 384 0038 81FB0321 		smull	r2, r1, r1, r3
+ 385 003c CA18     		adds	r2, r1, r3
+ 386 003e D917     		asrs	r1, r3, #31
+ 387 0040 C1EBA211 		rsb	r1, r1, r2, asr #6
+ 388 0044 89B2     		uxth	r1, r1
+ 389              		.loc 1 62 22 view .LVU96
+ARM GAS  /tmp/ccTBt61c.s 			page 9
 
 
- 391              		.loc 1 61 9 discriminator 1 view .LVU97
- 392 003e 9142     		cmp	r1, r2
- 393 0040 0CD9     		bls	.L31
-  62:Core/Src/gauges.c ****         {
-  63:Core/Src/gauges.c ****             socPWM[i] = (uint32_t)SOC_Pin;
- 394              		.loc 1 63 13 is_stmt 1 discriminator 3 view .LVU98
- 395              		.loc 1 63 23 is_stmt 0 discriminator 3 view .LVU99
- 396 0042 0A4B     		ldr	r3, .L34+4
- 397 0044 4FF40070 		mov	r0, #512
- 398 0048 43F82200 		str	r0, [r3, r2, lsl #2]
-  61:Core/Src/gauges.c ****         {
- 399              		.loc 1 61 43 is_stmt 1 discriminator 3 view .LVU100
-  61:Core/Src/gauges.c ****         {
- 400              		.loc 1 61 44 is_stmt 0 discriminator 3 view .LVU101
- 401 004c 0132     		adds	r2, r2, #1
- 402              	.LVL24:
-  61:Core/Src/gauges.c ****         {
- 403              		.loc 1 61 44 discriminator 3 view .LVU102
- 404 004e F5E7     		b	.L29
- 405              	.LVL25:
- 406              	.L32:
-  61:Core/Src/gauges.c ****         {
- 407              		.loc 1 61 44 discriminator 3 view .LVU103
- 408              	.LBE6:
- 409              	.LBB7:
-  64:Core/Src/gauges.c ****         }
-  65:Core/Src/gauges.c **** 
-  66:Core/Src/gauges.c ****         for (size_t i = highPulse; i < 1000; i++)
-  67:Core/Src/gauges.c ****         {
-  68:Core/Src/gauges.c ****             socPWM[i] = (uint32_t)SOC_Pin << 16U;
- 410              		.loc 1 68 13 is_stmt 1 discriminator 3 view .LVU104
- 411              		.loc 1 68 23 is_stmt 0 discriminator 3 view .LVU105
- 412 0050 064A     		ldr	r2, .L34+4
- 413 0052 4FF00071 		mov	r1, #33554432
- 414 0056 42F82310 		str	r1, [r2, r3, lsl #2]
-  66:Core/Src/gauges.c ****         {
- 415              		.loc 1 66 46 is_stmt 1 discriminator 3 view .LVU106
-  66:Core/Src/gauges.c ****         {
- 416              		.loc 1 66 47 is_stmt 0 discriminator 3 view .LVU107
- 417 005a 0133     		adds	r3, r3, #1
- 418              	.LVL26:
- 419              	.L31:
-  66:Core/Src/gauges.c ****         {
- 420              		.loc 1 66 36 is_stmt 1 discriminator 1 view .LVU108
-  66:Core/Src/gauges.c ****         {
- 421              		.loc 1 66 9 is_stmt 0 discriminator 1 view .LVU109
- 422 005c B3F57A7F 		cmp	r3, #1000
- 423 0060 F6D3     		bcc	.L32
- 424              	.LVL27:
- 425              	.L27:
-  66:Core/Src/gauges.c ****         {
- 426              		.loc 1 66 9 discriminator 1 view .LVU110
- 427              	.LBE7:
- 428              	.LBE5:
-  69:Core/Src/gauges.c ****         }
-  70:Core/Src/gauges.c ****     }
-  71:Core/Src/gauges.c **** }...
-ARM GAS  /tmp/ccdfAn5D.s 			page 10
+ 390 0046 01F5E671 		add	r1, r1, #460
+ 391 004a 89B2     		uxth	r1, r1
+ 392              	.LVL22:
+  63:Core/Src/gauges.c **** 
+  64:Core/Src/gauges.c ****             for (size_t i = 0; i < highPulse; i++)
+ 393              		.loc 1 64 13 is_stmt 1 view .LVU97
+ 394              	.LBB6:
+ 395              		.loc 1 64 18 view .LVU98
+ 396              		.loc 1 64 25 is_stmt 0 view .LVU99
+ 397 004c 0022     		movs	r2, #0
+ 398              	.LVL23:
+ 399              	.L29:
+ 400              		.loc 1 64 32 is_stmt 1 discriminator 1 view .LVU100
+ 401              		.loc 1 64 34 is_stmt 0 discriminator 1 view .LVU101
+ 402 004e 0B46     		mov	r3, r1
+ 403              		.loc 1 64 13 discriminator 1 view .LVU102
+ 404 0050 9142     		cmp	r1, r2
+ 405 0052 0CD9     		bls	.L31
+  65:Core/Src/gauges.c ****             {
+  66:Core/Src/gauges.c ****                 socPWM[i] = (uint32_t)SOC_Pin;
+ 406              		.loc 1 66 17 is_stmt 1 discriminator 3 view .LVU103
+ 407              		.loc 1 66 27 is_stmt 0 discriminator 3 view .LVU104
+ 408 0054 094B     		ldr	r3, .L34+4
+ 409 0056 4FF40070 		mov	r0, #512
+ 410 005a 43F82200 		str	r0, [r3, r2, lsl #2]
+  64:Core/Src/gauges.c ****             {
+ 411              		.loc 1 64 47 is_stmt 1 discriminator 3 view .LVU105
+  64:Core/Src/gauges.c ****             {
+ 412              		.loc 1 64 48 is_stmt 0 discriminator 3 view .LVU106
+ 413 005e 0132     		adds	r2, r2, #1
+ 414              	.LVL24:
+  64:Core/Src/gauges.c ****             {
+ 415              		.loc 1 64 48 discriminator 3 view .LVU107
+ 416 0060 F5E7     		b	.L29
+ 417              	.LVL25:
+ 418              	.L32:
+  64:Core/Src/gauges.c ****             {
+ 419              		.loc 1 64 48 discriminator 3 view .LVU108
+ 420              	.LBE6:
+ 421              	.LBB7:
+  67:Core/Src/gauges.c ****             }
+  68:Core/Src/gauges.c **** 
+  69:Core/Src/gauges.c ****             for (size_t i = highPulse; i < 1000; i++)
+  70:Core/Src/gauges.c ****             {
+  71:Core/Src/gauges.c ****                 socPWM[i] = (uint32_t)SOC_Pin << 16U;
+ 422              		.loc 1 71 17 is_stmt 1 discriminator 3 view .LVU109
+ 423              		.loc 1 71 27 is_stmt 0 discriminator 3 view .LVU110
+ 424 0062 064A     		ldr	r2, .L34+4
+ 425 0064 4FF00071 		mov	r1, #33554432
+ 426 0068 42F82310 		str	r1, [r2, r3, lsl #2]
+  69:Core/Src/gauges.c ****             {
+ 427              		.loc 1 69 50 is_stmt 1 discriminator 3 view .LVU111
+  69:Core/Src/gauges.c ****             {
+ 428              		.loc 1 69 51 is_stmt 0 discriminator 3 view .LVU112
+ 429 006c 0133     		adds	r3, r3, #1
+ 430              	.LVL26:
+ 431              	.L31:
+ARM GAS  /tmp/ccTBt61c.s 			page 10
 
 
- 429              		.loc 1 71 1 view .LVU111
- 430 0062 02B0     		add	sp, sp, #8
- 431              		.cfi_def_cfa_offset 0
- 432              	.LVL28:
- 433              		.loc 1 71 1 view .LVU112
- 434              		@ sp needed
- 435 0064 7047     		bx	lr
- 436              	.L35:
- 437 0066 00BF     		.align	2
- 438              	.L34:
- 439 0068 03B57EA5 		.word	-1518422781
- 440 006c 00000000 		.word	socPWM
- 441              		.cfi_endproc
- 442              	.LFE72:
- 444              		.comm	socPWM,4000,4
- 445              		.comm	tempPWM,400,4
- 446              		.text
- 447              	.Letext0:
- 448              		.file 2 "/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h"
- 449              		.file 3 "Drivers/CMSIS/Include/core_cm3.h"
- 450              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
- 451              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h"
- 452              		.file 6 "/usr/lib/gcc/arm-none-eabi/9.2.1/include/stddef.h"
- 453              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
- 454              		.file 8 "/usr/include/newlib/sys/_types.h"
- 455              		.file 9 "/usr/include/newlib/sys/reent.h"
- 456              		.file 10 "/usr/include/newlib/sys/lock.h"
- 457              		.file 11 "Core/Inc/gauges.h"
-ARM GAS  /tmp/ccdfAn5D.s 			page 11
+  69:Core/Src/gauges.c ****             {
+ 432              		.loc 1 69 40 is_stmt 1 discriminator 1 view .LVU113
+  69:Core/Src/gauges.c ****             {
+ 433              		.loc 1 69 13 is_stmt 0 discriminator 1 view .LVU114
+ 434 006e B3F57A7F 		cmp	r3, #1000
+ 435 0072 F6D3     		bcc	.L32
+ 436              	.LVL27:
+ 437              	.L27:
+  69:Core/Src/gauges.c ****             {
+ 438              		.loc 1 69 13 discriminator 1 view .LVU115
+ 439              	.LBE7:
+ 440              	.LBE5:
+  72:Core/Src/gauges.c ****             }
+  73:Core/Src/gauges.c ****         }
+  74:Core/Src/gauges.c ****     }
+  75:Core/Src/gauges.c **** }...
+ 441              		.loc 1 75 1 view .LVU116
+ 442 0074 02B0     		add	sp, sp, #8
+ 443              		.cfi_def_cfa_offset 0
+ 444              	.LVL28:
+ 445              		.loc 1 75 1 view .LVU117
+ 446              		@ sp needed
+ 447 0076 7047     		bx	lr
+ 448              	.L35:
+ 449              		.align	2
+ 450              	.L34:
+ 451 0078 03B57EA5 		.word	-1518422781
+ 452 007c 00000000 		.word	socPWM
+ 453              		.cfi_endproc
+ 454              	.LFE72:
+ 456              		.comm	socPWM,4000,4
+ 457              		.comm	tempPWM,400,4
+ 458              		.text
+ 459              	.Letext0:
+ 460              		.file 2 "/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h"
+ 461              		.file 3 "Drivers/CMSIS/Include/core_cm3.h"
+ 462              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+ 463              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f105xc.h"
+ 464              		.file 6 "/usr/lib/gcc/arm-none-eabi/9.2.1/include/stddef.h"
+ 465              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 466              		.file 8 "/usr/include/newlib/sys/_types.h"
+ 467              		.file 9 "/usr/include/newlib/sys/reent.h"
+ 468              		.file 10 "/usr/include/newlib/sys/lock.h"
+ 469              		.file 11 "Core/Inc/gauges.h"
+ARM GAS  /tmp/ccTBt61c.s 			page 11
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 gauges.c
-     /tmp/ccdfAn5D.s:16     .text.gaugeInit:0000000000000000 $t
-     /tmp/ccdfAn5D.s:24     .text.gaugeInit:0000000000000000 gaugeInit
-     /tmp/ccdfAn5D.s:67     .text.gaugeInit:000000000000001c $d
+     /tmp/ccTBt61c.s:16     .text.gaugeInit:0000000000000000 $t
+     /tmp/ccTBt61c.s:24     .text.gaugeInit:0000000000000000 gaugeInit
+     /tmp/ccTBt61c.s:67     .text.gaugeInit:000000000000001c $d
                             *COM*:0000000000000190 tempPWM
                             *COM*:0000000000000fa0 socPWM
-     /tmp/ccdfAn5D.s:73     .text.updateTach:0000000000000000 $t
-     /tmp/ccdfAn5D.s:80     .text.updateTach:0000000000000000 updateTach
-     /tmp/ccdfAn5D.s:152    .text.updateTach:0000000000000048 $d
-     /tmp/ccdfAn5D.s:159    .text.updateSpeed:0000000000000000 $t
-     /tmp/ccdfAn5D.s:166    .text.updateSpeed:0000000000000000 updateSpeed
-     /tmp/ccdfAn5D.s:234    .text.updateSpeed:0000000000000044 $d
-     /tmp/ccdfAn5D.s:241    .text.updateTemp:0000000000000000 $t
-     /tmp/ccdfAn5D.s:248    .text.updateTemp:0000000000000000 updateTemp
-     /tmp/ccdfAn5D.s:328    .text.updateTemp:000000000000004c $d
-     /tmp/ccdfAn5D.s:334    .text.updateSOC:0000000000000000 $t
-     /tmp/ccdfAn5D.s:341    .text.updateSOC:0000000000000000 updateSOC
-     /tmp/ccdfAn5D.s:439    .text.updateSOC:0000000000000068 $d
+     /tmp/ccTBt61c.s:73     .text.updateTach:0000000000000000 $t
+     /tmp/ccTBt61c.s:80     .text.updateTach:0000000000000000 updateTach
+     /tmp/ccTBt61c.s:152    .text.updateTach:0000000000000048 $d
+     /tmp/ccTBt61c.s:159    .text.updateSpeed:0000000000000000 $t
+     /tmp/ccTBt61c.s:166    .text.updateSpeed:0000000000000000 updateSpeed
+     /tmp/ccTBt61c.s:234    .text.updateSpeed:0000000000000044 $d
+     /tmp/ccTBt61c.s:241    .text.updateTemp:0000000000000000 $t
+     /tmp/ccTBt61c.s:248    .text.updateTemp:0000000000000000 updateTemp
+     /tmp/ccTBt61c.s:328    .text.updateTemp:000000000000004c $d
+     /tmp/ccTBt61c.s:334    .text.updateSOC:0000000000000000 $t
+     /tmp/ccTBt61c.s:341    .text.updateSOC:0000000000000000 updateSOC
+     /tmp/ccTBt61c.s:451    .text.updateSOC:0000000000000078 $d
 
 NO UNDEFINED SYMBOLS

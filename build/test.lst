@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc5c3ZZE.s 			page 1
+ARM GAS  /tmp/ccmnX85E.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc5c3ZZE.s 			page 1
   47 0016 5381     		strh	r3, [r2, #10]	@ movhi
   48              	.L2:
   10:Core/Src/test.c ****     }
-ARM GAS  /tmp/cc5c3ZZE.s 			page 2
+ARM GAS  /tmp/ccmnX85E.s 			page 2
 
 
   11:Core/Src/test.c ****     if (ldu.amps >= 1200)
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc5c3ZZE.s 			page 1
   91              		.loc 1 22 17 is_stmt 0 view .LVU20
   92 0052 054B     		ldr	r3, .L6
   93 0054 0022     		movs	r2, #0
-ARM GAS  /tmp/cc5c3ZZE.s 			page 3
+ARM GAS  /tmp/ccmnX85E.s 			page 3
 
 
   94 0056 1A80     		strh	r2, [r3]	@ movhi
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc5c3ZZE.s 			page 1
  135              		.comm	sf,40,4
  136              		.comm	hcan2,40,4
  137              		.comm	hcan1,40,4
-ARM GAS  /tmp/cc5c3ZZE.s 			page 4
+ARM GAS  /tmp/ccmnX85E.s 			page 4
 
 
  138              		.comm	LIDAR,8,4
@@ -213,14 +213,14 @@ ARM GAS  /tmp/cc5c3ZZE.s 			page 1
  167              		.file 15 "Core/Inc/encoder.h"
  168              		.file 16 "Core/Inc/lidar.h"
  169              		.file 17 "Core/Inc/can_setup.h"
-ARM GAS  /tmp/cc5c3ZZE.s 			page 5
+ARM GAS  /tmp/ccmnX85E.s 			page 5
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 test.c
-     /tmp/cc5c3ZZE.s:16     .text.testVal:0000000000000000 $t
-     /tmp/cc5c3ZZE.s:24     .text.testVal:0000000000000000 testVal
-     /tmp/cc5c3ZZE.s:111    .text.testVal:0000000000000068 $d
+     /tmp/ccmnX85E.s:16     .text.testVal:0000000000000000 $t
+     /tmp/ccmnX85E.s:24     .text.testVal:0000000000000000 testVal
+     /tmp/ccmnX85E.s:111    .text.testVal:0000000000000068 $d
                             *COM*:0000000000000012 ldu
                             *COM*:0000000000000014 BMS
                             *COM*:0000000000000004 canDebug
